@@ -33,10 +33,10 @@ admin.site.register(Submission, SubmissionAdminModel)
 
 
 class GradeAdminModel(admin.ModelAdmin):
-    list_display = ['id', 'mentor', 'submission', 'grades', 'created_at']
+    list_display = ['id', 'mentor', 'submission', 'grade', 'created_at']
     list_display_links = ['id', 'mentor']
-    list_filter = ['submission', 'grades']
-    search_fields = ['mentor', 'submission', 'grades']
+    list_filter = ['submission', 'grade']
+    search_fields = ['mentor', 'submission', 'grade']
 
 
 admin.site.register(Grade, GradeAdminModel)

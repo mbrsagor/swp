@@ -6,7 +6,7 @@
 
 - Python 3.8
 - Django 4.1.0
-- postgres  13
+- Postgres  13.0
 
 The following steps will walk you thru installation on a Mac. Linux should be similar. It's also possible to develop 
 on a Windows machine, but I have not documented the steps. If you've developed django apps on Windows, you should have little problem getting up and running.
@@ -19,7 +19,7 @@ git clone https://github.com/mbrsagor/assessment.git
 cd assessment
 ```
 
-###### Then copy code from the ``env_example`` and create new file `.env` then pasts
+###### Then copy code from the ``.env_example`` and create new file `.env` then pasts
 
 -------------------------------------------
 ```bash

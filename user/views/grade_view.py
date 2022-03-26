@@ -40,7 +40,7 @@ class GradeDetailView(views.APIView):
         if role_perm == ROLE.ADMIN or role_perm == ROLE.MENTOR:
             grade = Grade.objects.get(id=pk)
             if grade is not None:
-                serializer = GradeSerializer(grade).data
+                serializer = GradeSerializer(grade)
                 return Response(serializer.data)
             return Response('No content found')
         else:

@@ -57,15 +57,16 @@ class Grade(models.Model):
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
 
     GRADE_LIST = (
-        ("G1", "+A"),
-        ("G2", "A"),
-        ("G3", "-A"),
-        ("G4", "B"),
-        ("G5", "+B"),
-        ("G6", "B"),
-        ("G7", "C"),
+        ("+A", "a+"),
+        ("A", "a"),
+        ("-A", "a-"),
+        ("B", "b"),
+        ("+B", "b+"),
+        ("B", "b"),
+        ("C", "c"),
+        ("F", "f"),
     )
-    grades = models.CharField(max_length=2, choices=GRADE_LIST)
+    grade = models.CharField(max_length=2, choices=GRADE_LIST)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
