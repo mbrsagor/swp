@@ -39,3 +39,11 @@ pip install -r requirements.txt
 ./manage.py createsuperuser
 ./mangae.py runserver
 ```
+
+### Extra ordinary:
+- Token base authentication system.
+- Pagination.
+- Well documentation to run project.
+- Add postman collection.
+- 100% errors free.
+- Postgres database implemented (if you want you may use sqlite database)
