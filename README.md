@@ -1,10 +1,10 @@
-# Assessment
+# SWP
 
-> The project is basically an online exam task management backend web application.
+> `Student Web Portal`. The application develop for university final project purpose.
 
 ##### Dependencies
 
-- Python 3.8
+- Python 3.10
 - Django 4.1.0
 - Postgres  13.0
 
@@ -15,8 +15,8 @@ on a Windows machine, but I have not documented the steps. If you've developed d
 #### Setup
 
 ```bash
-git clone https://github.com/mbrsagor/assessment.git
-cd assessment
+git clone https://github.com/mbrsagor/swp.git
+cd swp
 ```
 
 ###### Then copy code from the ``.env_example`` and create new file `.env` then pasts
@@ -33,17 +33,7 @@ Run the application in your local development server:
 virtualenv venv --python=python3.8
 source venv/bin/activate
 pip install -r requirements.txt
-./manage.py makemigrations user
-./manage.py migrate user
 ./manage.py migrate
 ./manage.py createsuperuser
 ./mangae.py runserver
 ```
-
-### Extra ordinary:
-- Token base authentication system.
-- Pagination.
-- Well documentation to run project.
-- Add postman collection.
-- 100% errors free.
-- Postgres database implemented (if you want you may use sqlite database)
