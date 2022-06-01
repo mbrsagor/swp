@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 
 class LoginForm(AuthenticationForm):
-    email = CharField(widget=EmailInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter a valid email', 'required': True,
+    username = CharField(widget=TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your username', 'required': True,
                'autofocus': True}))
     password = CharField(
         widget=PasswordInput(
