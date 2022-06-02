@@ -36,11 +36,11 @@ class SingInView(LoginView):
         return super(SingInView, self).form_valid(form)
 
 
-class Logout(View):
+class SignOutView(View):
 
     def get(self, request):
         logout(request)
-        return redirect('/logout/')
+        return redirect('/login/')
 
 
 class RegistrationView(SuccessMessageMixin, generic.CreateView):
