@@ -10,12 +10,12 @@ class DomainEntity(models.Model):
 
 class Profile(DomainEntity):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userProfile')
-    name = models.CharField(max_length=50)
-    father_name = models.CharField(max_length=50)
-    mother_name = models.CharField(max_length=50)
-    board = models.CharField(max_length=100)
-    ssc_passing_year = models.DateField()
-    hsc_passing_year = models.DateField()
+    name = models.CharField(max_length=50, blank=True, null=True)
+    father_name = models.CharField(max_length=50, blank=True, null=True)
+    mother_name = models.CharField(max_length=50, blank=True, null=True)
+    board = models.CharField(max_length=100, blank=True, null=True)
+    ssc_passing_year = models.DateField(blank=True, null=True)
+    hsc_passing_year = models.DateField(blank=True, null=True)
     cgpa = models.DecimalField(max_digits=5, decimal_places=2, default=1.00)
 
     def __str__(self):

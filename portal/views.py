@@ -9,10 +9,10 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.messages.views import SuccessMessageMixin
 
-
 from .forms import LoginForm, SingUpForm
 
 
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
 class DashboardView(generic.TemplateView):
     template_name = 'index.html'
 
@@ -35,3 +35,16 @@ class SingInView(LoginView):
             self.request.session.set_expiry(1209600)
         return super(SingInView, self).form_valid(form)
 
+
+class Logout(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect('/logout/')
+
+
+class RegistrationView(SuccessMessageMixin, generic.CreateView):
+    form_class = SingUpForm
+    success_url = '/login/'
+    success_message = 'Successfully registration done.'
+    template_name = 'auth/register.html'

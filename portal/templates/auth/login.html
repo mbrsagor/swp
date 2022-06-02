@@ -23,6 +23,7 @@
                                 <form method="post">
                                     {% if form.errors %}
                                         <p class="alert alert-danger" role="alert">Username & password is incorrect</p>
+                                        <p class="alert alert-danger" role="alert">{{form.errors}}</p>
                                     {% endif %}
                                     {% csrf_token %}
                                     <div class="form-group">
@@ -43,7 +44,7 @@
                                 </form>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small"><a href="#">Need an account? Sign up!</a></div>
+                                <div class="small"><a href="{% url 'registration' %}">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>
