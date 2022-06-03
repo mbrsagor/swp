@@ -3,6 +3,7 @@ from django.forms import ModelForm, CharField, EmailInput, TextInput, Select, Pa
     CheckboxInput, NumberInput, Textarea, DateTimeInput, FileInput
 
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 class LoginForm(AuthenticationForm):
@@ -33,4 +34,21 @@ class SingUpForm(UserCreationForm):
                 attrs={'class': 'form-control', 'id': 'first_name', 'placeholder': 'Enter first name'}),
             'last_name': TextInput(
                 attrs={'class': 'form-control', 'id': 'last_name', 'placeholder': 'Enter last name'}),
+        }
+
+
+class ProfileUpdateForm(ModelForm):
+    class Meta:
+        model = Profile
+        read_only_fields = ('user',)
+        fields = (
+            '__all__',
+        )
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
+            'gender': Select(attrs={'class': 'form-control', 'id': 'gender'}),
+            'father_name': TextInput(attrs={'class': 'form-control', 'id': 'father_name'}),
+            'mother_name': TextInput(attrs={'class': 'form-control', 'id': 'mother_name'}),
+            'board_roll': NumberInput(attrs={'class': 'form-control', 'id': 'board_roll'}),
+            'date_of_birth': DateTimeInput(attrs={'class': 'form-control', 'id': 'date_of_birth', 'type': 'date'}),
         }

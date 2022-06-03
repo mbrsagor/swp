@@ -9,6 +9,12 @@ class DomainEntity(models.Model):
 
 
 class Profile(DomainEntity):
+    GENDER = (
+        ('MALE', 'MALE'),
+        ('FEMALE', 'FEMALE'),
+        ('OTHER', 'OTHER'),
+    )
+    gender = models.CharField(choices=GENDER, max_length=10, blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userProfile')
     name = models.CharField(max_length=50, blank=True, null=True)
     father_name = models.CharField(max_length=50, blank=True, null=True)

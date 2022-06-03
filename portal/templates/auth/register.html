@@ -23,7 +23,7 @@
                             <div class="card-body">
                                 <form method="post">
                                     {% if form.errors %}
-                                        <p class="alert alert-danger" role="alert">Username & password is incorrect</p>
+                                        <p class="alert alert-danger" role="alert">{{ form.errors }}</p>
                                     {% endif %}
                                     {% csrf_token %}
                                     <div class="row mb-3">
