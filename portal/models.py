@@ -19,9 +19,10 @@ class Profile(DomainEntity):
     name = models.CharField(max_length=50, blank=True, null=True)
     father_name = models.CharField(max_length=50, blank=True, null=True)
     mother_name = models.CharField(max_length=50, blank=True, null=True)
-    board = models.CharField(max_length=100, blank=True, null=True)
+    board_roll = models.CharField(max_length=100, blank=True, null=True)
     ssc_passing_year = models.DateField(blank=True, null=True)
     hsc_passing_year = models.DateField(blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     cgpa = models.DecimalField(max_digits=5, decimal_places=2, default=1.00)
 
     def __str__(self):

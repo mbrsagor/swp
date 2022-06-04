@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm, CharField, EmailInput, TextInput, Select, PasswordInput, BooleanField, \
-    CheckboxInput, NumberInput, Textarea, DateTimeInput, FileInput
+     NumberInput,  DateTimeInput, FileInput
 
 from django.contrib.auth.models import User
 from .models import Profile
@@ -42,7 +42,9 @@ class ProfileUpdateForm(ModelForm):
         model = Profile
         read_only_fields = ('user',)
         fields = (
-            '__all__',
+            'user', 'name', 'father_name', 'mother_name', 'board_roll',
+            'date_of_birth', 'ssc_passing_year', 'hsc_passing_year',
+            # 'created_at', 'updated_at'
         )
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
@@ -51,4 +53,8 @@ class ProfileUpdateForm(ModelForm):
             'mother_name': TextInput(attrs={'class': 'form-control', 'id': 'mother_name'}),
             'board_roll': NumberInput(attrs={'class': 'form-control', 'id': 'board_roll'}),
             'date_of_birth': DateTimeInput(attrs={'class': 'form-control', 'id': 'date_of_birth', 'type': 'date'}),
+            'ssc_passing_year': DateTimeInput(
+                attrs={'class': 'form-control', 'id': 'ssc_passing_year', 'type': 'date'}),
+            'hsc_passing_year': DateTimeInput(
+                attrs={'class': 'form-control', 'id': 'hsc_passing_year', 'type': 'date'}),
         }
