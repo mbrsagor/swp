@@ -25,6 +25,7 @@
                                     <div class="text-center">
                                         {% if form.errors %}
                                         <p class="alert alert-danger" role="alert">Username & password is incorrect</p>
+                                            {{ form.errors }}
                                     {% endif %}
                                     </div>
                                     {% csrf_token %}

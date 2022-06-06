@@ -7,8 +7,8 @@ from .models import Profile
 
 
 class LoginForm(AuthenticationForm):
-    username = CharField(widget=TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter your username', 'required': True,
+    username = CharField(widget=EmailInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your email', 'required': True,
                'autofocus': True}))
     password = CharField(
         widget=PasswordInput(
@@ -44,7 +44,6 @@ class ProfileUpdateForm(ModelForm):
         fields = (
             'user', 'name', 'father_name', 'mother_name', 'board_roll',
             'date_of_birth', 'ssc_passing_year', 'hsc_passing_year',
-            # 'created_at', 'updated_at'
         )
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
