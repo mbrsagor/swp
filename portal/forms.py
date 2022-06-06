@@ -42,7 +42,7 @@ class ProfileUpdateForm(ModelForm):
         model = Profile
         read_only_fields = ('user',)
         fields = (
-            'user', 'name', 'father_name', 'mother_name', 'board_roll',
+            'user', 'name', 'father_name', 'mother_name', 'board_roll', 'cgpa', 'gender',
             'date_of_birth', 'ssc_passing_year', 'hsc_passing_year',
         )
         widgets = {
