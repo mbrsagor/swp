@@ -25,12 +25,11 @@
                                     <div class="text-center">
                                         {% if form.errors %}
                                         <p class="alert alert-danger" role="alert">Username & password is incorrect</p>
-                                            {{ form.errors }}
                                     {% endif %}
                                     </div>
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="email">Enter your valid email address</label>
+                                        <label for="email">Enter your username</label>
                                         {{ form.username }}
                                     </div>
                                     <br/>

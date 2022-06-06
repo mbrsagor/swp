@@ -7,8 +7,8 @@ from .models import Profile
 
 
 class LoginForm(AuthenticationForm):
-    username = CharField(widget=EmailInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter your email', 'required': True,
+    username = CharField(widget=TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your username', 'required': True,
                'autofocus': True}))
     password = CharField(
         widget=PasswordInput(
