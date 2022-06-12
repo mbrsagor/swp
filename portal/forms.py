@@ -42,12 +42,13 @@ class ProfileUpdateForm(ModelForm):
         model = Profile
         read_only_fields = ('user',)
         fields = (
-            'user', 'name', 'father_name', 'mother_name', 'board_roll', 'cgpa', 'gender',
+            'name', 'father_name', 'mother_name', 'board_roll', 'cgpa', 'gender',
             'date_of_birth', 'ssc_passing_year', 'hsc_passing_year',
         )
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
             'gender': Select(attrs={'class': 'form-control', 'id': 'gender'}),
+            'cgpa': NumberInput(attrs={'class': 'form-control', 'id': 'cgpa'}),
             'father_name': TextInput(attrs={'class': 'form-control', 'id': 'father_name'}),
             'mother_name': TextInput(attrs={'class': 'form-control', 'id': 'mother_name'}),
             'board_roll': NumberInput(attrs={'class': 'form-control', 'id': 'board_roll'}),

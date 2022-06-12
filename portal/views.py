@@ -65,3 +65,13 @@ class ProfileUpdateView(SuccessMessageMixin, generic.UpdateView):
         return reverse('profile_update', kwargs={
             'pk': self.object.pk,
         })
+
+
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class ProfileView(generic.ListView):
+    model = Profile
+    context_object_name = 'profile'
+    template_name = 'auth/profile.html'
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
