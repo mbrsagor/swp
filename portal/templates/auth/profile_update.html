@@ -15,6 +15,10 @@
             </div>
             <div class="card-body">
                 <form method="post" enctype="multipart/form-data">
+                    {% include 'common/success_message.html' %}
+                    {% if form.errors %}
+                        {% include 'common/error_message.html' %}
+                    {% endif %}
                     {% csrf_token %}
                     <p>{{ form.errors }}</p>
                     <div class="pb-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
