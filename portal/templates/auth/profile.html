@@ -15,7 +15,19 @@
                 <h3 class="card-title"> {{ request.user.username }} Profile</h3>
             </div>
             <div class="card-body">
-                {{ profile.name }}
+                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 15px">
+                    <ul class="list-group">
+                        <li class="list-group-item">Name: {{ profile.name }}</li>
+                        <li class="list-group-item">Father Name: {{ profile.father_name }}</li>
+                        <li class="list-group-item">Mother Name: {{ profile.mother_name }}</li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

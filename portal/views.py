@@ -73,5 +73,12 @@ class ProfileView(generic.ListView):
     context_object_name = 'profile'
     template_name = 'auth/profile.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        try:
+            return Profile.objects.get(user=self.request.user)
+        except Exception as ex:
+            print(ex)
