@@ -39,6 +39,7 @@ post_save.connect(create_user_profile, sender=User)
 
 
 class Subject(DomainEntity):
+    is_active = models.BooleanField(default=True)
     name = models.CharField(max_length=120, unique=True)
     code = models.IntegerField(help_text='subject code must have 3 digit')
 

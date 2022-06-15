@@ -8,8 +8,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import user_passes_test, login_required
 
-from .forms import LoginForm, SingUpForm, ProfileUpdateForm
-from .models import Profile
+from .forms import LoginForm, SingUpForm, ProfileUpdateForm, SubjectForm
+from .models import Profile, Subject
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
@@ -82,3 +82,13 @@ class ProfileView(generic.ListView):
             return Profile.objects.get(user=self.request.user)
         except Exception as ex:
             print(ex)
+
+
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class SubjectCreateListView(SuccessMessageMixin, generic.CreateView, generic.ListView):
+    model = Subject
+    form_class = SubjectForm
+    success_url = '/subject/'
+    context_object_name = 'subject'
+    success_message = 'The subject has been created.'
+    template_name = 'subject/subject_listview.html'

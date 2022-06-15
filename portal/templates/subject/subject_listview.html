@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %} SWP || Subject listview {% endblock %}
+
+{% block content %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Subject</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Subject create listview</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <span>
+                        <i class="fas fa-table me-1"></i>
+                        All subject List
+                    </span>
+                    <button data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-sm">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if subject %}
+                    <table id="datatablesSimple">
+                        <thead>
+                        <tr>
+                            <th>Subject Name</th>
+                            <th>Code</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for obj in subject %}
+                            <tr>
+                                <td>{{ obj.name }}</td>
+                                <td>{{ obj.code }}</td>
+                                <td>
+                                    {% if obj.is_active %}
+                                        <span>Activated</span>
+                                        {% else %}
+                                        <span>Deactivated</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ obj.created_at }}</td>
+                                <td>{{ obj.updated_at }}</td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" href=""><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No Subject found in the list</p>
+                {% endif %}
+            </div>
+        </div>
+        {% include 'subject/modal.html' %}
+    </div>
+{% endblock %}

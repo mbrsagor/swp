@@ -11,4 +11,6 @@ urlpatterns = [
     # Profile
     path('profile/', views.ProfileView.as_view(), name="profile"),
     path('profile-update/<pk>/', views.ProfileUpdateView.as_view(), name="profile_update"),
+    # Subject
+    path('subject/', views.SubjectCreateListView.as_view(), name="subject_create_listview"),
 ]
