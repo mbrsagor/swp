@@ -1,9 +1,9 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm, CharField, EmailInput, TextInput, Select, PasswordInput, BooleanField, \
-     NumberInput,  DateTimeInput, FileInput
+    NumberInput, DateTimeInput, FileInput
 
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Subject
 
 
 class LoginForm(AuthenticationForm):
@@ -57,4 +57,16 @@ class ProfileUpdateForm(ModelForm):
                 attrs={'class': 'form-control', 'id': 'ssc_passing_year', 'type': 'date'}),
             'hsc_passing_year': DateTimeInput(
                 attrs={'class': 'form-control', 'id': 'hsc_passing_year', 'type': 'date'}),
+        }
+
+
+class SubjectForm(ModelForm):
+    class Meta:
+        model = Subject
+        fields = (
+            '__all__'
+        )
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
+            'code': NumberInput(attrs={'class': 'form-control', 'id': 'code'}),
         }
