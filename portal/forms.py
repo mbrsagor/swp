@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm, CharField, EmailInput, TextInput, Select, PasswordInput, BooleanField, \
-    NumberInput, DateTimeInput, FileInput
+    NumberInput, DateTimeInput, CheckboxInput, FileInput
 
 from django.contrib.auth.models import User
 from .models import Profile, Subject
@@ -69,4 +69,5 @@ class SubjectForm(ModelForm):
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
             'code': NumberInput(attrs={'class': 'form-control', 'id': 'code'}),
+            'is_active': CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_active'}),
         }

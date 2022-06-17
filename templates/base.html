@@ -1,32 +1,32 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>{% block title %} {% endblock %}</title>
-       {% include 'stylesheet.html' %}
-    </head>
-    <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-           {% include 'header.html' %}
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                {% include 'sidebar.html' %}
-            </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    {% block content %} {% endblock %}
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                   {% include 'footer.html' %}
-                </footer>
-            </div>
-        </div>
-        {% include 'script.html' %}
-    </body>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta name="description"  content="">
+    <!-- Twitter meta-->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@pratikborsadiya">
+    <meta property="twitter:creator" content="@pratikborsadiya">
+    <!-- Open Graph Meta-->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vali Admin">
+    <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+    {% include 'stylesheet.html' %}
+</head>
+<body class="app sidebar-mini rtl">
+<!-- Navbar-->
+<header class="app-header"><a class="app-header__logo" href="/">Vali</a>
+    {% include 'header.html' %}
+</header>
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<aside class="app-sidebar">
+    {% include 'sidebar.html' %}
+</aside>
+<main class="app-content">
+    {% block content %} {% endblock %}
+</main>
+{% include 'script.html' %}
+</body>
 </html>
