@@ -1,7 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %} Subject Enroll {% endblock %}
+{% block title %} SWP || Subject Endroll {% endblock %}
 
 {% block content %}
-
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Subject Endroll</h1>
+            <p>Student Web Portal</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <h3 class="tile-title">List of  subject</h3>
+                <div class="embed-responsive">
+                    <form method="post">
+                        {% include 'common/error_message.html' %}
+                        {% csrf_token %}
+                        {{ form.subjects }}
+                        <button class="btn btn-success btn-sm">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

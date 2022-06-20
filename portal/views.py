@@ -95,6 +95,7 @@ class SubjectCreateListView(SuccessMessageMixin, generic.CreateView, generic.Lis
     template_name = 'subject/subject_listview.html'
 
 
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
 class SubjectDeleteView(SuccessMessageMixin, generic.DeleteView):
     model = Subject
     success_url = '/subject/'

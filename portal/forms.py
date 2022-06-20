@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm, CharField, EmailInput, TextInput, Select, PasswordInput, BooleanField, \
-    NumberInput, DateTimeInput, CheckboxInput, SelectMultiple, FileInput
+    NumberInput, DateTimeInput, CheckboxInput, SelectMultiple, CheckboxSelectMultiple, FileInput
 
 from django.contrib.auth.models import User
 from .models import Profile, Subject, EnrollSubject
@@ -74,6 +74,12 @@ class SubjectForm(ModelForm):
 
 
 class EnrollSubjectForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(EnrollSubjectForm, self).__init__(*args, **kwargs)
+        self.fields["subjects"].widget = CheckboxSelectMultiple(attrs={'class': 'flat-red'})
+        self.fields["subjects"].queryset = Subject.objects.all()
+
     class Meta:
         model = EnrollSubject
         read_only_fields = ('student',)
