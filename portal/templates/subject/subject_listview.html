@@ -13,10 +13,10 @@
             <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
+                {% include 'common/success_message.html' %}
                 <div class="tile-header text-right mb-2">
                     <button data-toggle="modal" data-target="#exampleModal" type="button"
                             class="btn btn-sm btn-success">
@@ -51,7 +51,8 @@
                                     <td>{{ obj.created_at }}</td>
                                     <td>{{ obj.updated_at }}</td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href=""><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'subject_delete' obj.id %}"><i
+                                                class="fa fa-trash"></i></a>
                                         <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
                                     </td>
                                 </tr>
@@ -63,45 +64,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal Subject</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="name">Subject Name</label>
-                            {{ form.name }}
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Subject Code</label>
-                            {{ form.code }}
-                        </div>
-                        <div class="form-group">
-                            <div class="form-check form-switch">
-                                {{ form.is_active }}
-                                <label class="form-check-label" for="is_active">Do you want to publish</label>
-                            </div>
-
-
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    {% include 'subject/modal.html' %}
 {% endblock %}

@@ -72,4 +72,10 @@
         ga('create', 'UA-72504830-1', 'auto');
         ga('send', 'pageview');
     }
+    // Custom toster message show time limit.
+    setTimeout(() => {
+        const box = document.getElementById('messageArea');
+        box.style.display = 'none';
+    }, 5000); // 👈️ time in milliseconds
+
 </script>

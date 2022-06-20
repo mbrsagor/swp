@@ -14,15 +14,16 @@
 </style>
 
 <div class="message_body">
-    {% if messages %}
-        <div class="alert alert-success alert-dismissable">
-            <h4><i class="icon fa fa-check"></i> Succeeded!</h4>
-            <ul class="message">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+    <div id="messageArea">
+        {% if messages %}
+            <div class="alert alert-success alert-dismissable">
+                <h4><i class="icon fa fa-check"></i> Succeeded!</h4>
+                <ul class="message">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 </div>
-

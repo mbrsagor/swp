@@ -87,11 +87,19 @@ class ProfileView(generic.ListView):
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class SubjectCreateListView(SuccessMessageMixin, generic.CreateView, generic.ListView):
     model = Subject
+    paginate_by = 10
     form_class = SubjectForm
     success_url = '/subject/'
     context_object_name = 'subject'
     success_message = 'The subject has been created.'
     template_name = 'subject/subject_listview.html'
+
+
+class SubjectDeleteView(SuccessMessageMixin, generic.DeleteView):
+    model = Subject
+    success_url = '/subject/'
+    success_message = 'Subject has been deleted.'
+    template_name = 'common/delete_confirm.html'
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')

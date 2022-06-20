@@ -13,5 +13,6 @@ urlpatterns = [
     path('profile-update/<pk>/', views.ProfileUpdateView.as_view(), name="profile_update"),
     # Subject
     path('subject/', views.SubjectCreateListView.as_view(), name="subject_create_listview"),
+    path('subject/delete/<pk>/', views.SubjectDeleteView.as_view(), name="subject_delete"),
     path('subject-endroll/', views.EnrollSubjectView.as_view(), name="subject_endroll_listview"),
 ]
