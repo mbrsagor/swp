@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %} Section {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Subject</h1>
+            <p>Subject create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                <div class="tile-header text-right mb-2">
+                    <button data-toggle="modal" data-target="#exampleModal" type="button"
+                            class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="tile-body">
+                    {% if section %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Section Name</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in section %}
+                                <tr>
+                                    <td>{{ obj.name }}</td>
+                                    <td>{{ obj.description|slice:'10' }}</td>
+                                    <td>
+                                        {% if obj.is_active %}
+                                            <span>Activated</span>
+                                        {% else %}
+                                            <span>Deactivated</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ obj.created_at|naturaltime }}</td>
+                                    <td>{{ obj.updated_at|naturaltime }}</td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'section_delete_view' pk=obj.pk %}"><i
+                                                class="fa fa-trash"></i></a>
+                                        <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        {% include 'section/modal.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'section/modal.html' %}
+{% endblock %}
