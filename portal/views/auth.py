@@ -1,15 +1,6 @@
-from django.urls import reverse
-from django.views import View, generic
-from django.shortcuts import redirect
-from django.shortcuts import resolve_url
-from django.contrib.auth import login, logout
-from django.contrib.auth.views import LoginView
+from .views import *
 from django.utils.decorators import method_decorator
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import user_passes_test, login_required
-
-from .forms import LoginForm, SingUpForm, ProfileUpdateForm, SubjectForm, EnrollSubjectForm
-from .models import Profile, Subject, EnrollSubject
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user.is_authenticated), name='dispatch')
@@ -48,6 +39,10 @@ class RegistrationView(SuccessMessageMixin, generic.CreateView):
     success_url = '/login/'
     success_message = 'Successfully registration done.'
     template_name = 'auth/register.html'
+
+    def form_valid(self, form):
+        form.instance.is_active = True
+        return super(RegistrationView, self).form_valid(form)
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
@@ -111,4 +106,3 @@ class EnrollSubjectView(generic.CreateView, generic.ListView, SuccessMessageMixi
     template_name = 'enroll/enroll.html'
     success_url = '/subject/subject-enroll'
     success_message = 'subject has been enroll, pls wait for admin approve.'
-

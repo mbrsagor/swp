@@ -3,7 +3,11 @@ from django.forms import ModelForm, CharField, EmailInput, TextInput, Select, Pa
     NumberInput, DateTimeInput, CheckboxInput, SelectMultiple, CheckboxSelectMultiple, FileInput
 
 from django.contrib.auth.models import User
-from .models import Profile, Subject, EnrollSubject
+from .models.profiles import Profile
+from .models.subjects import Subject, EnrollSubject
+from .models.students import Certificate, Section, Project
+from .models.notice import Notice
+from .models.routine import Routine
 
 
 class LoginForm(AuthenticationForm):
@@ -26,15 +30,19 @@ class SingUpForm(UserCreationForm):
         fields = (
             'id', 'username', 'email', 'first_name', 'last_name'
         )
-        widgets = {
-            'username': TextInput(attrs={'class': 'form-control', 'id': 'username', 'placeholder': 'Enter username'}),
-            'email': EmailInput(
-                attrs={'class': 'form-control', 'id': 'email', 'placeholder': 'Enter valid a valid email'}),
-            'first_name': TextInput(
-                attrs={'class': 'form-control', 'id': 'first_name', 'placeholder': 'Enter first name'}),
-            'last_name': TextInput(
-                attrs={'class': 'form-control', 'id': 'last_name', 'placeholder': 'Enter last name'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super(SingUpForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+            }
+
+            self.fields['email'].widget.attrs['placeholder'] = 'Enter a valid email address'
+            self.fields['password1'].widget.attrs['placeholder'] = 'Enter valid password'
+            self.fields['password2'].widget.attrs['placeholder'] = 'Enter confirm password'
 
 
 class ProfileUpdateForm(ModelForm):
@@ -45,19 +53,31 @@ class ProfileUpdateForm(ModelForm):
             'name', 'father_name', 'mother_name', 'board_roll', 'cgpa', 'gender',
             'date_of_birth', 'ssc_passing_year', 'hsc_passing_year',
         )
-        widgets = {
-            'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
-            'gender': Select(attrs={'class': 'form-control', 'id': 'gender'}),
-            'cgpa': NumberInput(attrs={'class': 'form-control', 'id': 'cgpa'}),
-            'father_name': TextInput(attrs={'class': 'form-control', 'id': 'father_name'}),
-            'mother_name': TextInput(attrs={'class': 'form-control', 'id': 'mother_name'}),
-            'board_roll': NumberInput(attrs={'class': 'form-control', 'id': 'board_roll'}),
-            'date_of_birth': DateTimeInput(attrs={'class': 'form-control', 'id': 'date_of_birth', 'type': 'date'}),
-            'ssc_passing_year': DateTimeInput(
-                attrs={'class': 'form-control', 'id': 'ssc_passing_year', 'type': 'date'}),
-            'hsc_passing_year': DateTimeInput(
-                attrs={'class': 'form-control', 'id': 'hsc_passing_year', 'type': 'date'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+            }
+
+            self.fields['date_of_birth'].widget = DateTimeInput(format='%Y-%m-%d', attrs={
+                'class': 'form-control',
+                'id': field,
+                'type': 'date'
+            })
+            self.fields['ssc_passing_year'].widget = DateTimeInput(format='%Y-%m-%d', attrs={
+                'class': 'form-control',
+                'id': field,
+                'type': 'date'
+            })
+            self.fields['hsc_passing_year'].widget = DateTimeInput(format='%Y-%m-%d', attrs={
+                'class': 'form-control',
+                'id': field,
+                'type': 'date'
+            })
 
 
 class SubjectForm(ModelForm):
@@ -90,3 +110,84 @@ class EnrollSubjectForm(ModelForm):
             'subjects': SelectMultiple(attrs={'class': 'form-control', 'id': 'subjects'}),
             'is_active': CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_active'}),
         }
+
+
+class CertificateForm(ModelForm):
+    class Meta:
+        model = Certificate
+        fields = '__all__'
+        exclude = ('student',)
+
+    def __init__(self, *args, **kwargs):
+        super(CertificateForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+            }
+
+
+class SectionForm(ModelForm):
+    class Meta:
+        model = Section
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(SectionForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+            }
+            self.fields['is_active'].widget = CheckboxInput(attrs={'class': 'form-check-input', 'id': field, })
+
+
+class ProjectForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+        exclude = ('student',)
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+            }
+
+
+class NoticeForm(ModelForm):
+    class Meta:
+        model = Notice
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(NoticeForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+
+            }
+            self.fields['is_published'].widget = CheckboxInput(attrs={'class': 'form-check-input', 'id': field, })
+
+
+class RoutineForm(ModelForm):
+    class Meta:
+        model = Routine
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(RoutineForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control',
+                'id': field,
+                'placeholder': f'Enter {field}'
+
+            }
