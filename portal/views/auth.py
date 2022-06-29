@@ -1,6 +1,15 @@
-from .views import *
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import resolve_url, redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.views import generic, View
+
+from ..forms.auth import LoginForm, SingUpForm
+from ..forms.profile import ProfileUpdateForm
+from ..models.profile import Profile
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user), name='dispatch')

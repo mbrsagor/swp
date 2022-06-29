@@ -54,6 +54,7 @@
                                         <a class="btn btn-danger btn-sm" href="{% url 'certificates_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
                                         <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'certificate_detail_update_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -64,5 +65,5 @@
             </div>
         </div>
     </div>
-    {% include 'certificate/modal.html' %}
+    {% include 'common/modal.html' %}
 {% endblock %}

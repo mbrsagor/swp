@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %} {{ certificate.student }} {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Subject</h1>
+            <p>Subject create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'certificate_detail_update_view' pk=certificate.pk %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                <div class="tile-header text-right mb-2">
+                    <button data-toggle="modal" data-target="#exampleModal" type="button"
+                            class="btn btn-sm btn-warning">
+                        update
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center my-2">{{ certificate.student }}</h3>
+                        <h5>HSC Certificate</h5>
+                        <p>{{ certificate.ssc_certificate }}</p>
+                        <h5>HSC Certificate</h5>
+                        <p>{{ certificate.hsc_certificate }}</p>
+                        <h5>CV</h5>
+                        <p>{{ certificate.cv }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'common/modal.html' %}
+{% endblock %}
