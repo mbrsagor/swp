@@ -1,5 +1,5 @@
 from django.db import models
-from .domain_entity import DomainEntity
+from .teacher import DomainEntity
 from django.contrib.auth.models import User
 
 
@@ -13,7 +13,7 @@ class Certificate(DomainEntity):
 class Section(DomainEntity):
     name = models.CharField(max_length=150, db_index=True)
     description = models.TextField(max_length=250)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(verbose_name='Do you want to publish', default=True)
 
 
 class Project(DomainEntity):
@@ -23,3 +23,4 @@ class Project(DomainEntity):
     project_url = models.CharField(max_length=250)
     section = models.ForeignKey(Section, on_delete=models.PROTECT)
     expiry_date = models.DateTimeField(verbose_name='expiry date')
+    is_active = models.BooleanField(verbose_name='Do you want to publish', default=True)

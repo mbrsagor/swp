@@ -39,8 +39,10 @@
                             <tbody>
                             {% for obj in projects %}
                                 <tr>
-                                    <td>{{ obj.name }}</td>
+                                    <td>{{ obj.student }}</td>
+                                    <td>{{ obj.title }}</td>
                                     <td>{{ obj.description|slice:'10' }}</td>
+                                    <td>{{ obj.expiry_date|date }}</td>
                                     <td>
                                         {% if obj.is_active %}
                                             <span>Activated</span>
@@ -54,17 +56,16 @@
                                         <a class="btn btn-danger btn-sm" href="{% url 'section_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
                                         <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'project_update_detail_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-                    {% else %}
-                        {% include 'section/modal.html' %}
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    {% include 'section/modal.html' %}
+    {% include 'common/modal.html' %}
 {% endblock %}
