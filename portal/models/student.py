@@ -1,5 +1,5 @@
 from django.db import models
-from .teacher import DomainEntity
+from .domain_entity import DomainEntity
 from django.contrib.auth.models import User
 
 

@@ -6,10 +6,11 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.views import generic, View
-
+from ..forms.subject import SubjectForm,EnrollSubjectForm
 from ..forms.auth import LoginForm, SingUpForm
 from ..forms.profile import ProfileUpdateForm
 from ..models.profile import Profile
+from ..models.subject import Subject,EnrollSubject
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user.is_authenticated), name='dispatch')

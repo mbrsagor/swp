@@ -4,7 +4,9 @@ from portal.views import teacher
 from portal.views import subject
 from portal.views import auth
 from portal.views import section
-
+from portal.views import notice
+from portal.views import routine
+from portal.views import ebook
 
 urlpatterns = [
     path('', auth.DashboardView.as_view(), name='dashboard'),
@@ -30,4 +32,15 @@ urlpatterns = [
     # projects
     path('projects/', student.ProjectCreateAndListView.as_view(), name='project_view'),
     path('projects-update/<pk>/', student.ProjectUpdateAndDetailView.as_view(), name='project_update_detail_view'),
+    # notice
+    path('notice/', notice.NoticeView.as_view(), name='notice'),
+    path('notice/delete/<pk>/', notice.NoticeDeleteView.as_view(), name='notice_delete'),
+    # routine
+    path('routine/', routine.RoutineView.as_view(), name='routine'),
+    path('routine/delete/<pk>/', routine.RoutineDeleteView.as_view(), name='routine_delete'),
+    # ebook
+    path('ebook/', ebook.EbookView.as_view(), name='ebook'),
+    path('ebook/delete/<pk>/', ebook.EbookDeleteView.as_view(), name='ebook_delete'),
+    path('ebook/download/', ebook.EbookDownloadView.as_view(), name='ebook_download'),
+
 ]

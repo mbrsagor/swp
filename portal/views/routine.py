@@ -1,6 +1,9 @@
-from .views import *
+from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
+from portal.models.routine import Routine
+from portal.forms.routine import RoutineForm
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
