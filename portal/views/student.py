@@ -50,7 +50,6 @@ class CertificateUpdateAndDetailView(LoginRequiredMixin, SuccessMessageMixin, ge
         return reverse('certificate_detail_update_view', kwargs={'pk': pk})
 
 
-
 class ProjectCreateAndListView(LoginRequiredMixin, generic.CreateView, generic.ListView):
     model = Project
     form_class = ProjectForm

@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import resolve_url, redirect
@@ -12,8 +13,7 @@ from ..forms.profile import ProfileUpdateForm
 from ..models.profile import Profile
 
 
-@method_decorator(user_passes_test(lambda user: user.is_superuser or user), name='dispatch')
-class DashboardView(generic.TemplateView):
+class DashboardView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
 
 
