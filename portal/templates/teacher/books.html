@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load humanize %}
-{% block title %} Certificate {% endblock %}
+{% block title %} Books {% endblock %}
 
 {% block content %}
 <div class="app-title">
         <div>
-            <h1><i class="fa fa-dashboard"></i> Certificates</h1>
-            <p>Certificate lists</p>
+            <h1>Books</h1>
+            <p>Book lists and Create</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -17,56 +17,54 @@
         <div class="col-md-12">
             <div class="tile">
                 {% include 'common/success_message.html' %}
-                {% if is_certificate %}
-                <p>Already added your certificate.</p>
-                {% else %}
                 <div class="tile-header text-right mb-2">
-                    {% if not created_certificate %}
-                    <a href="{% url 'certificate_create_view' %}" class="btn btn-sm btn-success">
+                    <a href="{% url 'books_create_view' %}" class="btn btn-sm btn-success">
                         <i class="fa fa-plus"></i>
-                        Add certificate
+                        Add Books
                     </a>
-                    {% endif %}
                 </div>
-                {% endif %}
                 <div class="tile-body">
-                    {% if certificates %}
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>SSC Certificate</th>
-                                <th>HSC Certificate</th>
-                                <th>CV</th>
+                                <th>Book cover image</th>
+                                <th>Book name</th>
+                                <th>Book Author</th>
+                                <th>Description</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for obj in certificates %}
+                            {% for obj in books %}
                                 <tr>
-                                    <td><img src="{{ obj.ssc_certificate.url }}" style="height: 100px; width: 120px"></td>
-                                    <td><img src="{{ obj.hsc_certificate.url }}" style="height: 100px; width: 120px"></td>
+                                    <td><img src="{{ obj.book_cover_image.url }}" style="height: 100px; width: 120px"></td>
                                     <td>
-                                        <a href="{{ obj.cv.url }}">
-                                            <i class="fa fa-file-pdf-o" style="height: 80px; width: 100px;" aria-hidden="true"></i>
-                                        </a>
+                                        {{ obj.name }}
+                                    </td>
+                                    <td>
+                                        {{ obj.author_name }}
+                                    </td>
+                                    <td>
+                                        {{ obj.description|slice:'50' }}
                                     </td>
                                     <td>{{ obj.created_at|naturaltime }}</td>
                                     <td>{{ obj.updated_at|naturaltime }}</td>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'certificates_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'certificate_detail_update_view' pk=obj.pk %}"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{{obj.book_pdf.url}}">
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'books_update_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    {% include 'common/modal.html' %}
 {% endblock %}

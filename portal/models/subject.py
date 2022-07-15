@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from .teacher import DomainEntity
+from .domain_entity import DomainEntity
 
 
 class Subject(DomainEntity):

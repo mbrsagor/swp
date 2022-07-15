@@ -5,8 +5,8 @@
 {% block content %}
 <div class="app-title">
         <div>
-            <h1><i class="fa fa-dashboard"></i> Subject</h1>
-            <p>Subject create & listview</p>
+            <h1>Projects</h1>
+            <p>Projects create & listview</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -21,6 +21,7 @@
                     <button data-toggle="modal" data-target="#exampleModal" type="button"
                             class="btn btn-sm btn-success">
                         <i class="fa fa-plus"></i>
+                        Add project
                     </button>
                 </div>
                 <div class="tile-body">
@@ -28,9 +29,11 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>Section Name</th>
+                                <th>Student Name</th>
+                                <th>Title</th>
                                 <th>Description</th>
-                                <th>Status</th>
+                                <th>Section</th>
+                                <th>Expiry date</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
                                 <th>Actions</th>
@@ -42,21 +45,17 @@
                                     <td>{{ obj.student }}</td>
                                     <td>{{ obj.title }}</td>
                                     <td>{{ obj.description|slice:'10' }}</td>
+                                    <td>{{ obj.section }}</td>
                                     <td>{{ obj.expiry_date|date }}</td>
-                                    <td>
-                                        {% if obj.is_active %}
-                                            <span>Activated</span>
-                                        {% else %}
-                                            <span>Deactivated</span>
-                                        {% endif %}
-                                    </td>
                                     <td>{{ obj.created_at|naturaltime }}</td>
                                     <td>{{ obj.updated_at|naturaltime }}</td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'section_delete_view' pk=obj.pk %}"><i
-                                                class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'project_update_detail_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'project_delete_view' pk=obj.pk %}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'project_update_detail_view' pk=obj.pk %}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}

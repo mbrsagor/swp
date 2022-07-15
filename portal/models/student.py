@@ -1,13 +1,17 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
-from .teacher import DomainEntity
+from .domain_entity import DomainEntity
 from django.contrib.auth.models import User
 
 
 class Certificate(DomainEntity):
     student = models.OneToOneField(User, on_delete=models.PROTECT)
-    ssc_certificate = models.FileField(upload_to='ssc_certificate/')
-    hsc_certificate = models.FileField(upload_to='hsc_certificate/')
-    cv = models.FileField(upload_to='cv/')
+    ssc_certificate = models.ImageField(upload_to='ssc_certificate/', help_text='Image format must be jpg/jpeg or png',
+                                        validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])])
+    hsc_certificate = models.ImageField(upload_to='hsc_certificate/', help_text='Image format must be jpg/jpeg or png',
+                                        validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])])
+    cv = models.FileField(upload_to='cv/', help_text='Cv format must be pdf.',
+                          validators=[FileExtensionValidator(['pdf'])])
 
 
 class Section(DomainEntity):

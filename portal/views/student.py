@@ -9,33 +9,42 @@ from ..forms.student import CertificateForm, ProjectForm
 from ..models.student import Certificate, Project
 
 
-class CertificateListAndCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView, generic.ListView):
+class CertificateListView(LoginRequiredMixin, generic.ListView):
     model = Certificate
-    form_class = CertificateForm
     context_object_name = 'certificates'
     template_name = 'certificate/certificate.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CertificateListView, self).get_context_data(**kwargs)
+        context['created_certificate'] = Certificate.objects.filter(student=self.request.user)
+        return context
+
+
+class CertificateCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    model = Certificate
+    form_class = CertificateForm
+    template_name = 'certificate/create.html'
     success_url = '/certificates/'
     success_message = 'The certificate created.'
+    error_message = 'Already added your certificate.'
 
     def form_valid(self, form):
         student = Certificate.objects.filter(student=self.request.user)
 
         if student.exists():
             next_url = self.request.META['HTTP_REFERER']
-            messages.error(self.request, 'Already added your certificate.')
+            messages.error(self.request, self.error_message)
+            print(self.error_message)
             return HttpResponseRedirect(next_url)
+        instance = form.save(commit=False)
+        instance.student = self.request.user
+        instance.save()
+        return super(CertificateCreateView, self).form_valid(form)
 
-        if not student.exists():
-            form.instance.student = self.request.user
-            form.save()
-            return super(CertificateListAndCreateView, self).form_valid(form)
-
-
-class CertificateDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
-    model = Certificate
-    success_url = '/certificates/'
-    success_message = 'The certificate Deleted.'
-    template_name = 'common/delete_confirm.html'
+    def get_context_data(self, **kwargs):
+        kwargs = super(CertificateCreateView, self).get_context_data(**kwargs)
+        kwargs['title'] = 'Created Certificate'
+        return kwargs
 
 
 class CertificateUpdateAndDetailView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView, generic.DetailView):
@@ -50,6 +59,14 @@ class CertificateUpdateAndDetailView(LoginRequiredMixin, SuccessMessageMixin, ge
         return reverse('certificate_detail_update_view', kwargs={'pk': pk})
 
 
+class CertificateDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Certificate
+    success_url = '/certificates/'
+
+    def get(self, *args, **kwargs):
+        return self.delete(self.request, *args, **kwargs)
+
+
 class ProjectCreateAndListView(LoginRequiredMixin, generic.CreateView, generic.ListView):
     model = Project
     form_class = ProjectForm
@@ -57,6 +74,12 @@ class ProjectCreateAndListView(LoginRequiredMixin, generic.CreateView, generic.L
     template_name = 'project/project.html'
     success_url = '/projects/'
     success_message = 'The projects created.'
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.student = self.request.user
+        instance.save()
+        return super().form_valid(form)
 
 
 class ProjectUpdateAndDetailView(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
@@ -69,3 +92,12 @@ class ProjectUpdateAndDetailView(LoginRequiredMixin, generic.UpdateView, generic
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse("project_update_detail_view", kwargs={"pk": pk})
+
+
+class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Project
+    success_url = '/projects/'
+
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+
