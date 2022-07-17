@@ -9,22 +9,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="name">Subject Name</label>
-                        {{ form.name }}
+                        <label for="name">Routine Title</label>
+                        {{ form.title }}
                     </div>
-                    <div class="form-group">
-                        <label for="name">Subject Code</label>
-                        {{ form.code }}
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check form-switch">
-                            {{ form.is_active }}
-                            <label class="form-check-label" for="is_active">Do you want to publish</label>
-                        </div>
+                     <div class="form-group">
+                        <label for="description">{{ form.routine_image.label}}</label>
+                        {{ form.routine_image }}
                     </div>
                 </div>
                 <div class="modal-footer">
