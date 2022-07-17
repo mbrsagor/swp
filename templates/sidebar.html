@@ -1,56 +1,66 @@
 <div class="app-sidebar__user">
-    <img width="80px" class="app-sidebar__user-avatar" src="https://res.cloudinary.com/mbrsagor/image/upload/v1595691413/Profile_pic/sagor_field_buzz_dhbfeu.jpg"
-                                    alt="User Image">
+    <img width="80px" class="app-sidebar__user-avatar"
+        src="https://res.cloudinary.com/mbrsagor/image/upload/v1595691413/Profile_pic/sagor_field_buzz_dhbfeu.jpg"
+        alt="User Image">
     <div>
         <p class="app-sidebar__user-name">{{ request.user.username }}</p>
         <p class="app-sidebar__user-designation">{{ request.user.email }}</p>
     </div>
 </div>
 <ul class="app-menu">
-    <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span
-            class="app-menu__label">Dashboard</span></a></li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-            class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Management</span><i
-            class="treeview-indicator fa fa-angle-right"></i></a>
-        <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{% url 'subject_create_listview' %}"><i class="icon fa fa-circle-o"></i>
-                Subject List</a></li>
-            <li><a class="treeview-item" href="{% url 'subject_endroll' %}"><i class="icon fa fa-circle-o"></i>
-                Subject Endroll</a></li>
-        </ul>
+    <li>
+        <a class="app-menu__item active" href="{% url 'dashboard' %}">
+            <span class="app-menu__label">Dashboard</span>
+        </a>
     </li>
-    <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span
-            class="app-menu__label">Charts</span></a></li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-            class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Forms</span><i
-            class="treeview-indicator fa fa-angle-right"></i></a>
-        <ul class="treeview-menu">
-            <li><a class="treeview-item" href="form-components.html"><i class="icon fa fa-circle-o"></i> Form
-                Components</a></li>
-            <li><a class="treeview-item" href="form-custom.html"><i class="icon fa fa-circle-o"></i> Custom
-                Components</a></li>
-            <li><a class="treeview-item" href="form-samples.html"><i class="icon fa fa-circle-o"></i> Form
-                Samples</a></li>
-            <li><a class="treeview-item" href="form-notifications.html"><i class="icon fa fa-circle-o"></i> Form
-                Notifications</a></li>
-        </ul>
+    <li>
+        <a class="app-menu__item" href="{% url 'subject_create_listview' %}">
+            <span class="app-menu__label">Subjects</span>
+        </a>
     </li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-            class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Tables</span><i
-            class="treeview-indicator fa fa-angle-right"></i></a>
-        <ul class="treeview-menu">
-            <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic
-                Tables</a></li>
-            <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data
-                Tables</a></li>
-        </ul>
+    <li>
+        <a class="app-menu__item" href="{% url 'subject_enroll' %}">
+            <span class="app-menu__label">Subject Enrolls</span>
+        </a>
     </li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-            class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Pages</span><i
-            class="treeview-indicator fa fa-angle-right"></i></a>
-        <ul class="treeview-menu">
-            <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a>
-            </li>
-        </ul>
+    <li>
+        <a class="app-menu__item" href="{% url 'section_view' %}">
+            <span class="app-menu__label">Sections</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'project_view' %}">
+            <span class="app-menu__label">Projects</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'certificates_view' %}">
+            <span class="app-menu__label">Certificates</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'assignment_create_and_list_view' %}">
+            <span class="app-menu__label">Assignments</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'books_list_view' %}">
+            <span class="app-menu__label">E-Books</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'routines_view' %}">
+            <span class="app-menu__label">Routines</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'notices_view' %}">
+            <span class="app-menu__label">Notices</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'marks_view' %}">
+            <span class="app-menu__label">Marks</span>
+        </a>
     </li>
 </ul>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block title %} {% endblock %}</title>
+    <title>SWP || {% block title %} {% endblock %}</title>
     <meta name="description"  content="">
     <!-- Twitter meta-->
     <meta property="twitter:card" content="summary_large_image">
@@ -28,5 +28,7 @@
     {% block content %} {% endblock %}
 </main>
 {% include 'script.html' %}
+{% block javascript %}
+{% endblock %}
 </body>
 </html>

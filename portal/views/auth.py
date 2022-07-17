@@ -1,19 +1,19 @@
-from django.urls import reverse
-from django.views import View, generic
-from django.shortcuts import redirect
-from django.shortcuts import resolve_url
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.utils.decorators import method_decorator
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import resolve_url, redirect
+from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.views import generic, View
 
-from .forms import LoginForm, SingUpForm, ProfileUpdateForm, SubjectForm, EnrollSubjectForm
-from .models import Profile, Subject, EnrollSubject
+from ..forms.auth import LoginForm, SingUpForm
+from ..forms.profile import ProfileUpdateForm
+from ..models.profile import Profile
 
 
-@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
-class DashboardView(generic.TemplateView):
+class DashboardView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
 
 
@@ -49,6 +49,10 @@ class RegistrationView(SuccessMessageMixin, generic.CreateView):
     success_message = 'Successfully registration done.'
     template_name = 'auth/register.html'
 
+    def form_valid(self, form):
+        form.instance.is_active = True
+        return super(RegistrationView, self).form_valid(form)
+
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class ProfileUpdateView(SuccessMessageMixin, generic.UpdateView):
@@ -82,32 +86,3 @@ class ProfileView(generic.ListView):
             return Profile.objects.get(user=self.request.user)
         except Exception as ex:
             print(ex)
-
-
-@method_decorator(login_required(login_url='/login/'), name='dispatch')
-class SubjectCreateListView(SuccessMessageMixin, generic.CreateView, generic.ListView):
-    model = Subject
-    paginate_by = 10
-    form_class = SubjectForm
-    success_url = '/subject/'
-    context_object_name = 'subject'
-    success_message = 'The subject has been created.'
-    template_name = 'subject/subject_listview.html'
-
-
-@method_decorator(login_required(login_url='/login/'), name='dispatch')
-class SubjectDeleteView(SuccessMessageMixin, generic.DeleteView):
-    model = Subject
-    success_url = '/subject/'
-    success_message = 'Subject has been deleted.'
-    template_name = 'common/delete_confirm.html'
-
-
-@method_decorator(login_required(login_url='/login/'), name='dispatch')
-class EnrollSubjectView(SuccessMessageMixin, generic.CreateView, generic.ListView):
-    model = EnrollSubject
-    form_class = EnrollSubjectForm
-    context_object_name = 'enrollSubject'
-    template_name = 'enroll/enroll.html'
-    success_url = '/subject/subject-enroll'
-    success_message = 'subject has been enroll, pls wait for admin approve.'
