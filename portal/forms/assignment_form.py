@@ -6,7 +6,7 @@ class AssignmentForm(ModelForm):
     class Meta:
         model = Assignment
         fields = '__all__'
-        exclude = ('teacher',)
+        exclude = ('student',)
 
     def __init__(self, *args, **kwargs):
         super(AssignmentForm, self).__init__(*args, **kwargs)

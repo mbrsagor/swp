@@ -1,7 +1,7 @@
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..models.assinment import Mark
-from ..forms.assignment import MarkForm
+from portal.forms.assignment_form import MarkForm
 
 
 class MarkCreateAdnListView(LoginRequiredMixin, generic.CreateView, generic.ListView):

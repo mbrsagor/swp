@@ -1,20 +1,26 @@
-from django.contrib.messages import constants as messages
-from pathlib import Path
 import os
 import environ
+from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.Env()
-# env.read_env(BASE_DIR / '.env')
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=list
+)
+
+env_path = os.path.join(BASE_DIR, '.env')
+environ.Env.read_env(env_path)
 
 SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env("DEBUG")
+
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # Application definition
 
@@ -25,9 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'portal.apps.PortalConfig',
-    # third party app
-    'django.contrib.humanize',
+
+    'portal'
 ]
 
 MIDDLEWARE = [
@@ -65,7 +70,7 @@ WSGI_APPLICATION = 'swp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': f'django.db.backends.{env("DB_ENGINE")}',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
@@ -73,6 +78,13 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join('db.sqlite3')
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

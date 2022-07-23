@@ -1,0 +1,52 @@
+{% if assignments %}
+    <table class="table table-hover table-bordered" id="sampleTable">
+        <thead>
+        <tr>
+            <th>Assignment title</th>
+            <th>Description</th>
+            <th>File</th>
+            <th>Students</th>
+            <th>Status</th>
+            <th>Report/Mark</th>
+            <th>Created at</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in assignments %}
+            <tr>
+                <td>{{ obj.title }}</td>
+                <td>{{ obj.description|slice:'10' }}</td>
+                <td>{{ obj.assignment_file }}</td>
+                <td>
+                    {% for student in obj.student.all %}
+                        <p>{{ student.username }}</p>
+                    {% endfor %}
+                </td>
+                <td>
+                    <span>{{ obj.status }}</span>
+                </td>
+                <td>
+                    {% if obj.status != 'Completed' %}
+                        <a href="{% url 'assignment_reports_view' pk=obj.pk %}" class="btn btn-primary">Report</a>
+                    {% elif obj.status == 'Completed' %}
+                        <a href="{% url 'assignment_marks_view' pk=obj.pk %}" class="btn btn-primary">Mark</a>
+                    {% else %}
+                        Completed
+                    {% endif %}
+                </td>
+                <td>
+                    <span>{{ obj.created_at }}</span>
+                </td>
+
+                <td>
+                    <a class="btn btn-danger btn-sm" href="#"><i
+                            class="fa fa-trash"></i></a>
+                    <a class="btn btn-success btn-sm" href="{% url 'assignment_detail_view' pk=obj.pk %}"><i
+                            class="fa fa-eye"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

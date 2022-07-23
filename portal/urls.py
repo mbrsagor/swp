@@ -4,7 +4,7 @@ from portal.views import ebook
 from portal.views import subject
 from portal.views import auth
 from portal.views import section
-from portal.views import assignment
+from portal.views import assignment_view
 from portal.views import routine
 from portal.views import notice
 from portal.views import mark
@@ -40,13 +40,13 @@ urlpatterns = [
          name='project_update_detail_view'),
     path('projects/delete/<pk>/', student.ProjectDeleteView.as_view(), name='project_delete_view'),
     # assignments
-    path('assignments/', assignment.AssignmentCreateAndListView.as_view(),
+    path('assignments/', assignment_view.AssignmentCreateAndListView.as_view(),
          name='assignment_create_and_list_view'),
-    path('assignments/<pk>/', assignment.AssignmentDetailView.as_view(),
+    path('assignments/<pk>/', assignment_view.AssignmentDetailView.as_view(),
          name='assignment_detail_view'),
-    path('assignments/reports/<pk>/', assignment.AssignmentReport.as_view(),
+    path('assignments/reports/<pk>/', assignment_view.AssignmentReport.as_view(),
          name='assignment_reports_view'),
-    path('assignments/marks/<pk>/', assignment.AssignmentMarkView.as_view(),
+    path('assignments/marks/<pk>/', assignment_view.AssignmentMarkView.as_view(),
          name='assignment_marks_view'),
     # mark
     path('marks/', mark.MarkCreateAdnListView.as_view(), name='marks_view'),

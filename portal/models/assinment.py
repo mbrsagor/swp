@@ -12,10 +12,9 @@ class Assignment(DomainEntity):
     )
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=200)
-    assignment_file = models.FileField(upload_to='assignment/', validators=[FileExtensionValidator(['pdf'])])
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assignment_teachers')
-    student = models.ManyToManyField(User, related_name='assignment_students')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assignment_students')
     status = models.CharField(choices=STATUS_CHOICES, default='Active', max_length=20)
+    assignment_file = models.FileField(upload_to='assignment/', validators=[FileExtensionValidator(['pdf'])])
 
     @property
     def pass_mark(self):
@@ -44,5 +43,3 @@ class Report(DomainEntity):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='report_teacher')
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='report_assignment')
     is_active = models.BooleanField(default=True)
-
-

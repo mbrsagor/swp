@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from ..models.assinment import Assignment, Report
-from ..forms.assignment import AssignmentForm, ReportForm, MarkForm
+
+from portal.models.assinment import Assignment
+from portal.forms.assignment_form import AssignmentForm, ReportForm, MarkForm
 
 
-class AssignmentCreateAndListView(LoginRequiredMixin, generic.CreateView, generic.ListView):
+class AssignmentCreateAndListView(SuccessMessageMixin, generic.CreateView, generic.ListView):
     model = Assignment
     form_class = AssignmentForm
     context_object_name = 'assignments'
@@ -20,11 +21,6 @@ class AssignmentCreateAndListView(LoginRequiredMixin, generic.CreateView, generi
         instance.save()
         form.save_m2m()
         return super(AssignmentCreateAndListView, self).form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        kwargs = super(AssignmentCreateAndListView, self).get_context_data(**kwargs)
-        kwargs['title'] = 'Assignment Created Form'
-        return kwargs
 
 
 class AssignmentDetailView(LoginRequiredMixin, generic.DetailView):
@@ -78,5 +74,3 @@ class AssignmentReport(generic.View):
             instance.assignment = assignment
             instance.save()
             return redirect('assignment_create_and_list_view')
-
-
