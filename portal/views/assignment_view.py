@@ -16,10 +16,8 @@ class AssignmentCreateAndListView(SuccessMessageMixin, generic.CreateView, gener
     template_name = 'assignment/assignment.html'
 
     def form_valid(self, form):
-        instance = form.save(commit=False)
-        instance.teacher = self.request.user
-        instance.save()
-        form.save_m2m()
+        obj = form.save(commit=False)
+        obj.student = self.request.user
         return super(AssignmentCreateAndListView, self).form_valid(form)
 
 
