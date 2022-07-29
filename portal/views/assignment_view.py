@@ -7,7 +7,7 @@ from portal.models.assinment import Assignment
 from portal.forms.assignment_form import AssignmentForm, ReportForm, MarkForm
 
 
-class AssignmentCreateAndListView(SuccessMessageMixin, generic.CreateView, generic.ListView):
+class AssignmentCreateAndListView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView, generic.ListView):
     model = Assignment
     form_class = AssignmentForm
     context_object_name = 'assignments'
@@ -26,7 +26,7 @@ class AssignmentDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'assignment/detail.html'
 
 
-class AssignmentMarkView(generic.View):
+class AssignmentMarkView(LoginRequiredMixin, generic.View):
 
     def get(self, *args, **kwargs):
         assignment = Assignment.objects.get(pk=kwargs['pk'])
@@ -50,7 +50,7 @@ class AssignmentMarkView(generic.View):
             return redirect('assignment_create_and_list_view')
 
 
-class AssignmentReport(generic.View):
+class AssignmentReport(LoginRequiredMixin, generic.View):
 
     def get(self, *args, **kwargs):
         assignment = Assignment.objects.get(pk=kwargs['pk'])
