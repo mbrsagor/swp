@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load humanize %}
 {% block title %} Section {% endblock %}
 
 {% block content %}
@@ -43,8 +42,8 @@
                                     <td>
                                         <img src="{{ obj.routine_image.url }}" style="height: 100px; width: 110px">
                                     </td>
-                                    <td>{{ obj.created_at|naturaltime }}</td>
-                                    <td>{{ obj.updated_at|naturaltime }}</td>
+                                    <td>{{ obj.created_at|date }}</td>
+                                    <td>{{ obj.updated_at|date }}</td>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'routine_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %} {{ title }}  {% endblock %}
+{% block title %} Subject Enroll update  {% endblock %}
 
 {% block content %}
 <div class="app-title">
         <div>
-            <h1><i class="fa fa-dashboard"></i> {{ title}}</h1>
-            <p>Subject create & listview</p>
+            <h1><i class="fa fa-dashboard"></i> Subject update</h1>
+            <p>Subject enroll update</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -20,12 +20,17 @@
                     <form method="post" enctype="multipart/form-data" id="form">
                         <div class="modal-body">
                             {% csrf_token %}
-                            {% for field in form %}
                             <div class="form-group">
-                                <label>{{ field.label }}</label>
-                                {{ field }}
+                                <label>{{ form.subjects.label }}</label>
+                                {{ form.subjects }}
                             </div>
-                            {% endfor %}
+                            <div class="form-group">
+                                <p>student: {{object.student}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ form.is_approve.label }}</label>
+                                {{ form.is_approve }}
+                            </div>
                         </div>
                             <button type="submit" class="btn btn-primary m-2">Save</button>
                     </form>

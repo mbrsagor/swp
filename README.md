@@ -37,3 +37,44 @@ pip install -r requirements.txt
 ./manage.py createsuperuser
 ./mangae.py runserver
 ```
+
+## authenticate
+   1. login 
+   2. logout
+
+## Teacher
+ 1. class routine
+    1. add
+    2. update
+    3. delete
+   
+ 2. marks all
+    1. add mark
+    2. update
+    3. delete
+ 
+ 3. book
+    1. add
+    2. update
+    3. delete
+
+## Student
+   1. register
+   2. profile update
+   3. all marks see
+   4. certificate
+      1. name
+      2. image
+      3. add, update, delete
+   
+
+## Admin
+   1. teacher
+   2. student
+   3. Notice
+
+   4. Financial data
+      1. student
+      2. semister
+      3. paid
+      4. unpaid

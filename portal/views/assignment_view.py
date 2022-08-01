@@ -25,19 +25,19 @@ class AssignmentDetailView(LoginRequiredMixin, generic.DetailView):
     model = Assignment
     template_name = 'assignment/detail.html'
 
+class MarkListView(LoginRequiredMixin, generic.ListView):
+    model = Mark
+    template_name = 'mark/list.html'
+
 
 class AssignmentMarkView(LoginRequiredMixin, generic.View):
 
-    def get(self, *args, **kwargs):
-        assignment = Assignment.objects.get(pk=kwargs['pk'])
-        form = MarkForm()
-        title = 'Assignment Mark Submit'
-        context = {
-            'title': title,
-            'form': form,
-            'assignment': assignment
-        }
-        return render(self.request, 'assignment/mark-create.html', context)
+    template_name = 'assignment/mark-create.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = MarkForm()
+        return context
 
     def post(self, *args, **kwargs):
         form = MarkForm(self.request.POST)
@@ -50,18 +50,14 @@ class AssignmentMarkView(LoginRequiredMixin, generic.View):
             return redirect('assignment_create_and_list_view')
 
 
-class AssignmentReport(LoginRequiredMixin, generic.View):
+class AssignmentReportView(LoginRequiredMixin, generic.TemplateView):
 
-    def get(self, *args, **kwargs):
-        assignment = Assignment.objects.get(pk=kwargs['pk'])
-        form = ReportForm()
-        title = 'Assignment Report Submit'
-        context = {
-            'title': title,
-            'form': form,
-            'assignment': assignment
-        }
-        return render(self.request, 'assignment/report-create.html', context)
+    template_name = 'assignment/report-create.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ReportForm()
+        return context
 
     def post(self, *args, **kwargs):
         form = ReportForm(self.request.POST)

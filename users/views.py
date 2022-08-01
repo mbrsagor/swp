@@ -1,4 +1,5 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -8,32 +9,41 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.views import generic, View
 
-from ..forms.auth import LoginForm, SingUpForm
-from ..forms.profile import ProfileUpdateForm
-from ..models.profile import Profile
+from users.forms import SingUpForm, ProfileUpdateForm
+from users.models import Profile
+from portal.models.subject import Subject, EnrollSubject
 
 
 class DashboardView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
 
+    	
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subjects'] = Subject.objects.all()
+        context['enroll_subjects'] = EnrollSubject.objects.all()
+        return context
 
-class SingInView(LoginView):
-    authentication_form = LoginForm
-    form_class = LoginForm
-    redirect_authenticated_user = False
+    
+
+
+class SingInView(generic.TemplateView):
     template_name = 'auth/login.html'
 
-    def get_success_url(self):
-        url = self.get_redirect_url()
-        return url or resolve_url('/dashboard/')
-
-    def form_valid(self, form):
-        remember_me = form.cleaned_data['remember_me']
-        login(self.request, form.get_user())
-
-        if remember_me:
-            self.request.session.set_expiry(1209600)
-        return super(SingInView, self).form_valid(form)
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('/')
+            else:
+                next = request.META['HTTP_REFERER']
+                return HttpResponseRedirect(next)
+        else:
+            next = request.META['HTTP_REFERER']
+            return HttpResponseRedirect(next)
 
 
 class SignOutView(View):

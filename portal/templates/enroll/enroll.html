@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block title %} My Subjects {% endblock %}
 
 {% block content %}
@@ -61,16 +60,17 @@
                             <td>
                                 <a class="btn btn-danger btn-sm" href="{% url 'subject_enroll_delete_view' pk=objects.pk %}"><i
                                         class="fa fa-trash"></i></a>
-                                {% if request.user.is_staff %}
-                                    {% if objects.is_approve %}
-                                        <a class="btn btn-success btn-sm" href="{% url 'subjects_enroll_confirm_view' pk=objects.pk %}">
-                                            Active
-                                        </a>
-                                    {% else %}
-                                        <a class="btn btn-success btn-sm" href="{% url 'subjects_enroll_confirm_view' pk=objects.pk %}">
-                                            Deactivate
-                                        </a>
-                                    {% endif %}
+                                
+                                {% if user.is_student %}
+                                    <a class="btn btn-success btn-sm" href="{% url 'subjects_enroll_update_view' pk=objects.pk %}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                {% endif %}
+                                    
+                                {% if request.user.is_superuser %}
+                                    <a class="btn btn-success btn-sm" href="{% url 'subjects_enroll_approve_view' pk=objects.pk %}">
+                                        Approve
+                                    </a>
                                 {% endif %}
                             </td>
                             {% endfor %}

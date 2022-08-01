@@ -4,7 +4,7 @@ from ..models.assinment import Mark
 from portal.forms.assignment_form import MarkForm
 
 
-class MarkCreateAdnListView(LoginRequiredMixin, generic.CreateView, generic.ListView):
+class MarkListView(LoginRequiredMixin, generic.ListView):
     model = Mark
     form_class = MarkForm
     context_object_name = 'marks'
@@ -15,10 +15,8 @@ class MarkCreateAdnListView(LoginRequiredMixin, generic.CreateView, generic.List
         form.instance.teacher = self.request.user
         return super(MarkCreateAdnListView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        kwargs = super(MarkCreateAdnListView, self).get_context_data(**kwargs)
-        kwargs['title'] = 'Assignment Create'
-        return kwargs
+class AssignmentMarkAddview(LoginRequiredMixin, generic.CreateView):
+    
 
 
 class MarkUpdateView(LoginRequiredMixin, generic.UpdateView):

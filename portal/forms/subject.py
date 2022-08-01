@@ -10,7 +10,7 @@ class SubjectForm(ModelForm):
         )
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
-            'code': NumberInput(attrs={'class': 'form-control', 'id': 'code'}),
+            'code': TextInput(attrs={'class': 'form-control', 'id': 'code'}),
             'is_active': CheckboxInput(attrs={'class': 'form-check-input ml-2', 'id': 'is_active'}),
         }
 
@@ -24,11 +24,7 @@ class EnrollSubjectForm(ModelForm):
 
     class Meta:
         model = EnrollSubject
-        fields = (
-            '__all__'
-        )
-        exclude = ('student',)
+        fields = ('subjects',)
         widgets = {
-            'subjects': SelectMultiple(attrs={'class': 'form-control', 'id': 'subjects'}),
-            'is_active': CheckboxInput(attrs={'class': 'form-check-input ml-2', 'id': 'is_active'}),
+            'subjects': SelectMultiple(attrs={'class': 'form-control', 'id': 'subjects'})
         }

@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block title %} Subjects {% endblock %}
 
 {% block content %}
@@ -49,11 +48,13 @@
                                             <span>Deactivated</span>
                                         {% endif %}
                                     </td>
-                                    <td>{{ obj.created_at }}</td>
-                                    <td>{{ obj.updated_at }}</td>
+                                    <td>{{ obj.updated_at|date }}</td>
+                                    <td>{{ obj.created_at|date }}</td>
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'subject_delete' obj.id %}"><i
                                                 class="fa fa-trash"></i></a>
+                                                <a class="btn btn-success btn-sm" href="{% url 'subject_update_view' obj.id %}"><i
+                                                    class="fa fa-edit"></i>
                                     </td>
                                 </tr>
                                 {% empty %}

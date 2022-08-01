@@ -10,13 +10,13 @@
     <meta property="twitter:creator" content="@pratikborsadiya">
     <!-- Open Graph Meta-->
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Vali Admin">
-    <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+    <meta property="og:site_name" content="Web Student Portal Admin">
+    <meta property="og:title" content="Web Student Portal">
     {% include 'stylesheet.html' %}
 </head>
 <body class="app sidebar-mini rtl">
 <!-- Navbar-->
-<header class="app-header"><a class="app-header__logo" href="/">Vali</a>
+<header class="app-header"><a class="app-header__logo" href="/">CBIU Web Portal</a>
     {% include 'header.html' %}
 </header>
 <!-- Sidebar menu-->
@@ -29,6 +29,10 @@
 </main>
 {% include 'script.html' %}
 {% block javascript %}
+<script>
+    console.log({{teacher}})
+    console.log({{student}})
+</script>
 {% endblock %}
 </body>
 </html>

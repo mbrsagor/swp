@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %} {{ title }}  {% endblock %}
+{% block title %} Subject update  {% endblock %}
 
 {% block content %}
 <div class="app-title">
         <div>
-            <h1><i class="fa fa-dashboard"></i> {{ title}}</h1>
+            <h1><i class="fa fa-dashboard"></i> Subject update</h1>
             <p>Subject create & listview</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -21,18 +21,18 @@
                         <div class="modal-body">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label>{{ form.ssc_certificate.label }}</label>
-                                {{ form.ssc_certificate }}
+                                <label>{{ form.name.label }}</label>
+                                {{ form.name }}
                             </div>
                             <img src="" alt="" id="showImage1" style="height: 150px; width: 200;">
                             <div class="form-group">
-                                <label>{{ form.hsc_certificate.label }}</label>
-                                {{ form.hsc_certificate }}
+                                <label>{{ form.code.label }}</label>
+                                {{ form.code }}
                             </div>
                             <img src="" alt="" id="showImage2" style="height: 150px; width: 200;">
                             <div class="form-group">
-                                <label>{{ form.cv.label }}</label>
-                                {{ form.cv }}
+                                <label>{{ form.is_active.label }}</label>
+                                {{ form.is_active }}
                             </div>
                         </div>
                             <button type="submit" class="btn btn-primary m-2">Save</button>
@@ -41,26 +41,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block javascript %}
-<script>
-    const form = document.querySelector('#form')
-    const uploadImg1 = document.getElementById('ssc_certificate');
-    const uploadImg2 = document.getElementById('hsc_certificate');
-    const show1 = document.getElementById('showImage1');
-    const show2 = document.getElementById('showImage2');
-
-    uploadImg1.addEventListener('change', (e) => {
-        const formData = new FormData(form)
-        const file = formData.get('ssc_certificate')
-        const image = URL.createObjectURL(file)
-        show1.setAttribute('src', image)
-    })
-    uploadImg2.addEventListener('change', (e) => {
-        const formData = new FormData(form)
-        const file = formData.get('hsc_certificate')
-        const image = URL.createObjectURL(file)
-        show2.setAttribute('src', image)
-    })
-</script>
 {% endblock %}

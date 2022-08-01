@@ -20,6 +20,16 @@ class SubjectCreateListView(SuccessMessageMixin, generic.CreateView, generic.Lis
     template_name = 'subject/subjects.html'
 
 
+
+class SubjectUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+    model = Subject
+    form_class = SubjectForm
+    success_url = '/'
+    success_message = 'The subject has been updated.'
+    template_name = 'subject/update.html'
+
+
+
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class SubjectDeleteView(generic.DeleteView):
     model = Subject
@@ -45,25 +55,26 @@ class SubjectEnrollCreateAndListView(SuccessMessageMixin, generic.CreateView, ge
         form.save_m2m()
         return super().form_valid(form)
 
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class SubjectEnrollUpdateView(SuccessMessageMixin, generic.UpdateView):
+    model = EnrollSubject
+    form_class = EnrollSubjectForm
+    template_name = 'enroll/update.html'
+    success_url = '/subjects/enroll/'
+    success_message = 'subject has been enroll, pls wait for admin approve.'
+
+
+
+
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
-class EnrollApproveConfirmed(generic.View):
-    """
-    just access admin
-    """
-    def get(self, *args, **kwargs):
-        try:
-            enroll_subject = EnrollSubject.objects.get(pk=kwargs['pk'])
-            if enroll_subject.is_approve:
-                enroll_subject.is_approve = False
-                enroll_subject.save()
-                return redirect('subject_enroll')
-            enroll_subject.is_approve = True
-            enroll_subject.save()
-            print(enroll_subject.is_approve)
-            return redirect('subject_enroll')
-        except:
-            return redirect('subject_enroll')
+class EnrollApproveView(generic.UpdateView):
+    model = EnrollSubject
+    fields = ('is_approve',)
+    template_name = 'enroll/aprove.html'
+    success_url = '/'
+    success_message = 'subject has been enroll approve.'
+
 
 
 class SubjectEnrollDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):

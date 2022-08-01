@@ -1,6 +1,7 @@
+{% load static %}
 <div class="app-sidebar__user">
     <img width="80px" class="app-sidebar__user-avatar"
-        src="https://res.cloudinary.com/mbrsagor/image/upload/v1595691413/Profile_pic/sagor_field_buzz_dhbfeu.jpg"
+        src="{% static 'image/susanto-paul.png' %}"
         alt="User Image">
     <div>
         <p class="app-sidebar__user-name">{{ request.user.username }}</p>
@@ -48,16 +49,21 @@
             <span class="app-menu__label">E-Books</span>
         </a>
     </li>
+    {% if user.roll == 'TEACHER' or user.is_superuser %}
     <li>
         <a class="app-menu__item" href="{% url 'routines_view' %}">
             <span class="app-menu__label">Routines</span>
         </a>
     </li>
+    {% endif %}
+    
+    {% if user.is_superuser %}
     <li>
         <a class="app-menu__item" href="{% url 'notices_view' %}">
             <span class="app-menu__label">Notices</span>
         </a>
     </li>
+    {% endif %}
     <li>
         <a class="app-menu__item" href="{% url 'marks_view' %}">
             <span class="app-menu__label">Marks</span>

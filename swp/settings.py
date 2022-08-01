@@ -22,7 +22,8 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
-# Application definition
+# custom account connect settings
+AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'portal'
+    'portal',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'users.context_processors.user_context',
             ],
         },
     },
