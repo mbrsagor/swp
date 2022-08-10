@@ -16,26 +16,20 @@
         <div class="col-md-12">
             <div class="tile">
                 {% include 'common/success_message.html' %}
-                {% if is_certificate %}
-                <p>Already added your certificate.</p>
-                {% else %}
                 <div class="tile-header text-right mb-2">
-                    {% if not created_certificate %}
-                    <a href="{% url 'certificate_create_view' %}" class="btn btn-sm btn-success">
+                    <button data-toggle="modal" data-target="#exampleModal" type="button"
+                            class="btn btn-sm btn-success">
                         <i class="fa fa-plus"></i>
-                        Add certificate
-                    </a>
-                    {% endif %}
+                        Add Certificate
+                    </button>
                 </div>
-                {% endif %}
                 <div class="tile-body">
                     {% if certificates %}
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>SSC Certificate</th>
-                                <th>HSC Certificate</th>
-                                <th>CV</th>
+                                <th>Certificate Name</th>
+                                <th>Certificate Link</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
                                 <th>Actions</th>
@@ -44,11 +38,10 @@
                             <tbody>
                             {% for obj in certificates %}
                                 <tr>
-                                    <td><img src="{{ obj.ssc_certificate.url }}" style="height: 100px; width: 120px"></td>
-                                    <td><img src="{{ obj.hsc_certificate.url }}" style="height: 100px; width: 120px"></td>
+                                    <td>{{ obj.certificate_title }}</td>
                                     <td>
-                                        <a href="{{ obj.cv.url }}">
-                                            <i class="fa fa-file-pdf-o" style="height: 80px; width: 100px;" aria-hidden="true"></i>
+                                        <a href="{{ obj.certificate.url }}" target="_blank">
+                                            Preview Link
                                         </a>
                                     </td>
                                     <td>{{ obj.created_at|date }}</td>
@@ -56,7 +49,7 @@
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'certificates_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'certificate_detail_update_view' pk=obj.pk %}"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'certificate_update_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -67,5 +60,5 @@
             </div>
         </div>
     </div>
-    {% include 'common/modal.html' %}
+    {% include 'certificate/modal.html' %}
 {% endblock %}

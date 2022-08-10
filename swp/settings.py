@@ -24,6 +24,10 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # custom account connect settings
 AUTH_USER_MODEL = 'users.User'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'users.backends.EmailOrPhoneNumberBackend'
+    ]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -34,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'portal',
-    'users'
+    'users',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -140,7 +145,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/dashboard'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 # Django Message Framework
 MESSAGE_TAGS = {

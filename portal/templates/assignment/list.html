@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %} Project {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Assignments</h1>
+            <p>Assignments create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                <div class="tile-header text-right mb-2">
+                    <button data-toggle="modal" data-target="#exampleModal" type="button"
+                            class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Add assignment
+                    </button>
+                </div>
+                <div class="tile-body">
+                    {% if assignments %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Students</th>
+                                <th>Assignment title</th>
+                                <th>File</th>
+                                <th>Status</th>
+                                <th>Created at</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in assignments %}
+                                <tr>
+                                    <td>
+                                        {{ request.user.username }}
+                                    </td>
+                                    <td>{{ obj.title }}</td>
+                                    <td>
+                                        <a href="{{ obj.assignment_file.url }}" target="_blank">Assignment preview link</a>
+                                    </td>
+                                    <td>
+                                        <span>{{ obj.created_at }}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{ obj.updated_at }}</span>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'assignment_delete_view' pk=obj.pk %}"><i
+                                                class="fa fa-trash"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'assignment_update_view' pk=obj.pk %}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'common/modal.html' %}
+{% endblock %}

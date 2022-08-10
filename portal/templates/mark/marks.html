@@ -30,7 +30,6 @@
                             <tr>
                                 <th>Teacher</th>
                                 <th>Student</th>
-                                <th>Assignment</th>
                                 <th>Type</th>
                                 <th>Marks</th>
                                 <th>Actions</th>
@@ -43,15 +42,8 @@
                                     <td>
                                         {{ obj.student }}
                                     </td>
-                                    <td>
-                                        {% if obj.assignment %}
-                                            {{ obj.assignment.title }}
-                                        {% else %}
-                                            Assignment not
-                                        {% endif %}
-                                    </td>
                                     <td>{{ obj.status }}</td>
-                                    <td>{{ obj.pass_mark }}</td>
+                                    <td>{{ obj.marks }}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="{% url 'marks_update_view' pk=obj.pk %}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -66,5 +58,5 @@
             </div>
         </div>
     </div>
-    {% include 'common/modal.html' %}
+    {% include 'mark/modal.html' %}
 {% endblock %}

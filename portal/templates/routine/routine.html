@@ -47,7 +47,7 @@
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'routine_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href=""><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'routines_update_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}

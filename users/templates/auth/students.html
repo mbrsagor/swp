@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %} Students {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>Students</h1>
+            <p>Students create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-header text-left mb-2">
+                {% include 'common/success_message.html' %}
+                </div>
+                <div class="tile-header text-right mb-2">
+                    <button data-toggle="modal" data-target="#exampleModal" type="button"
+                            class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Add Students
+                    </button>
+                </div>
+                <div class="tile-body">
+                    {% if students %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Father name</th>
+                                    <th>Mother name</th>
+                                    <th>Department</th>
+                                    <th>Board roll</th>
+                                    <th>Gender</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td>
+                                        {{ student.username }}
+                                    </td>
+                                    <td>
+                                        {{ student.email }}
+                                    </td>
+                                     <td>
+                                        {{ student.profile.father_name }}
+                                    </td>
+                                     <td>
+                                        {{ student.profile.mother_name }}
+                                    </td>
+                                    <td>
+                                        {{ student.profile.department }}
+                                    </td>
+                                    <td>{{ student.profile.board_roll }}</td>
+                                    <td>{{ student.profile.gender }}</td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="#">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" href="#">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

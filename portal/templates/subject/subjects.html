@@ -30,7 +30,7 @@
                             <tr>
                                 <th>Subject Name</th>
                                 <th>Code</th>
-                                <th>Status</th>
+                                <th>Department</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
                                 <th>Actions</th>
@@ -41,13 +41,7 @@
                                 <tr>
                                     <td>{{ obj.name }}</td>
                                     <td>{{ obj.code }}</td>
-                                    <td>
-                                        {% if obj.is_active %}
-                                            <span>Activated</span>
-                                        {% else %}
-                                            <span>Deactivated</span>
-                                        {% endif %}
-                                    </td>
+                                    <td>{{ obj.department }}</td>
                                     <td>{{ obj.updated_at|date }}</td>
                                     <td>{{ obj.created_at|date }}</td>
                                     <td>

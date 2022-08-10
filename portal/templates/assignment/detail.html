@@ -15,33 +15,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6 m-auto card">
+                <div class="col-md-6 m-auto card py-3">
                     <h1>{{ object.title }}</h1>
-                    <h6>Teacher: {{ object.teacher }}</h6>
-                    <p>
-                        {{ object.description }}
-                    </p>
-                    <h6>Students: </h6>
-                    <ul>
-                        {% for student in object.student.all %}
-                        <li>{{ student.username }}</li>
-                        {% endfor %}
-                    </ul>
-                    <h6>Reports: </h6>
-                    <ul>
-                        {% for report in object.report_assignment.all %}
-                        <li>{{ report.title }}</li>
-                        <li>{{ report.description }}</li>
-                        {% endfor %}
-                    </ul>
-                    <h6>Result</h6>
-                    <ul>
-                        {% for mark in object.mark_assignments.all %}
-                        <li>{{ mark.student }}</li>
-                        <li>{{ mark.assignment }}</li>
-                        <li>{{ mark.pass_mark }}</li>
-                        {% endfor %}
-                    </ul>
+                    <h4>Student: {{ object.student }}</h4>
+                    <a href="{{ object.assignment_file.url }}">Assignment file download</a>
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }}  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> {{ title}}</h1>
+            <p>Subject create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 m-auto card">
+                    {{form.errors}}
+                    <form method="post" enctype="multipart/form-data" id="form">
+                        <div class="modal-body">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>{{ form.certificate_title.label }}</label>
+                                {{ form.certificate_title }}
+                            </div>
+                            <div class="form-group">
+                                <label>{{ form.certificate.label }}</label>
+                                {{ form.certificate }}
+                            </div>
+                        </div>
+                            <button type="submit" class="btn btn-primary m-2">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

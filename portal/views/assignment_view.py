@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from portal.models.assinment import Assignment
-from portal.forms.assignment_form import AssignmentForm, ReportForm, MarkForm
+from portal.models import Assignment, Mark
+from portal.forms.assignment_form import AssignmentForm
 
 
 class AssignmentCreateAndListView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView, generic.ListView):
@@ -13,7 +12,7 @@ class AssignmentCreateAndListView(LoginRequiredMixin, SuccessMessageMixin, gener
     context_object_name = 'assignments'
     success_url = '/assignments/'
     success_message = 'Successfully created assignment.'
-    template_name = 'assignment/assignment.html'
+    template_name = 'assignment/list.html'
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -21,50 +20,21 @@ class AssignmentCreateAndListView(LoginRequiredMixin, SuccessMessageMixin, gener
         return super(AssignmentCreateAndListView, self).form_valid(form)
 
 
+class AssignmentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Assignment
+    form_class = AssignmentForm
+    success_url = '/assignments/'
+    template_name = 'assignment/update.html'
+
+
 class AssignmentDetailView(LoginRequiredMixin, generic.DetailView):
     model = Assignment
-    template_name = 'assignment/detail.html'
-
-class MarkListView(LoginRequiredMixin, generic.ListView):
-    model = Mark
-    template_name = 'mark/list.html'
+    template_name = 'assignment/update.html'
 
 
-class AssignmentMarkView(LoginRequiredMixin, generic.View):
+class AssignmentDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Assignment
+    success_url = '/assignments/'
 
-    template_name = 'assignment/mark-create.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = MarkForm()
-        return context
-
-    def post(self, *args, **kwargs):
-        form = MarkForm(self.request.POST)
-        assignment = Assignment.objects.get(pk=kwargs['pk'])
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.teacher = self.request.user
-            instance.assignment = assignment
-            instance.save()
-            return redirect('assignment_create_and_list_view')
-
-
-class AssignmentReportView(LoginRequiredMixin, generic.TemplateView):
-
-    template_name = 'assignment/report-create.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = ReportForm()
-        return context
-
-    def post(self, *args, **kwargs):
-        form = ReportForm(self.request.POST)
-        assignment = Assignment.objects.get(pk=kwargs['pk'])
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.teacher = self.request.user
-            instance.assignment = assignment
-            instance.save()
-            return redirect('assignment_create_and_list_view')
+    def get(self, *args, **kwargs):
+        return self.delete(self.request, *args, **kwargs)

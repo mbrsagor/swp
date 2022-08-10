@@ -1,14 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from users.models import User
+from users.models import User, Student, Teacher, StudentProfile, TeacherProfile
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    list_display = ('full_name', 'email', 'is_active', 'is_staff', 'is_superuser')
-    list_filter = ('full_name', 'email')
+    list_display = ('username', 'email', 'is_active', 'is_staff', 'is_superuser')
+    list_filter = ('username', 'email')
     readonly_fields = ('pk',)
     filter_horizontal = []
-    ordering = ('email',)
     fieldsets = ()
     add_fieldsets = (
         (None, {
@@ -16,3 +15,8 @@ class UserAdmin(UserAdmin):
             'fields': ('full_name', 'email', 'roll', 'password1', 'password2'),
         }),
     )
+
+
+
+
+admin.site.register([Teacher, TeacherProfile, Student, StudentProfile])

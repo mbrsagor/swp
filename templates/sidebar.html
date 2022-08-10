@@ -4,8 +4,8 @@
         src="{% static 'image/susanto-paul.png' %}"
         alt="User Image">
     <div>
-        <p class="app-sidebar__user-name">{{ request.user.username }}</p>
-        <p class="app-sidebar__user-designation">{{ request.user.email }}</p>
+        <p class="app-sidebar__user-name">{{ user.username }}</p>
+        <p class="app-sidebar__user-designation">{{ user.email }}</p>
     </div>
 </div>
 <ul class="app-menu">
@@ -14,19 +14,67 @@
             <span class="app-menu__label">Dashboard</span>
         </a>
     </li>
+    {% if user.is_superuser %}
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Users</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+            <li>
+                <a class="treeview-item" href="{% url 'teachers-view' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a class="treeview-item" href="{% url 'students-view' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Students
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'faculties-create-listview' %}">
+            <span class="app-menu__label">Faculties</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'departments-create-listview' %}">
+            <span class="app-menu__label">Departments</span>
+        </a>
+    </li>
     <li>
         <a class="app-menu__item" href="{% url 'subject_create_listview' %}">
             <span class="app-menu__label">Subjects</span>
         </a>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'subject_enroll' %}">
-            <span class="app-menu__label">Subject Enrolls</span>
+        <a class="app-menu__item" href="{% url 'semesters-create-listview' %}">
+            <span class="app-menu__label">Semesters</span>
         </a>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'section_view' %}">
-            <span class="app-menu__label">Sections</span>
+        <a class="app-menu__item" href="{% url 'payments' %}">
+            <span class="app-menu__label">Payments</span>
+        </a>
+    </li>
+    {% endif %}
+    {% if user.roll == 'TEACHER' or user.is_superuser %}
+    <li>
+        <a class="app-menu__item" href="{% url 'routines_view' %}">
+            <span class="app-menu__label">Routines</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'marks_view' %}">
+            <span class="app-menu__label">Marks</span>
+        </a>
+    </li>
+    {% endif %}
+    {% if user.roll == 'STUDENT' or user.is_superuser %}
+    <li>
+        <a class="app-menu__item" href="{% url 'subject_enroll' %}">
+            <span class="app-menu__label">Subject Enrolls</span>
         </a>
     </li>
     <li>
@@ -44,29 +92,15 @@
             <span class="app-menu__label">Assignments</span>
         </a>
     </li>
+    {% endif %}
     <li>
         <a class="app-menu__item" href="{% url 'books_list_view' %}">
             <span class="app-menu__label">E-Books</span>
         </a>
     </li>
-    {% if user.roll == 'TEACHER' or user.is_superuser %}
     <li>
-        <a class="app-menu__item" href="{% url 'routines_view' %}">
-            <span class="app-menu__label">Routines</span>
-        </a>
-    </li>
-    {% endif %}
-    
-    {% if user.is_superuser %}
-    <li>
-        <a class="app-menu__item" href="{% url 'notices_view' %}">
+        <a class="app-menu__item" href="{% url 'notices-view' %}">
             <span class="app-menu__label">Notices</span>
-        </a>
-    </li>
-    {% endif %}
-    <li>
-        <a class="app-menu__item" href="{% url 'marks_view' %}">
-            <span class="app-menu__label">Marks</span>
         </a>
     </li>
 </ul>

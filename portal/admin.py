@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models.subject import Subject, EnrollSubject
-from .models.student import Certificate, Section, Project
-from .models.assinment import Assignment, Report, Mark
+from portal.models import Subject, EnrollSubject, Certificate, Project,  Assignment, Mark, Faculty, Department
 
-admin.site.register([Subject, EnrollSubject, Certificate, Section, Project, Assignment, Mark])
+
+admin.site.register([Subject, EnrollSubject, Certificate, Project, Assignment, Mark, Faculty, Department])

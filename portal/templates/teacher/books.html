@@ -17,10 +17,12 @@
             <div class="tile">
                 {% include 'common/success_message.html' %}
                 <div class="tile-header text-right mb-2">
-                    <a href="{% url 'books_create_view' %}" class="btn btn-sm btn-success">
-                        <i class="fa fa-plus"></i>
-                        Add Books
-                    </a>
+                    {% if user.roll == 'TEACHER' or user.is_superuser %}
+                        <a href="{% url 'books_create_view' %}" class="btn btn-sm btn-success">
+                            <i class="fa fa-plus"></i>
+                            Add Books
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="tile-body">
                         <table class="table table-hover table-bordered" id="sampleTable">
@@ -38,7 +40,13 @@
                             <tbody>
                             {% for obj in books %}
                                 <tr>
-                                    <td><img src="{{ obj.book_cover_image.url }}" style="height: 100px; width: 120px"></td>
+                                    <td>
+                                        {% if obj.book_cover_image %}
+                                        <img src="{{ obj.book_cover_image.url }}" style="height: 100px; width: 120px">
+                                        {% else %}
+                                        Cover image not
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         {{ obj.name }}
                                     </td>
@@ -51,12 +59,14 @@
                                     <td>{{ obj.created_at|date }}</td>
                                     <td>{{ obj.updated_at|date }}</td>
                                     <td>
+                                        {% if user.roll == 'TEACHER' or user.is_superuser %}
                                         <a class="btn btn-danger btn-sm" href="{% url 'certificates_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href="{{obj.book_pdf.url}}">
-                                            <i class="fa fa-download" aria-hidden="true"></i>
-                                        </a>
                                         <a class="btn btn-success btn-sm" href="{% url 'books_update_view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
+                                        {% endif %}
+                                         <a class="btn btn-success btn-sm" href="{% url 'books_detail_view' pk=obj.pk %}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}

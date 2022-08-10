@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %} {{ title }}  {% endblock %}
+{% block title %} Marks update  {% endblock %}
 
 {% block content %}
 <div class="app-title">
         <div>
-            <h1>{{ title}}</h1>
+            <h1>Marks update</h1>
             <p>Marks update</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6 m-auto card">
+                <div class="col-md-6 m-auto card py-2">
                     {{form.errors}}
                     <form method="post" enctype="multipart/form-data" id="form">
                             {% csrf_token %}

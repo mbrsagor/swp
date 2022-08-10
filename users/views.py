@@ -1,49 +1,118 @@
-from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseRedirect
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url, redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views import generic, View
-
-from users.forms import SingUpForm, ProfileUpdateForm
-from users.models import Profile
-from portal.models.subject import Subject, EnrollSubject
+from users.forms import LoginForm, StudentSingUpForm, StudentProfileForm, TeacherSingUpForm, TeacherProfileForm, \
+    UserForm
+from portal.models import Subject, EnrollSubject
+from users.models import User, Teacher, Student, StudentProfile, TeacherProfile
 
 
 class DashboardView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
-
     	
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subjects'] = Subject.objects.all()
-        context['enroll_subjects'] = EnrollSubject.objects.all()
+        context['enroll_subjects'] = EnrollSubject.objects.filter(student=self.request.user)
         return context
 
-    
+
+# Student view
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class StudentListView(generic.ListView):
+    model = Student
+    context_object_name = 'students'
+    template_name = 'student/list.html'
 
 
-class SingInView(generic.TemplateView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class StudentCreateView(generic.CreateView):
+    model = Student
+    form_class = StudentSingUpForm
+    success_url = '/students/'
+    template_name = 'student/create.html'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class StudentUpdateView(generic.UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'student/update.html'
+    success_url = '/students/'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class StudentDeleteView(generic.DeleteView):
+    model = User
+    success_url = '/students/'
+
+    def get(self, *args, **kwargs):
+        return self.delete(self.request, *args, **kwargs)
+# end start view
+
+
+# teahers views
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class TeacherListView(generic.ListView):
+    model = Teacher
+    context_object_name = 'teachers'
+    template_name = 'teacher/list.html'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class TeacherCreateView(generic.CreateView):
+    model = Teacher
+    form_class = TeacherSingUpForm
+    template_name = 'teacher/create.html'
+    success_url = '/teachers/'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class TeacherUpdateView(generic.UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'teacher/update.html'
+    success_url = '/teachers/'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class TeacherDeleteView(generic.DeleteView):
+    model = User
+    success_url = '/teachers/'
+
+    def get(self, *args, **kwargs):
+        return self.delete(self.request, *args, **kwargs)
+
+
+class SingInView(LoginView):
+    authentication_form = LoginForm
+    form_class = LoginForm
+    redirect_authenticated_user = False
     template_name = 'auth/login.html'
 
-    def post(self, request, *args, **kwargs):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('/')
-            else:
-                next = request.META['HTTP_REFERER']
-                return HttpResponseRedirect(next)
-        else:
-            next = request.META['HTTP_REFERER']
-            return HttpResponseRedirect(next)
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        return url or resolve_url('/dashboard/')
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data['remember_me']
+        print('form working.')
+        login(self.request, form.get_user())
+
+        if remember_me:
+            self.request.session.set_expiry(1209600)
+        return super(SingInView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print('invalid form')
+        return super(SingInView, self).form_invalid(form)
 
 
 class SignOutView(View):
@@ -54,7 +123,7 @@ class SignOutView(View):
 
 
 class RegistrationView(SuccessMessageMixin, generic.CreateView):
-    form_class = SingUpForm
+    form_class = StudentSingUpForm
     success_url = '/login/'
     success_message = 'Successfully registration done.'
     template_name = 'auth/register.html'
@@ -66,33 +135,55 @@ class RegistrationView(SuccessMessageMixin, generic.CreateView):
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class ProfileUpdateView(SuccessMessageMixin, generic.UpdateView):
-    model = Profile
-    form_class = ProfileUpdateForm
+    model = StudentProfile
+    form_class = StudentProfileForm
     success_message = 'Profile has been updated successfully.'
     template_name = 'auth/profile_update.html'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.filter(user=self.request.user.id)
-
     def get_success_url(self):
-        return reverse('profile_update', kwargs={
+        return reverse('profile', kwargs={
             'pk': self.object.pk,
         })
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
-class ProfileView(generic.ListView):
-    model = Profile
+class StudentProfileView(generic.ListView):
+    model = StudentProfile
     context_object_name = 'profile'
     template_name = 'auth/profile.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+    def get_queryset(self):
+        try:
+            return StudentProfile.objects.get(user=self.request.user)
+        except Exception as ex:
+            print(ex)
+
+
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class TeacherProfileView(generic.ListView):
+    model = TeacherProfile
+    context_object_name = 'profile'
+    template_name = 'teacher/profile.html'
 
     def get_queryset(self):
         try:
-            return Profile.objects.get(user=self.request.user)
+            return TeacherProfile.objects.get(user=self.request.user)
         except Exception as ex:
             print(ex)
+
+
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class TeacherProfileUpdateView(generic.UpdateView):
+    model = TeacherProfile
+    form_class = TeacherProfileForm
+    template_name = 'teacher/profile-update.html'
+
+    def get_success_url(self):
+        return reverse('teachers-profile-view', kwargs={
+            'pk': self.object.pk,
+        })
+
+    def get_form_kwargs(self):
+        kwargs = super(TeacherProfileUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
