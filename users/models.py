@@ -12,10 +12,11 @@ from portal.models import Department, Subject
 class User(AbstractBaseUser, PermissionsMixin):
 
     class Rolls(models.TextChoices):
+        ADMIN = 'ADMIN', 'Admin'
         STUDENT = 'STUDENT', 'Student'
         TEACHER = 'TEACHER', 'Teacher'
 
-    default_type = Rolls.STUDENT
+    default_type = Rolls.ADMIN
 
     username = models.CharField(max_length=155, unique=True, db_index=True)
     email = models.EmailField(unique=True, db_index=True)
