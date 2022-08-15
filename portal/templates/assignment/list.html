@@ -16,13 +16,17 @@
         <div class="col-md-12">
             <div class="tile">
                 {% include 'common/success_message.html' %}
-                <div class="tile-header text-right mb-2">
-                    <button data-toggle="modal" data-target="#exampleModal" type="button"
-                            class="btn btn-sm btn-success">
-                        <i class="fa fa-plus"></i>
-                        Add assignment
-                    </button>
-                </div>
+                
+                {% if user.roll == 'STUDENT' %}
+                    <div class="tile-header text-right mb-2">
+                        <button data-toggle="modal" data-target="#exampleModal" type="button"
+                                class="btn btn-sm btn-success">
+                            <i class="fa fa-plus"></i>
+                            Add assignment
+                        </button>
+                    </div>
+                {% endif %}
+                <h3 class="title">Assignments</h3>
                 <div class="tile-body">
                     {% if assignments %}
                         <table class="table table-hover table-bordered" id="sampleTable">
@@ -33,7 +37,9 @@
                                 <th>Assignment title</th>
                                 <th>File</th>
                                 <th>Created at</th>
+                                {% if user.roll == 'STUDENT' %}
                                 <th>Actions</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
@@ -52,7 +58,7 @@
                                     <td>
                                         <span>{{ obj.created_at }}</span>
                                     </td>
-
+                                    {% if user.roll == 'STUDENT' %}
                                     <td>
                                         <a class="btn btn-danger btn-sm" href="{% url 'assignment_delete_view' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
@@ -60,6 +66,7 @@
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                             </tbody>

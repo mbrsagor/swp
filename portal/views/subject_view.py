@@ -47,7 +47,7 @@ class SubjectEnrollCreateAndListView(SuccessMessageMixin, generic.CreateView, ge
 
     def get_queryset(self):
         if self.request.user.roll == 'STUDENT':
-            return self.model.filter(student=self.request.user)
+            return self.model.objects.filter(student=self.request.user)
         else:
             return self.model.objects.all()
 
