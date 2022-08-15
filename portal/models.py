@@ -61,7 +61,7 @@ class Ebook(TimeStamp):
                                          validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])], blank=True)
     author_name = models.CharField(max_length=150)
     description = models.TextField(max_length=200, blank=True)
-    book_pdf = models.FileField(upload_to='books/', validators=[FileExtensionValidator(['pdf'])], max_length=5242880)
+    book_pdf = models.FileField(upload_to='books/', validators=[FileExtensionValidator(['pdf'])], max_length=214958080)
 
     def __str__(self):
         return self.name
@@ -107,14 +107,15 @@ class Project(TimeStamp):
     description = models.TextField(max_length=250)
     project_url = models.CharField(max_length=250, blank=True)
     project_file = models.FileField(upload_to='projects/', help_text='Project file format must .zip',
-                                    validators=[FileExtensionValidator(['zip'])], null=True, blank=True)
+                                    validators=[FileExtensionValidator(['zip'])], null=True, blank=True, max_length=214958080)
 
 
 class Assignment(TimeStamp):
     """ Assignment can be uploaded and delete student """
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assignment_students')
     title = models.CharField(max_length=150)
-    assignment_file = models.FileField(upload_to='assignment/', validators=[FileExtensionValidator(['pdf'])])
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    assignment_file = models.FileField(upload_to='assignment/', validators=[FileExtensionValidator(['pdf'])], max_length=214958080)
 
 
 class Mark(TimeStamp):

@@ -17,112 +17,15 @@
         <div class="col-md-12">
             <div class="tile">
                 {% if user.is_superuser %}
-                <div class="tile-body">
-                    <h3 class="title">Subjects</h3>
-                    <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead>
-                        <tr>
-                            <th>Subject Name</th>
-                            <th>Code</th>
-                            <th>Status</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for obj in subjects %}
-                            <tr>
-                                <td>{{ obj.name }}</td>
-                                <td>{{ obj.code }}</td>
-                                <td>
-                                    {% if obj.is_active %}
-                                        <span>Activated</span>
-                                    {% else %}
-                                        <span>Deactivated</span>
-                                    {% endif %}
-                                </td>
-                                <td>{{ obj.updated_at|date }}</td>
-                                <td>{{ obj.created_at|date }}</td>
-                                <td>
-                                    <a class="btn btn-danger btn-sm" href="{% url 'subject_delete' obj.id %}"><i
-                                            class="fa fa-trash"></i></a>
-                                    <a class="btn btn-success btn-sm" href="{% url 'subject_update_view' obj.id %}"><i
-                                                class="fa fa-edit"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td>Subjects empty</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% include 'include/admin-table.html' %}
                 {% endif %}
+
                 {% if user.roll == 'STUDENT' or user.is_superuser %}
-                <div class="tile-body">
-                    <h3 class="title">Enroll subjects</h3>
-                    <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead>
-                            <tr>
-                                <th>Student Name</th>
-                                <th>Subject Name</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for objects in enroll_subjects %}
-                            <tr>
-                                <td>{{objects.student}}</td>
-                                <td>
-                                    <ul>
-                                        {% for subject in objects.subjects.all %}
-                                        <li>
-                                            <p>
-                                                subject name: {{ subject.name }}
-                                                <span style="margin-left: 10px">subject code: {{ subject.code }}</span>
-                                            </p>
-                                        </li>
-                                        {% endfor %}
-    
-                                    </ul>
-                                </td>
-                                <td>
-                                    {% if objects.is_approve %}
-                                    <span>Approved</span>
-                                    {% else %}
-                                    <span>Pending</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger btn-sm" href="{% url 'subject_enroll_delete_view' pk=objects.pk %}">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'subjects_enroll_update_view' pk=objects.pk %}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        
-                                        {% if user.is_superuser %}
-                                            <a class="btn btn-success btn-sm" href="{% url 'subjects_enroll_approve_view' pk=objects.pk %}">
-                                                Approve
-                                            </a>
-                                        {% endif %}
-                                            
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4">
-                                    <a href="{% url 'subject_enroll' %}" class="btn btn-success">Add Enroll Subject</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% include 'include/student-table.html' %}
+                {% endif %}
+                
+                {% if user.roll == 'TEACHER' or user.is_superuser %}
+                    {% include 'include/teacher-table.html' %}
                 {% endif %}
             </div>
         </div>

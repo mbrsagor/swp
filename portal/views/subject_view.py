@@ -46,8 +46,10 @@ class SubjectEnrollCreateAndListView(SuccessMessageMixin, generic.CreateView, ge
     success_message = 'subject has been enroll, pls wait for admin approve.'
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(student=self.request.user)
-        return queryset
+        if self.request.user.roll == 'STUDENT':
+            return self.model.filter(student=self.request.user)
+        else:
+            return self.model.objects.all()
 
     def form_valid(self, form):
         instance = form.save(commit=False)

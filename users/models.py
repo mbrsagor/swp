@@ -59,6 +59,7 @@ class StudentProfile(models.Model):
     )
     gender = models.CharField(choices=GENDER, max_length=10, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    avatar = models.ImageField(upload_to='student-avatar/')
     name = models.CharField(max_length=50, blank=True)
     father_name = models.CharField(max_length=50, blank=True)
     mother_name = models.CharField(max_length=50, blank=True)
@@ -76,8 +77,9 @@ class TeacherProfile(models.Model):
         ('OTHER', 'OTHER'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
+    avatar = models.ImageField(upload_to='teacher-avatar/')
     gender = models.CharField(choices=GENDER, max_length=10, blank=True)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=True, null=True)
+    subject = models.ManyToManyField(Subject)
 
 
 class StudentManager(models.Manager):

@@ -6,7 +6,10 @@ from django.forms import (
     PasswordInput,
     CharField,
     DateInput,
-    BooleanField
+    BooleanField,
+    SelectMultiple,
+    CheckboxSelectMultiple,
+    ImageField,
 )
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from users.models import User, Teacher, Student, StudentProfile, TeacherProfile
@@ -68,12 +71,12 @@ class TeacherSingUpForm(UserCreationForm):
 
 
 class StudentProfileForm(ModelForm):
+
     class Meta:
         model = StudentProfile
-        read_only_fields = ('user',)
         fields = (
             'name', 'father_name', 'mother_name', 'board_roll', 'cgpa', 'gender',
-            'date_of_birth', 'ssc_passing_year', 'hsc_passing_year',
+            'date_of_birth', 'ssc_passing_year', 'hsc_passing_year', 'avatar',
         )
 
         widgets = {
@@ -90,6 +93,7 @@ class StudentProfileForm(ModelForm):
 
 
 class TeacherProfileForm(ModelForm):
+    
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super(TeacherProfileForm, self).__init__(*args, **kwargs)
@@ -97,13 +101,13 @@ class TeacherProfileForm(ModelForm):
 
     class Meta:
         model = TeacherProfile
-        read_only_fields = ('user',)
         fields = (
             'subject',
+            'avatar',
             'gender',
         )
 
         widgets = {
-            'subject': Select(attrs={'class': 'form-control', 'id': 'subject'}),
+            'subject': CheckboxSelectMultiple(attrs={'class': 'flat-red', 'id': 'subjects'}),
             'gender': Select(attrs={'class': 'form-control', 'id': 'gender'}),
         }

@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views import generic, View
 from users.forms import LoginForm, StudentSingUpForm, StudentProfileForm, TeacherSingUpForm, TeacherProfileForm, \
     UserForm
-from portal.models import Subject, EnrollSubject
+from portal.models import Subject, EnrollSubject, Routine
 from users.models import User, Teacher, Student, StudentProfile, TeacherProfile
 
 
@@ -19,8 +19,17 @@ class DashboardView(LoginRequiredMixin, generic.TemplateView):
     	
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['subjects'] = Subject.objects.all()
-        context['enroll_subjects'] = EnrollSubject.objects.filter(student=self.request.user)
+        if self.request.user.roll == 'STUDENT':
+            context['enroll_subjects'] = EnrollSubject.objects.filter(student=self.request.user)
+            context['routine'] = Routine.objects.all()
+        
+        if self.request.user.roll == 'TEACHER':
+            context['routine'] = Routine.objects.filter(teacher=self.request.user)
+
+        if self.request.user.is_superuser:
+            context['subjects'] = Subject.objects.all()
+            context['enroll_subjects'] = EnrollSubject.objects.all()
+        
         return context
 
 
@@ -152,6 +161,10 @@ class StudentProfileView(generic.ListView):
     context_object_name = 'profile'
     template_name = 'auth/profile.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
     def get_queryset(self):
         try:
             return StudentProfile.objects.get(user=self.request.user)
@@ -164,6 +177,10 @@ class TeacherProfileView(generic.ListView):
     model = TeacherProfile
     context_object_name = 'profile'
     template_name = 'teacher/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
     def get_queryset(self):
         try:

@@ -29,9 +29,9 @@
                             <thead>
                             <tr>
                                 <th>Students</th>
+                                <th>Subject</th>
                                 <th>Assignment title</th>
                                 <th>File</th>
-                                <th>Status</th>
                                 <th>Created at</th>
                                 <th>Actions</th>
                             </tr>
@@ -40,7 +40,10 @@
                             {% for obj in assignments %}
                                 <tr>
                                     <td>
-                                        {{ request.user.username }}
+                                        {{ obj.student.username }}
+                                    </td>
+                                    <td>
+                                        {{ obj.subject }}
                                     </td>
                                     <td>{{ obj.title }}</td>
                                     <td>
@@ -48,9 +51,6 @@
                                     </td>
                                     <td>
                                         <span>{{ obj.created_at }}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{ obj.updated_at }}</span>
                                     </td>
 
                                     <td>
@@ -69,5 +69,5 @@
             </div>
         </div>
     </div>
-    {% include 'common/modal.html' %}
+    {% include 'assignment/modal.html' %}
 {% endblock %}

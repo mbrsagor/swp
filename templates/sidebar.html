@@ -1,8 +1,16 @@
 {% load static %}
 <div class="app-sidebar__user">
-    <img width="80px" class="app-sidebar__user-avatar"
-        src="{% static 'image/susanto-paul.png' %}"
+    
+    {% if user.roll == 'STUDENT' %}
+        <img width="80px" class="app-sidebar__user-avatar"
+        src="{% if user.student_profile.avatar %} {{ user.student_profile.avatar.url }} {% else %}{% static 'image/avatar.png' %} {% endif %}"
         alt="User Image">
+    {% else %}
+        <img width="80px" class="app-sidebar__user-avatar"
+            src="{% if user.teacher_profile.avatar %} {{ user.teacher_profile.avatar.url }} {% else %}{% static 'image/avatar.png' %} {% endif %}"
+            alt="User Image">
+    {% endif %}
+        
     <div>
         <p class="app-sidebar__user-name">{{ user.username }}</p>
         <p class="app-sidebar__user-designation">{{ user.email }}</p>
@@ -61,11 +69,6 @@
     {% endif %}
     {% if user.roll == 'TEACHER' or user.is_superuser %}
     <li>
-        <a class="app-menu__item" href="{% url 'routines_view' %}">
-            <span class="app-menu__label">Routines</span>
-        </a>
-    </li>
-    <li>
         <a class="app-menu__item" href="{% url 'marks_view' %}">
             <span class="app-menu__label">Marks</span>
         </a>
@@ -87,12 +90,17 @@
             <span class="app-menu__label">Certificates</span>
         </a>
     </li>
+    {% endif %}
+    <li>
+        <a class="app-menu__item" href="{% url 'routines_view' %}">
+            <span class="app-menu__label">Routines</span>
+        </a>
+    </li>
     <li>
         <a class="app-menu__item" href="{% url 'assignment_create_and_list_view' %}">
             <span class="app-menu__label">Assignments</span>
         </a>
     </li>
-    {% endif %}
     <li>
         <a class="app-menu__item" href="{% url 'books_list_view' %}">
             <span class="app-menu__label">E-Books</span>
