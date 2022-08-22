@@ -1,5 +1,6 @@
 from django.db import models
-from portal.models import TimeStamp, Semester
+from swp.models import TimeStamp
+from faculties.models import Semester
 from users.models import Student
 
 

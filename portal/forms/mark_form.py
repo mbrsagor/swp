@@ -8,7 +8,6 @@ class MarkForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super(MarkForm, self).__init__(*args, **kwargs)
-        self.fields['student'].queryset = Student.objects.filter(department=self.request.user.department)
 
     class Meta:
         model = Mark

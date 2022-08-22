@@ -9,7 +9,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
     <div class="row">
@@ -18,10 +18,9 @@
                 {% include 'common/success_message.html' %}
                 {% if user.is_superuser %}
                 <div class="tile-header text-right mb-2">
-                    <button data-toggle="modal" data-target="#exampleModal" type="button"
-                            class="btn btn-sm btn-success">
-                        <i class="fa fa-plus"></i>
-                    </button>
+                    <a href="{% url 'portal:notices-create' %}" class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i> Add Books
+                    </a>
                 </div>
                 {% endif %}
                 <div class="tile-body">
@@ -49,9 +48,9 @@
                                     <td>{{ obj.updated_at|date }}</td>
                                     {% if user.is_superuser %}
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'notice-delete-view' pk=obj.pk %}"><i
+                                        <a class="btn btn-danger btn-sm" href="{% url 'portal:notice-delete' pk=obj.pk %}"><i
                                                 class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'notices-update-view' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'portal:notices-update' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
                                     </td>
                                     {% endif %}
                                 </tr>
@@ -67,5 +66,4 @@
             </div>
         </div>
     </div>
-    {% include 'notice/modal.html' %}
 {% endblock %}

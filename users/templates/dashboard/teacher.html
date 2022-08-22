@@ -1,0 +1,47 @@
+
+<div class="tile-body">
+    <h3>Assignments</h3>
+    {% if assignments %}
+        <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Course Schedule</th>
+                <th>title</th>
+                <th>PDF Files</th>
+                <th>Create</th>
+                <th>Last Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in assignments %}
+                <tr>
+                    <td>
+                        {{ obj.teacher }}
+                    </td>
+                    <td>
+                        {{ obj.course_schedule }}
+                    </td>
+                    <td>
+                        {{ obj.title }}
+                    </td>
+                     <td>
+                         <a href="{{ obj.assignment_file.url }}" target="_blank">Assignment PDF Download</a>
+                    </td>
+                    <td>{{ obj.created_at|date }}</td>
+                    <td>{{ obj.last_date }}</td>
+                    <td>
+                        <a class="btn btn-success btn-sm" href="{% url 'faculties:assignments-update' pk=obj.pk %}">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'faculties:assignments-delete' pk=obj.pk %}">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

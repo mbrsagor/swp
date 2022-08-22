@@ -9,7 +9,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
     <div class="row">
@@ -21,18 +21,12 @@
                         <div class="modal-body">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label>{{ form.ssc_certificate.label }}</label>
-                                {{ form.ssc_certificate }}
+                                <label>{{ form.certificate_title.label }}</label>
+                                {{ form.certificate_title }}
                             </div>
-                            <img src="" alt="" id="showImage1" style="height: 150px; width: 200;">
                             <div class="form-group">
-                                <label>{{ form.hsc_certificate.label }}</label>
-                                {{ form.hsc_certificate }}
-                            </div>
-                            <img src="" alt="" id="showImage2" style="height: 150px; width: 200;">
-                            <div class="form-group">
-                                <label>{{ form.cv.label }}</label>
-                                {{ form.cv }}
+                                <label>{{ form.certificate.label }}</label>
+                                {{ form.certificate }}
                             </div>
                         </div>
                             <button type="submit" class="btn btn-primary m-2">Save</button>
@@ -41,26 +35,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block javascript %}
-<script>
-    const form = document.querySelector('#form')
-    const uploadImg1 = document.getElementById('ssc_certificate');
-    const uploadImg2 = document.getElementById('hsc_certificate');
-    const show1 = document.getElementById('showImage1');
-    const show2 = document.getElementById('showImage2');
-
-    uploadImg1.addEventListener('change', (e) => {
-        const formData = new FormData(form)
-        const file = formData.get('ssc_certificate')
-        const image = URL.createObjectURL(file)
-        show1.setAttribute('src', image)
-    })
-    uploadImg2.addEventListener('change', (e) => {
-        const formData = new FormData(form)
-        const file = formData.get('hsc_certificate')
-        const image = URL.createObjectURL(file)
-        show2.setAttribute('src', image)
-    })
-</script>
 {% endblock %}

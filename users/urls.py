@@ -1,28 +1,28 @@
-from django.urls import path, re_path
-from users import views
+from django.urls import path
+from users.views import auth_view, student_view, teacher_view, dashboard_view
 
-
+app_name = "users"
 urlpatterns = [
-    path('', views.DashboardView.as_view(), name='dashboard'),
-    path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
+    path("", dashboard_view.DashboardView.as_view(), name="dashboard"),
+    path("dashboard/", dashboard_view.DashboardView.as_view(), name="dashboard"),
     # Auth
-    path('login/', views.SingInView.as_view(), name="login"),
-    path('logout/', views.SignOutView.as_view(), name='logout'),
-    path('registration/', views.RegistrationView.as_view(), name='registration'),
+    path("login/", auth_view.SingInView.as_view(), name="login"),
+    path("logout/", auth_view.SignOutView.as_view(), name="logout"),
+    path("registration/", student_view.RegistrationView.as_view(), name="registration"),
     # Profile
-    path('profile/<pk>/', views.StudentProfileView.as_view(), name="profile"),
-    path('profile/update/<pk>/', views.ProfileUpdateView.as_view(), name="profile-update"),
+    path("profiles/<pk>/", student_view.StudentProfileView.as_view(), name="profiles"),
+    path("profiles/<pk>/update/", student_view.ProfileUpdateView.as_view(), name="profiles-update"),
     # students
-    path('students/', views.StudentListView.as_view(), name='students-view'),
-    path('students/create/', views.StudentCreateView.as_view(), name='students-create-view'),
-    path('students/update/<pk>/', views.StudentUpdateView.as_view(), name='students-update-view'),
-    path('students/delete/<pk>/', views.StudentDeleteView.as_view(), name='students-delete-view'),
+    path("students/", student_view.StudentListView.as_view(), name="students"),
+    path("students/create/", student_view.StudentCreateView.as_view(), name="students-create"),
+    path("students/<pk>/update/", student_view.StudentUpdateView.as_view(), name="students-update"),
+    path("students/<pk>/delete/", student_view.StudentDeleteView.as_view(), name="students-delete"),
     # teachers
-    path('teachers/', views.TeacherListView.as_view(), name='teachers-view'),
-    path('teachers/profile/<pk>/', views.TeacherProfileView.as_view(), name='teachers-profile-view'),
-    path('teachers/profile/update/<pk>/', views.TeacherProfileUpdateView.as_view(),
-         name='teachers-profile-update-view'),
-    path('teachers/create/', views.TeacherCreateView.as_view(), name='teachers-create-view'),
-    path('teachers/update/<pk>/', views.TeacherUpdateView.as_view(), name='teachers-update-view'),
-    path('teacher/delete/<pk>/', views.TeacherDeleteView.as_view(), name='teacher-delete-view'),
+    path("teachers/", teacher_view.TeacherListView.as_view(), name="teachers"),
+    path("teachers/profile/<pk>/", teacher_view.TeacherProfileView.as_view(), name="teachers-profile"),
+    path("teachers/profile/<pk>/update/", teacher_view.TeacherProfileUpdateView.as_view(),
+         name="teachers-profile-update"),
+    path("teachers/create/", teacher_view.TeacherCreateView.as_view(), name="teachers-create"),
+    path("teachers/<pk>/update/", teacher_view.TeacherUpdateView.as_view(), name="teachers-update"),
+    path("teachers/<pk>/delete/", teacher_view.TeacherDeleteView.as_view(), name="teachers-delete"),
 ]

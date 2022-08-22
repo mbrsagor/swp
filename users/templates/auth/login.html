@@ -26,7 +26,7 @@
             <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
             <div>
                 {% if form.errors %}
-                    <p class="alert alert-danger" role="alert">{{form.errors}}}</p>
+                    {% include 'common/error_message.html' %}
                 {% endif %}
             </div>
             <div class="form-group">
@@ -45,7 +45,7 @@
                     <div class="animated-checkbox">
                         {{ form.remember_me }} Stay Signed in
                     </div>
-                    <p class="semibold-text mb-2"><a href="{% url 'registration' %}">Registration</a></p>
+                    <p class="semibold-text mb-2"><a href="{% url 'users:registration' %}">Registration</a></p>
                 </div>
             </div>
             <div class="form-group btn-container">

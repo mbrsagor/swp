@@ -20,8 +20,8 @@
                     {% include 'include/admin-table.html' %}
                 {% endif %}
 
-                {% if user.roll == 'STUDENT' or user.is_superuser %}
-                    {% include 'include/student-table.html' %}
+                {% if user.teacher or user.is_superuser %}
+                    {% include 'dashboard/teacher.html' %}
                 {% endif %}
                 
                 {% if user.roll == 'TEACHER' or user.is_superuser %}

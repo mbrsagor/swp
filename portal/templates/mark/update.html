@@ -9,7 +9,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
     <div class="row">
@@ -21,11 +21,11 @@
                             {% csrf_token %}
                             {% for field in form %}
                             <div class="form-group">
-                                <label>{{ field..label }}</label>
+                                <label>{{ field.label }}</label>
                                 {{ field }}
                             </div>
                         {% endfor %}
-                            <button type="submit" class="btn btn-primary m-2">Save</button>
+                            <button type="submit" class="btn btn-primary m-2">Update</button>
                     </form>
                 </div>
             </div>

@@ -1,29 +1,30 @@
-from django.urls import reverse
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect
+from django.utils.decorators import method_decorator
 from django.views import generic
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 from portal.forms.student_form import CertificateForm, ProjectForm
 from portal.models import Certificate, Project
 
 
-class CertificateListView(LoginRequiredMixin, generic.ListView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class CertificateListView(generic.ListView):
     model = Certificate
     context_object_name = 'certificates'
-    template_name = 'certificate/certificate.html'
+    template_name = 'certificate/list.html'
 
     def get_queryset(self):
-        if self.request.user.roll == 'STUDENT':
-            return super(CertificateListView, self).get_queryset().filter(student=self.request.user)
-        return super(CertificateListView, self).get_queryset()
+        qs = super(CertificateListView, self).get_queryset()
+        if self.request.user.student:
+            return qs.filter(student=self.request.user)
+        return qs.all()
 
 
-class CertificateCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class CertificateCreateView(SuccessMessageMixin, generic.CreateView):
     form_class = CertificateForm
     template_name = 'certificate/create.html'
-    success_url = '/certificates/'
+    success_url = reverse_lazy('portal:certificates')
     success_message = 'The certificate created.'
 
     def form_valid(self, form):
@@ -31,38 +32,43 @@ class CertificateCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.Cre
         return super(CertificateCreateView, self).form_valid(form)
 
 
-class CertificateUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class CertificateUpdateView(SuccessMessageMixin, generic.UpdateView):
     model = Certificate
     form_class = CertificateForm
-    success_url = '/certificates/'
+    success_url = reverse_lazy('portal:certificates')
     template_name = 'certificate/update.html'
     success_message = 'The certificate updated.'
 
 
-class CertificateDeleteView(LoginRequiredMixin, generic.DeleteView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class CertificateDeleteView(generic.DeleteView):
     model = Certificate
-    success_url = '/certificates/'
+    success_url = reverse_lazy('portal:certificates')
 
     def get(self, *args, **kwargs):
         return self.delete(self.request, *args, **kwargs)
 
 
-class ProjectListView(LoginRequiredMixin, generic.ListView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class ProjectListView(generic.ListView):
     model = Project
     context_object_name = 'projects'
     template_name = 'project/list.html'
 
     def get_queryset(self):
-        if self.request.user.roll == 'STUDENT':
-            return super(ProjectListView, self).get_queryset().filter(student=self.request.user)
-        return super(ProjectListView, self).get_queryset()
+        qs = super(ProjectListView, self).get_queryset()
+        if self.request.user.student:
+            return qs.filter(student=self.request.user)
+        return qs.all()
 
 
-class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class ProjectCreateView(generic.CreateView):
     model = Project
     form_class = ProjectForm
     template_name = 'project/create.html'
-    success_url = '/projects/'
+    success_url = reverse_lazy('portal:projects')
     success_message = 'The projects created.'
 
     def form_valid(self, form):
@@ -70,21 +76,26 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
         return super(ProjectCreateView, self).form_valid(form)
 
 
-class ProjectUpdateAndDetailView(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class ProjectDetailView(generic.DetailView):
     model = Project
-    form_class = ProjectForm
     context_object_name = 'project'
     template_name = 'project/detail.html'
-    success_message = 'The projects updated.'
-
-    def get_success_url(self):
-        pk = self.kwargs["pk"]
-        return reverse("project_update_detail_view", kwargs={"pk": pk})
 
 
-class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class ProjectUpdateView(generic.UpdateView):
     model = Project
-    success_url = '/projects/'
+    form_class = ProjectForm
+    success_message = 'The projects updated.'
+    success_url = reverse_lazy('portal:projects')
+    template_name = 'project/update.html'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.student), name='dispatch')
+class ProjectDeleteView(generic.DeleteView):
+    model = Project
+    success_url = reverse_lazy('portal:projects')
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)

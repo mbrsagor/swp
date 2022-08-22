@@ -21,7 +21,7 @@
                 <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline">Timeline</a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile-update' pk=profile.pk %}">Update</a>
+                        <a class="nav-link" href="{% url 'users:profiles-update' pk=profile.pk %}">Update</a>
                     </li>
                 </ul>
             </div>
@@ -42,7 +42,9 @@
                                 </ul>
                                 <ul class="list-group">
                                     <h3 class="card-title">Academic Information</h3>
-                                    <li class="list-group-item">Department: {{ profile.user.department }}</li>
+                                    <li class="list-group-item">Faculty: {{ profile.faculty }}</li>
+                                    <li class="list-group-item">Department: {{ profile.department }}</li>
+                                    <li class="list-group-item">Program: {{ profile.program.name }}</li>
                                     <li class="list-group-item">Board Roll: {{ profile.board_roll }}</li>
                                     <li class="list-group-item">SSC Passing year: {{ profile.ssc_passing_year }}</li>
                                     <li class="list-group-item">HSC Passing year: {{ profile.hsc_passing_year }}</li>
@@ -70,6 +72,32 @@
                                             </td>
                                             <td>
                                                 {{ obj.marks }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="tile-body">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Course</th>
+                                            <th>Teacher</th>
+                                            <th>Schedule</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for obj in courses %}
+                                        <tr>
+                                            <td>
+                                                {{ obj.course }}
+                                            </td>
+                                            <td>
+                                                {{ obj.teacher }}
+                                            </td>
+                                            <td>
+                                                {{ obj.schedule }}
                                             </td>
                                         </tr>
                                     {% endfor %}

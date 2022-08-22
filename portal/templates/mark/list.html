@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %} Marks {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>Marks</h1>
+            <p>Marks create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                <div class="tile-header text-right mb-2">
+                    <button data-toggle="modal" data-target="#exampleModal" type="button"
+                            class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Add Marks
+                    </button>
+                </div>
+                <div class="tile-body">
+                    {% if marks %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Teacher</th>
+                                <th>Student</th>
+                                <th>Type</th>
+                                <th>Marks</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in marks %}
+                                <tr>
+                                    <td>{{ obj.teacher }}</td>
+                                    <td>
+                                        {{ obj.student }}
+                                    </td>
+                                    <td>{{ obj.status }}</td>
+                                    <td>{{ obj.marks }}</td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="{% url 'portal:marks-update' pk=obj.pk %}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'portal:marks-delete' pk=obj.pk %}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'mark/modal.html' %}
+{% endblock %}

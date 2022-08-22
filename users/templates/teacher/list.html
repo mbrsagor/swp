@@ -9,7 +9,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
     <div class="row">
@@ -19,7 +19,7 @@
                 {% include 'common/success_message.html' %}
                 </div>
                 <div class="tile-header text-right mb-2">
-                    <a href="{% url 'teachers-create-view' %}" class="btn btn-sm btn-success">
+                    <a href="{% url 'users:teachers-create' %}" class="btn btn-sm btn-success">
                         <i class="fa fa-plus"></i>
                         Add Teacher
                     </a>
@@ -52,10 +52,10 @@
                                     <td>{{ teacher.teacher_profile.subject }}</td>
                                     <td>{{ teacher.teacher_profile.gender }}</td>
                                     <td>
-                                        <a class="btn btn-success btn-sm" href="{% url 'teachers-update-view' teacher.pk %}">
+                                        <a class="btn btn-success btn-sm" href="{% url 'users:teachers-update' teacher.pk %}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'teacher-delete-view' teacher.pk %}">
+                                        <a class="btn btn-danger btn-sm" href="{% url 'users:teachers-delete' teacher.pk %}">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     </td>

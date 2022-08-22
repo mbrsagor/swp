@@ -9,7 +9,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
     <div class="row">
@@ -17,7 +17,7 @@
             <div class="tile">
                 {% include 'common/success_message.html' %}
                 <div class="tile-header text-right mb-2">
-                    <a href="{% url 'project_create_view' %}" class="btn btn-sm btn-success">
+                    <a href="{% url 'portal:projects-create' %}" class="btn btn-sm btn-success">
                         <i class="fa fa-plus"></i>
                         Add project
                     </a>
@@ -60,10 +60,13 @@
                                     <td>{{ obj.created_at|date }}</td>
                                     <td>{{ obj.updated_at|date }}</td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'project_delete_view' pk=obj.pk %}">
+                                        <a class="btn btn-success btn-sm" href="{% url 'portal:projects-update' pk=obj.pk %}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'portal:projects-delete' pk=obj.pk %}">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'project_update_detail_view' pk=obj.pk %}">
+                                        <a class="btn btn-success btn-sm" href="{% url 'portal:projects-detail' pk=obj.pk %}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>

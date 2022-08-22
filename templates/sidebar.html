@@ -1,14 +1,22 @@
 {% load static %}
 <div class="app-sidebar__user">
     
-    {% if user.roll == 'STUDENT' %}
+    {% if user.student %}
         <img width="80px" class="app-sidebar__user-avatar"
-        src="{% if user.student_profile.avatar %} {{ user.student_profile.avatar.url }} {% else %}{% static 'image/avatar.png' %} {% endif %}"
-        alt="User Image">
-    {% else %}
+        src="{{ user.student_profile.avatarURL }}"
+        alt="student Image">
+    {% endif %}
+
+    {% if user.teacher %}
         <img width="80px" class="app-sidebar__user-avatar"
-            src="{% if user.teacher_profile.avatar %} {{ user.teacher_profile.avatar.url }} {% else %}{% static 'image/avatar.png' %} {% endif %}"
-            alt="User Image">
+            src="{{ user.teacher_profile.avatarURL }}"
+            alt="teacher Image">
+    {% endif %}
+
+    {% if user.is_superuser %}
+    <img width="80px" class="app-sidebar__user-avatar"
+            src="{{ user.admin_profile.avatarURL }}"
+            alt="admin Image">
     {% endif %}
         
     <div>
@@ -18,7 +26,7 @@
 </div>
 <ul class="app-menu">
     <li>
-        <a class="app-menu__item active" href="{% url 'dashboard' %}">
+        <a class="app-menu__item active" href="{% url 'users:dashboard' %}">
             <span class="app-menu__label">Dashboard</span>
         </a>
     </li>
@@ -28,86 +36,125 @@
             class="treeview-indicator fa fa-angle-right"></i></a>
         <ul class="treeview-menu">
             <li>
-                <a class="treeview-item" href="{% url 'teachers-view' %}">
+                <a class="treeview-item" href="{% url 'users:teachers' %}">
                     <i class="icon fa fa-circle-o"></i>
                     Teachers
                 </a>
             </li>
             <li>
-                <a class="treeview-item" href="{% url 'students-view' %}">
+                <a class="treeview-item" href="{% url 'users:students' %}">
                     <i class="icon fa fa-circle-o"></i>
                     Students
                 </a>
             </li>
         </ul>
     </li>
-    <li>
-        <a class="app-menu__item" href="{% url 'faculties-create-listview' %}">
-            <span class="app-menu__label">Faculties</span>
-        </a>
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Faculties</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:faculties' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Faculties
+                </a>
+            </li>
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:departments' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Departments
+                </a>
+            </li>
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:programs' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Programs
+                </a>
+            </li>
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:semesters' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Semesters
+                </a>
+            </li>
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:courses' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Courses
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+            class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Courses</span><i
+            class="treeview-indicator fa fa-angle-right"></i></a>
+        <ul class="treeview-menu">
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:courses' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a class="treeview-item" href="{% url 'faculties:course-schedules' %}">
+                    <i class="icon fa fa-circle-o"></i>
+                    Courses Schedule
+                </a>
+            </li>
+        </ul>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'departments-create-listview' %}">
-            <span class="app-menu__label">Departments</span>
-        </a>
-    </li>
-    <li>
-        <a class="app-menu__item" href="{% url 'subject_create_listview' %}">
+        <a class="app-menu__item" href="{#% url 'subjects' %#}">
             <span class="app-menu__label">Subjects</span>
         </a>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'semesters-create-listview' %}">
-            <span class="app-menu__label">Semesters</span>
-        </a>
-    </li>
-    <li>
-        <a class="app-menu__item" href="{% url 'payments' %}">
+        <a class="app-menu__item" href="{% url 'payments:payments' %}">
             <span class="app-menu__label">Payments</span>
         </a>
     </li>
     {% endif %}
-    {% if user.roll == 'TEACHER' or user.is_superuser %}
+    {% if user.teacher or user.is_superuser %}
     <li>
-        <a class="app-menu__item" href="{% url 'marks_view' %}">
+        <a class="app-menu__item" href="{% url 'faculties:assignments' %}">
+            <span class="app-menu__label">Assignments</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'portal:marks' %}">
             <span class="app-menu__label">Marks</span>
         </a>
     </li>
     {% endif %}
-    {% if user.roll == 'STUDENT' or user.is_superuser %}
+    {% if user.student or user.is_superuser %}
     <li>
-        <a class="app-menu__item" href="{% url 'subject_enroll' %}">
-            <span class="app-menu__label">Subject Enrolls</span>
-        </a>
-    </li>
-    <li>
-        <a class="app-menu__item" href="{% url 'project_view' %}">
+        <a class="app-menu__item" href="{% url 'portal:projects' %}">
             <span class="app-menu__label">Projects</span>
         </a>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'certificates_view' %}">
+        <a class="app-menu__item" href="{% url 'portal:certificates' %}">
             <span class="app-menu__label">Certificates</span>
         </a>
     </li>
     {% endif %}
     <li>
-        <a class="app-menu__item" href="{% url 'routines_view' %}">
+        <a class="app-menu__item" href="{% url 'faculties:course-schedules' %}">
+            <span class="app-menu__label">Courses Schedule</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href="{% url 'portal:routines' %}">
             <span class="app-menu__label">Routines</span>
         </a>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'assignment_create_and_list_view' %}">
-            <span class="app-menu__label">Assignments</span>
-        </a>
-    </li>
-    <li>
-        <a class="app-menu__item" href="{% url 'books_list_view' %}">
+        <a class="app-menu__item" href="{% url 'portal:books' %}">
             <span class="app-menu__label">E-Books</span>
         </a>
     </li>
     <li>
-        <a class="app-menu__item" href="{% url 'notices-view' %}">
+        <a class="app-menu__item" href="{% url 'portal:notices' %}">
             <span class="app-menu__label">Notices</span>
         </a>
     </li>

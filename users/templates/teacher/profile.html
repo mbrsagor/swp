@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="profile">
                 <div class="info"><img class="user-img"
-                                       src="{% if profile.avatar %} {{ profile.avatar.url }} {% else %}{% static 'image/avatar.png' %} {% endif %}">
+                                       src="{{ profile.avatarURL }}">
                     <h4>{{ profile.user.username}}</h4>
                     <p>{{ profile.user.department }}</p>
                 </div>
@@ -20,7 +20,7 @@
                 <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline">Timeline</a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'teachers-profile-update-view' profile.pk %}">Update</a>
+                        <a class="nav-link" href="{% url 'users:teachers-profile-update' profile.pk %}">Update</a>
                     </li>
                 </ul>
             </div>

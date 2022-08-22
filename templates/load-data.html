@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %} Marks update  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>Marks update</h1>
+            <p>Marks update</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 m-auto card py-2" id="app">
+                    {{form.errors}}
+                    <form method="post" enctype="multipart/form-data" id="form">
+                            {% csrf_token %}
+                        <select class="custom-select" v-model="faculty_selected" @change="loadFac($event)">
+                          <option v-for="(v,k) in faculty_list" :key="k" :value="v">[[v.name]]</option>
+                        </select>
+                        <select class="custom-select" v-model="department_selected" @change="loadDep($event)">
+                          <option v-for="(v,k) in department_arr" :key="k" :value="v">[[v.name]]</option>
+                        </select>
+                        <select class="custom-select">
+                          <option v-for="(v,k) in progream_arr" :key="k" :value="v">[[v.name]]</option>
+                        </select>
+                            <button type="submit" class="btn btn-primary m-2">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+    var app = new Vue({
+      el: '#app',
+      delimiters: ['[[', ']]'],
+      data: {
+        faculty_list: {{ faculties|safe }},
+        department_list: {{ departments|safe }},
+        program_list: {{ programs|safe }},
+        faculty_selected: '',
+        department_arr: [],
+        department_selected: '',
+        progream_arr: [],
+      },
+      mounted: function(){
+        console.log('I am working.')
+      },
+      methods: {
+        loadFac(){
+            this.department_arr = [];
+            for (let i = 0; i < this.department_list.length; i++) {
+                if (this.faculty_selected.name === this.department_list[i].faculty__name) {
+                    this.department_arr.push({name:this.department_list[i].name});
+                }
+            }
+            this.loadDep()
+
+        },
+        loadDep(){
+            this.progream_arr = [];
+            for (let i = 0; i < this.program_list.length; i++) {
+                if (this.department_selected.name === this.program_list[i].department__name) {
+                    this.progream_arr.push({name:this.program_list[i].name});
+                }
+            }
+
+        },
+      }
+    })
+</script>
+{% endblock %}

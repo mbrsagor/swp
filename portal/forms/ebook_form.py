@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput, Textarea, FileInput, Select
 from portal.models import Ebook
 
 
@@ -8,11 +8,12 @@ class BookForm(ModelForm):
         fields = '__all__'
         exclude = ('teacher',)
 
-    def __init__(self, *args, **kwargs):
-        super(BookForm, self).__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs = {
-                'class': 'form-control',
-                'id': field
-            }
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
+            'book_cover_image': FileInput(attrs={'class': 'form-control', 'id': 'book_cover_image'}),
+            'author_name': TextInput(attrs={'class': 'form-control', 'id': 'author_name'}),
+            'description': Textarea(attrs={'class': 'form-control', 'id': 'description'}),
+            'book_pdf': FileInput(attrs={'class': 'form-control', 'id': 'book_pdf'}),
+        }
+
 
