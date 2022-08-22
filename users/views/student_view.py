@@ -53,7 +53,7 @@ class ProfileUpdateView(SuccessMessageMixin, generic.UpdateView):
         return super(ProfileUpdateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse("users:profiles", kwargs={"pk": self.object.pk})
+        return reverse("users:profiles", kwargs={"pk": self.object.user.pk})
 
     def get_form_kwargs(self):
         kwargs = super(ProfileUpdateView, self).get_form_kwargs()

@@ -22,6 +22,5 @@ def create_teacher_profile(sender, instance, created, **kwargs):
 def uniqie_id_genarate(sender, instance, **kwargs):
     if instance.roll_number:
         year_last_two_digit = instance.created_at.strftime("%y")
-        print(year_last_two_digit)
-        instance.unique_id = f'521{instance.faculty.code}{year_last_two_digit}{instance.program.code}{instance.roll_number}'
+        instance.unique_id = f'097{year_last_two_digit}100{instance.program.code}{instance.roll_number}'
 

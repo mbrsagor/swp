@@ -82,7 +82,7 @@ class StudentProfile(TimeStamp):
     ssc_passing_year = models.DateField(blank=True, null=True)
     hsc_passing_year = models.DateField(blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    cgpa = models.DecimalField(max_digits=5, decimal_places=2)
+    cgpa = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     gender = models.CharField(choices=GENDER, max_length=10, blank=True)
     is_updated = models.BooleanField(default=False)
 
