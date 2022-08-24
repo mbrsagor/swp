@@ -1,9 +1,9 @@
 from django.urls import path
 from portal.views import student_view
 from portal.views import ebook_view
-from portal.views import routine
+from portal.views import routine_view
 from portal.views import notice_view
-from portal.views import mark
+from portal.views import mark_view
 
 
 app_name = 'portal'
@@ -21,9 +21,9 @@ urlpatterns = [
          name='projects-update'),
     path('projects/<pk>/delete/', student_view.ProjectDeleteView.as_view(), name='projects-delete'),
     # mark
-    path('marks/', mark.MarkListView.as_view(), name='marks'),
-    path('marks/<pk>/update/', mark.MarkUpdateView.as_view(), name='marks-update'),
-    path('marks/<pk>/delete/', mark.MarkDeleteView.as_view(), name='marks-delete'),
+    path('marks/', mark_view.MarkListView.as_view(), name='marks'),
+    path('marks/<pk>/update/', mark_view.MarkUpdateView.as_view(), name='marks-update'),
+    path('marks/<pk>/delete/', mark_view.MarkDeleteView.as_view(), name='marks-delete'),
 
     # E-Books urls
     path('books/', ebook_view.BooksListView.as_view(), name='books'),
@@ -37,7 +37,7 @@ urlpatterns = [
     path('notices/<pk>/update/', notice_view.NoticeUpdateView.as_view(), name='notices-update'),
     path('notices/<pk>/delete/', notice_view.NoticeDeleteView.as_view(), name='notice-delete'),
     # routine
-    path('routines/', routine.RoutineCreateAndListView.as_view(), name='routines'),
-    path('routines/<pk>/update', routine.RoutineUpdateView.as_view(), name='routines-update'),
-    path('routines/<pk>/delete', routine.RoutineDeleteView.as_view(), name='routines-delete'),
+    path('routines/', routine_view.RoutineCreateAndListView.as_view(), name='routines'),
+    path('routines/<pk>/update', routine_view.RoutineUpdateView.as_view(), name='routines-update'),
+    path('routines/<pk>/delete', routine_view.RoutineDeleteView.as_view(), name='routines-delete'),
 ]

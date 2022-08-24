@@ -1,8 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    PermissionsMixin
-)
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils.translation import gettext_lazy as _
 from swp.models import TimeStamp
 from users.managers import UserManager
 from faculties.models import Faculty, Department, Program
@@ -67,24 +65,29 @@ class StudentProfile(TimeStamp):
         ('FEMALE', 'FEMALE'),
         ('OTHER', 'OTHER'),
     )
-    MAX_CREDIT = 10
+
+    SESSION_CHOICES = (
+        ('SPRING', 'SPRING'),
+        ('SUMMER', 'SUMMER'),
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
-    roll_number = models.CharField(max_length=5, blank=True, help_text='student id format 001-101',)
+    roll_number = models.CharField(max_length=5, blank=True, help_text='student roll number format 001-101',)
     unique_id = models.CharField(max_length=16, blank=True)
-    faculty = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
-    program = models.ForeignKey(Program, on_delete=models.SET_NULL, null=True, blank=True)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE, null=True, blank=True)
+    session = models.CharField(choices=SESSION_CHOICES, max_length=10)
     avatar = models.ImageField(upload_to='student-avatar/', max_length=524288)
-    name = models.CharField(max_length=50, blank=True)
-    father_name = models.CharField(max_length=50, blank=True)
-    mother_name = models.CharField(max_length=50, blank=True)
-    board_roll = models.CharField(max_length=100, blank=True)
-    ssc_passing_year = models.DateField(blank=True, null=True)
-    hsc_passing_year = models.DateField(blank=True, null=True)
-    date_of_birth = models.DateField(blank=True, null=True)
-    cgpa = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    gender = models.CharField(choices=GENDER, max_length=10, blank=True)
-    is_updated = models.BooleanField(default=False)
+    full_name = models.CharField(max_length=50)
+    father_name = models.CharField(max_length=50)
+    mother_name = models.CharField(max_length=50)
+    ssc_passing_year = models.DateField(null=True, blank=True)
+    hsc_passing_year = models.DateField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    cgpa = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    gender = models.CharField(choices=GENDER, max_length=10)
+    credit = models.FloatField(_('code'), default=0)
 
     @property
     def avatarURL(self):
@@ -93,6 +96,9 @@ class StudentProfile(TimeStamp):
     # @property
     # def credit(self):
     #     return self.my_course_schedule.
+
+    def __str__(self):
+        return self.user.username
 
 
 class TeacherProfile(TimeStamp):
@@ -104,11 +110,14 @@ class TeacherProfile(TimeStamp):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
     avatar = models.ImageField(upload_to='book-avatar/', max_length=524288)
     gender = models.CharField(choices=GENDER, max_length=10, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.PROTECT, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
     def avatarURL(self):
         return self.avatar.url if self.avatar else '/static/image/avatar.png'
+    
+    def __str__(self):
+        return self.user.username
 
 
 class AdminProfile(TimeStamp):
@@ -124,6 +133,9 @@ class AdminProfile(TimeStamp):
     @property
     def avatarURL(self):
         return self.avatar.url if self.avatar else '/static/image/avatar.png'
+    
+    def __str__(self):
+        return self.user.username
 
 
 class StudentManager(models.Manager):

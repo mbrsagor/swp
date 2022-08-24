@@ -16,6 +16,19 @@ class RegistrationView(SuccessMessageMixin, generic.CreateView):
     success_message = "Successfully registration done."
     template_name = "auth/register.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationView, self).get_context_data(**kwargs)
+        faculties = Faculty.objects.all().order_by("name")
+        faculty_list = list(faculties.values("name", "id"))
+        context["faculties"] = json.dumps(faculty_list)
+        departments = Department.objects.all().order_by("name")
+        faculty_list = list(departments.values("name", "faculty__id", "id"))
+        context["departments"] = json.dumps(faculty_list)
+        programs = Program.objects.all().order_by("name")
+        program_list = list(programs.values("name", "department__id", "id"))
+        context["programs"] = json.dumps(program_list)
+        return context
+
     def form_valid(self, form):
         form.instance.is_active = True
         return super(RegistrationView, self).form_valid(form)
@@ -34,31 +47,7 @@ class ProfileUpdateView(SuccessMessageMixin, generic.UpdateView):
     form_class = StudentProfileForm
     success_message = "Profile has been updated successfully."
     template_name = "auth/profile_update.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileUpdateView, self).get_context_data(**kwargs)
-        faculties = Faculty.objects.all().order_by("name")
-        faculty_list = list(faculties.values("name", "id"))
-        context["faculties"] = json.dumps(faculty_list)
-        departments = Department.objects.all().order_by("name")
-        faculty_list = list(departments.values("name", "faculty__id", "id"))
-        context["departments"] = json.dumps(faculty_list)
-        programs = Program.objects.all().order_by("name")
-        program_list = list(programs.values("name", "department__id", "id"))
-        context["programs"] = json.dumps(program_list)
-        return context
-    
-    def form_valid(self, form):
-        form.instance.is_updated = True
-        return super(ProfileUpdateView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse("users:profiles", kwargs={"pk": self.object.user.pk})
-
-    def get_form_kwargs(self):
-        kwargs = super(ProfileUpdateView, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
+    success_url = reverse_lazy('users:students')
 
 
 @method_decorator(login_required(login_url="/login/"), name="dispatch")
@@ -78,6 +67,19 @@ class StudentCreateView(generic.CreateView):
     form_class = StudentSingUpForm
     success_url = reverse_lazy("users:students")
     template_name = "student/create.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentCreateView, self).get_context_data(**kwargs)
+        faculties = Faculty.objects.all().order_by("name")
+        faculty_list = list(faculties.values("name", "id"))
+        context["faculties"] = json.dumps(faculty_list)
+        departments = Department.objects.all().order_by("name")
+        faculty_list = list(departments.values("name", "faculty__id", "id"))
+        context["departments"] = json.dumps(faculty_list)
+        programs = Program.objects.all().order_by("name")
+        program_list = list(programs.values("name", "department__id", "id"))
+        context["programs"] = json.dumps(program_list)
+        return context
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name="dispatch")

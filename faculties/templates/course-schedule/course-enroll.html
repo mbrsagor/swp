@@ -16,14 +16,6 @@
         <div class="col-md-12">
             <div class="tile">
                 {% include 'common/success_message.html' %}
-                {% if user.is_superuser %}
-                    <div class="tile-header text-right mb-2">
-                        <a href="{% url 'faculties:course-schedules-create' %}" class="btn btn-sm btn-success">
-                            <i class="fa fa-plus"></i>
-                            Add Course Schedule
-                        </a>
-                    </div>
-                {% endif %}
                 {% if object_list %}
                 <div class="tile-body">
                         <table class="table table-hover table-bordered" id="sampleTable">
@@ -31,7 +23,6 @@
                             <tr>
                                 <th>Course</th>
                                 <th>Teachers</th>
-                                <th>Students</th>
                                 <th>Schedule</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
@@ -48,29 +39,12 @@
                                         {{ obj.teacher }}
                                     </td>
                                     <td>
-                                        <ul>
-                                            {% for student in obj.students.all %}
-                                                <li>{{ student }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                    <td>
                                         {{ obj.schedule }}
                                     </td>
                                     <td>{{ obj.created_at|date }}</td>
                                     <td>{{ obj.updated_at|date }}</td>
                                     <td>
-                                        {% if user.is_superuser %}
-                                        <a class="btn btn-danger btn-sm" href="{% url 'faculties:course-schedules-delete' pk=obj.pk %}"><i
-                                                class="fa fa-trash"></i></a>
-                                        <a class="btn btn-success btn-sm" href="{% url 'faculties:course-schedules-update' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
-                                        {% endif %}
-                                        {% if user.student %}
-                                            <a href="{% url 'faculties:course-schedules-join' obj.pk %}" class="btn btn-primary">Join</a>
-                                        {% endif %}
-                                         <a class="btn btn-success btn-sm" href="{% url 'faculties:course-schedules-detail' pk=obj.pk %}">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </a>
+                                        <a href="{% url 'faculties:course-schedules-join' obj.pk %}" class="btn btn-primary">Join</a>
                                     </td>
                                 </tr>
                             {% endfor %}

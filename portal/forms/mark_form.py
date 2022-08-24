@@ -6,7 +6,6 @@ from users.models import Student
 class MarkForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
         super(MarkForm, self).__init__(*args, **kwargs)
 
     class Meta:

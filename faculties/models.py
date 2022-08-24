@@ -1,9 +1,9 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from datetime import datetime
 from swp.models import TimeStamp
-from django.utils.translation import gettext_lazy as _
 
 User = settings.AUTH_USER_MODEL
 
@@ -32,7 +32,6 @@ class Program(TimeStamp):
     """Program can be submitted only admin"""
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='programs')
     name = models.CharField(_('name'), max_length=255)
-    code = models.CharField(_('code'), max_length=10)
 
     def __str__(self):
         return self.name
@@ -53,10 +52,10 @@ class CourseSchedule(TimeStamp):
         ('DAY', 'Day'),
         ('EVENING', 'Evening')
     )
-
+    MAX_CREDIT = 25.0
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_schedule')
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='teacher_course_schedule')
-    student = models.ManyToManyField(User, related_name='my_course_schedule')
+    students = models.ManyToManyField(User, blank=True, related_name='my_course_schedule')
     schedule = models.CharField(choices=SCHEDULE_CHOICES, max_length=8)
     is_active = models.BooleanField(default=True)
 
@@ -94,25 +93,16 @@ class AssignmentSubmit(TimeStamp):
 
 class Semester(TimeStamp):
     """Semester can be submitted only admin"""
-    SPRING = 1
-    SUMMER = 2
-
-    SESSION_CHOICES = (
-        (SPRING, _('SPRING')),
-        (SUMMER, _('SUMMER')),
-    )
 
     SCHEDULE_CHOICES = (
         ('DAY', 'Day (Regular)'),
         ('EVENING', 'Evening')
     )
-
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='semesters')
-    session = models.IntegerField(choices=SESSION_CHOICES)
-    year = models.DateField()
-    schedule = models.CharField(choices=SCHEDULE_CHOICES, max_length=8)
-    batch = models.CharField(max_length=10)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    schedule = models.CharField(choices=SCHEDULE_CHOICES, max_length=8)
+    year = models.DateField()
+    batch = models.CharField(max_length=10)
 
     def __str__(self):
         return f'{self.student} -> {self.session}'

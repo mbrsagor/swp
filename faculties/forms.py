@@ -58,11 +58,10 @@ class SemesterForm(forms.ModelForm):
 class ProgramForm(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ('department', 'name', 'code')
+        fields = ('department', 'name')
         widgets = {
             'department': forms.Select(attrs={'class': 'form-control', 'id': 'department'}),
-            'name': forms.TextInput(attrs={'class': 'form-control', 'id': 'name'}),
-            'code': forms.NumberInput(attrs={'class': 'form-control', 'id': 'code'})
+            'name': forms.TextInput(attrs={'class': 'form-control', 'id': 'name'})
         }
 
 
@@ -81,7 +80,7 @@ class CourseScheduleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CourseScheduleForm, self).__init__(*args, **kwargs)
         self.fields['teacher'].queryset = Teacher.objects.all()
-        self.fields['student'].queryset = Student.objects.all()
+        self.fields['students'].queryset = Student.objects.all()
 
     class Meta:
         model = CourseSchedule
@@ -90,7 +89,7 @@ class CourseScheduleForm(forms.ModelForm):
         widgets = {
             'course': forms.Select(attrs={'class': 'form-control', 'id': 'course'}),
             'teacher': forms.Select(attrs={'class': 'form-control', 'id': 'teacher'}),
-            'student': forms.SelectMultiple(attrs={'class': 'form-control', 'id': 'student'}),
+            'students': forms.SelectMultiple(attrs={'class': 'form-control', 'id': 'students'}),
             'schedule': forms.Select(attrs={'class': 'form-control', 'id': 'schedule'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_active'}),
         }
@@ -100,7 +99,10 @@ class AssignmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super(AssignmentForm, self).__init__(*args, **kwargs)
-        self.fields['course_schedule'].queryset = CourseSchedule.objects.filter(teacher=user)
+        if user.teacher:
+            self.fields['course_schedule'].queryset = CourseSchedule.objects.filter(teacher=user)
+        else:
+            self.fields['course_schedule'].queryset = CourseSchedule.objects.all()
 
     class Meta:
         model = Assignment

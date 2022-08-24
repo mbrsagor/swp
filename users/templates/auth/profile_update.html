@@ -19,30 +19,38 @@
                     {% include 'common/error_message.html' %}
                 {% endif %}
                 {% csrf_token %}
+                <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="roll_number">Roll Number</label>
+                        {{ form.roll_number }}
+                    </div>
+                    <div class="form-group">
+                        <label for="unique_id">Unique ID</label>
+                        {{ form.unique_id }}
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Credit</label>
+                        {{ form.credit }}
+                    </div>
+                </div>
                 <div class="pb-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
                     <div class="form-group">
                         <label for="faculty">Faculty</label>
-                        <select class="custom-select" name="faculty" v-model="faculty_selected" @change="loadFac($event)">
-                          <option v-for="(v,k) in faculty_list" :key="k" :value="v.id">[[v.name]]</option>
-                        </select>
+                        {{ form.faculty }}
                     </div>
                     <div class="form-group">
                         <label for="department">Department</label>
-                        <select class="custom-select" name="department" v-model="department_selected" @change="loadDep($event)">
-                          <option v-for="(v,k) in department_arr" :key="k" :value="v.id">[[v.name]]</option>
-                        </select>
+                        {{ form.department }}
                     </div>
                     <div class="form-group">
                         <label for="program">Program</label>
-                        <select class="custom-select" name="program">
-                          <option v-for="(v,k) in progream_arr" :key="k" :value="v.id">[[v.name]]</option>
-                        </select>
+                        {{ form.program }}
                     </div>
                 </div>
                 <div class="pb-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
                     <div class="form-group">
                         <label for="name">Enter Full Name</label>
-                        {{ form.name }}
+                        {{ form.full_name }}
                     </div>
                     <div class="form-group">
                         <label for="father_name">Enter father Name</label>
@@ -63,8 +71,8 @@
                         {{ form.gender }}
                     </div>
                     <div class="form-group">
-                        <label for="board_roll">Enter Road Roll</label>
-                        {{ form.board_roll }}
+                        <label for="session">Select Session</label>
+                        {{ form.session }}
                     </div>
                 </div>
                 <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
@@ -83,7 +91,7 @@
                 </div>
                 <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
                     <div class="form-group">
-                        <label for="date_of_birth">Images</label>
+                        <label for="avatar">Profile Image</label>
                         {{ form.avatar }}
                     </div>
                 </div>
@@ -91,47 +99,4 @@
             </form>
         </div>
     </div>
-{% endblock %}
-{% block javascript %}
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<script>
-    var app = new Vue({
-      el: '#app',
-      delimiters: ['[[', ']]'],
-      data: {
-        faculty_list: {{ faculties|safe }},
-        department_list: {{ departments|safe }},
-        program_list: {{ programs|safe }},
-        faculty_selected: '',
-        department_arr: [],
-        department_selected: '',
-        progream_arr: [],
-      },
-      mounted: function(){
-        console.log('I am working.')
-      },
-      methods: {
-        loadFac(){
-            this.department_arr = [];
-            for (let i = 0; i < this.department_list.length; i++) {
-                if (this.faculty_selected === this.department_list[i].faculty__id) {
-                    this.department_arr.push({name:this.department_list[i].name, id: this.department_list[i].id});
-                }
-            };
-            console.log(this.department_arr)
-        },
-        loadDep(){
-            this.progream_arr = [];
-            for (let i = 0; i < this.program_list.length; i++) {
-                if (this.department_selected === this.program_list[i].department__id) {
-                    console.log(this.program_list[i].id)
-                    this.progream_arr.push({name:this.program_list[i].name, id: this.program_list[i].id});
-                }
-            }
-            console.log(this.department_selected)
-
-        },
-      }
-    })
-</script>
 {% endblock %}

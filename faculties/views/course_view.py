@@ -1,12 +1,14 @@
 from django.http import HttpResponseRedirect
-from django.views import generic
+from django.views import generic, View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.urls import reverse_lazy
 from faculties.models import Course, CourseSchedule
 from faculties.forms import CourseForm, CourseScheduleForm
+from users.models import StudentProfile
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
@@ -54,7 +56,7 @@ class CourseScheduleListView(LoginRequiredMixin, generic.ListView):
             return qs.filter(teacher=self.request.user)
 
         if self.request.user.student:
-            return qs.filter(student=self.request.user)
+            return qs.filter(students=self.request.user)
 
         return qs.all()
 
@@ -69,6 +71,32 @@ class CourseScheduleCreateView(generic.CreateView):
     form_class = CourseScheduleForm
     success_url = reverse_lazy('faculties:course-schedules')
     template_name = 'course-schedule/create.html'
+
+
+@method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
+class CourseScheduleView(generic.ListView):
+    model = CourseSchedule
+    template_name = 'course-schedule/course-enroll.html'
+
+
+@method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
+class CourseScheduleEnrollView(View):
+    def get(self, *args, **kwargs):
+        if CourseSchedule.objects.filter(students=self.request.user).exists():
+            messages.info(self.request, 'Already Joined')
+            return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
+
+        course_schedule = CourseSchedule.objects.get(pk=kwargs['pk'])
+        profile = StudentProfile.objects.get(user=self.request.user)
+
+        if profile.credit >= course_schedule.MAX_CREDIT:
+            messages.info(self.request, 'Your Credit Completed.')
+            return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
+        profile.credit += course_schedule.course.credit
+        profile.save()
+        course_schedule.students.add(self.request.user)
+        messages.info(self.request, 'Successfully Joined')
+        return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')

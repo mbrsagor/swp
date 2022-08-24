@@ -32,7 +32,7 @@
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Department</th>
-                                    <th>Subject</th>
+                                    <th>Image</th>
                                     <th>Gender</th>
                                     <th>Actions</th>
                                 </tr>
@@ -47,12 +47,17 @@
                                         {{ teacher.email }}
                                     </td>
                                     <td>
-                                        {{ teacher.department }}
+                                        {{ teacher.teacher_profile.department }}
                                     </td>
-                                    <td>{{ teacher.teacher_profile.subject }}</td>
+                                    <td>
+                                        <img src="{{ teacher.teacher_profile.avatar.url }}" height="50" width="50">
+                                    </td>
                                     <td>{{ teacher.teacher_profile.gender }}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="{% url 'users:teachers-update' teacher.pk %}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'users:teachers-profile-update' teacher.teacher_profile.pk %}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm" href="{% url 'users:teachers-delete' teacher.pk %}">

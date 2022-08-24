@@ -38,10 +38,13 @@ urlpatterns = [
     path('course-schedules/', course_view.CourseScheduleListView.as_view(), name="course-schedules"),
     path('course-schedules/<pk>/detail', course_view.CourseScheduleDetailView.as_view(), name="course-schedules-detail"),
     path('course-schedules/create/', course_view.CourseScheduleCreateView.as_view(), name="course-schedules-create"),
+    path('course-schedules/<pk>/join/', course_view.CourseScheduleEnrollView.as_view(), name="course-schedules-join"),
     path('course-schedules/<pk>/update/', course_view.CourseScheduleUpdateView.as_view(),
          name="course-schedules-update"),
     path('course-schedules/<pk>/delete/', course_view.CourseScheduleDeleteView.as_view(),
          name="course-schedules-delete"),
+    path('course-schedules/enroll/', course_view.CourseScheduleView.as_view(),
+         name="course-schedules-enroll"),
     # assignment url config
     path('assignments/', assignment_view.AssignmentListView.as_view(), name='assignments'),
     path('assignments/create/', assignment_view.AssignmentCreateView.as_view(), name='assignments-create'),

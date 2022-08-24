@@ -104,11 +104,6 @@
         </ul>
     </li>
     <li>
-        <a class="app-menu__item" href="{#% url 'subjects' %#}">
-            <span class="app-menu__label">Subjects</span>
-        </a>
-    </li>
-    <li>
         <a class="app-menu__item" href="{% url 'payments:payments' %}">
             <span class="app-menu__label">Payments</span>
         </a>
@@ -126,6 +121,13 @@
         </a>
     </li>
     {% endif %}
+    {% if user.teacher %}
+    <li>
+            <a class="app-menu__item" href="{% url 'faculties:course-schedules' %}">
+                <span class="app-menu__label">Courses Schedule</span>
+            </a>
+        </li>
+    {% endif %}
     {% if user.student or user.is_superuser %}
     <li>
         <a class="app-menu__item" href="{% url 'portal:projects' %}">
@@ -138,11 +140,13 @@
         </a>
     </li>
     {% endif %}
-    <li>
-        <a class="app-menu__item" href="{% url 'faculties:course-schedules' %}">
-            <span class="app-menu__label">Courses Schedule</span>
+    {% if user.student %}
+        <li>
+        <a class="app-menu__item" href="{% url 'faculties:course-schedules-enroll' %}">
+            <span class="app-menu__label">Course Enroll</span>
         </a>
     </li>
+    {% endif %}
     <li>
         <a class="app-menu__item" href="{% url 'portal:routines' %}">
             <span class="app-menu__label">Routines</span>

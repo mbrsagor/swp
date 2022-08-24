@@ -16,15 +16,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
+                <div class="tile-header text-left mb-2">
+                {% include 'common/success_message.html' %}
+                </div>
                 {% if user.is_superuser %}
                     {% include 'include/admin-table.html' %}
                 {% endif %}
 
-                {% if user.teacher or user.is_superuser %}
-                    {% include 'dashboard/teacher.html' %}
+                {% if user.student %}
+                    {% include 'dashboard/student.html' %}
                 {% endif %}
                 
-                {% if user.roll == 'TEACHER' or user.is_superuser %}
+                {% if user.teacher %}
                     {% include 'include/teacher-table.html' %}
                 {% endif %}
             </div>

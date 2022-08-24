@@ -34,8 +34,8 @@
                                     <th>Email</th>
                                     <th>Father name</th>
                                     <th>Mother name</th>
+                                    <th>Faculty</th>
                                     <th>Department</th>
-                                    <th>Board roll</th>
                                     <th>Gender</th>
                                     <th>Actions</th>
                                 </tr>
@@ -56,12 +56,15 @@
                                         {{ student.student_profile.mother_name }}
                                     </td>
                                     <td>
-                                        {{ student.department }}
+                                        {{ student.student_profile.faculty }}
                                     </td>
-                                    <td>{{ student.student_profile.board_roll }}</td>
+                                    <td>{{ student.student_profile.department }}</td>
                                     <td>{{ student.student_profile.gender }}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="{% url 'users:students-update' pk=student.pk %}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'users:profiles-update' pk=student.student_profile.pk %}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm" href="{% url 'users:students-delete' student.pk %}">

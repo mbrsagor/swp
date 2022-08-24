@@ -54,11 +54,7 @@ class TeacherProfileUpdateView(generic.UpdateView):
     model = TeacherProfile
     form_class = TeacherProfileForm
     template_name = 'teacher/profile-update.html'
-
-    def get_success_url(self):
-        return reverse('users:teachers-profile', kwargs={
-            'pk': self.object.user.pk,
-        })
+    success_url = reverse_lazy('users:teachers')
 
     def get_form_kwargs(self):
         kwargs = super(TeacherProfileUpdateView, self).get_form_kwargs()

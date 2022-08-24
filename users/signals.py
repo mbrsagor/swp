@@ -7,20 +7,10 @@ def create_student_profile(sender, instance, created, **kwargs):
     if created:
         AdminProfile.objects.create(user=instance)
 
-@receiver(post_save, sender=Student)
-def create_student_profile(sender, instance, created, **kwargs):
-    if created:
-        StudentProfile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=Teacher)
-def create_teacher_profile(sender, instance, created, **kwargs):
-    if created:
-        TeacherProfile.objects.create(user=instance)
 
 @receiver(pre_save, sender=StudentProfile)
 def uniqie_id_genarate(sender, instance, **kwargs):
     if instance.roll_number:
         year_last_two_digit = instance.created_at.strftime("%y")
-        instance.unique_id = f'097{year_last_two_digit}100{instance.program.code}{instance.roll_number}'
+        instance.unique_id = f'075{year_last_two_digit}100{instance.program.code}{instance.roll_number}'
 

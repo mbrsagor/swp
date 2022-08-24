@@ -12,7 +12,7 @@ class DashboardView(LoginRequiredMixin, generic.TemplateView):
         if self.request.user.student:
             context['profile'] = StudentProfile.objects.get(user=self.request.user)
             context['assignment_submit'] = AssignmentSubmit.objects.filter(student=self.request.user)
-            context['course_schedule'] = CourseSchedule.objects.filter(student=self.request.user)
+            context['course_schedule'] = CourseSchedule.objects.filter(students=self.request.user)
             return context
 
         if self.request.user.teacher:
