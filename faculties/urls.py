@@ -47,10 +47,13 @@ urlpatterns = [
          name="course-schedules-enroll"),
     # assignment url config
     path('assignments/', assignment_view.AssignmentListView.as_view(), name='assignments'),
+    path('assignments/<pk>/detail', assignment_view.AssignmentDetailView.as_view(), name='assignments-detail'),
     path('assignments/create/', assignment_view.AssignmentCreateView.as_view(), name='assignments-create'),
     path('assignments/<pk>/update/', assignment_view.AssignmentUpdateView.as_view(), name='assignments-update'),
     path('assignments/<pk>/delete/', assignment_view.AssignmentDeleteView.as_view(), name='assignments-delete'),
     # assignment submit url
     path('assignment-submits/<pk>/create/', assignment_view.AssignmentSubmitView.as_view(),
          name='assignment-submits-create'),
+    path('assignment-submits', assignment_view.AssignmentSubmitListView.as_view(),
+         name='assignment-submits'),
 ]

@@ -77,12 +77,6 @@
                     Semesters
                 </a>
             </li>
-            <li>
-                <a class="treeview-item" href="{% url 'faculties:courses' %}">
-                    <i class="icon fa fa-circle-o"></i>
-                    Courses
-                </a>
-            </li>
         </ul>
     </li>
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
@@ -106,6 +100,11 @@
     <li>
         <a class="app-menu__item" href="{% url 'payments:payments' %}">
             <span class="app-menu__label">Payments</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item active" href="{% url 'faculties:assignment-submits' %}">
+            <span class="app-menu__label">Assignment Submit List</span>
         </a>
     </li>
     {% endif %}

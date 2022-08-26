@@ -18,11 +18,6 @@ class MarkListView(generic.CreateView,  generic.ListView):
         form.instance.teacher = self.request.user
         return super(MarkListView, self).form_valid(form)
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user.teacher), name='dispatch')
 class MarkUpdateView(generic.UpdateView):

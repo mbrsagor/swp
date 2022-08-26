@@ -87,8 +87,8 @@ class AssignmentSubmit(TimeStamp):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='assignment_submit')
     assignment_file_url = models.URLField(help_text='github, gitlab or google drive file link')
 
-    def __str__(self):
-        return self.student
+    def __str__(self) -> str:
+        return f'{self.student}'
 
 
 class Semester(TimeStamp):

@@ -19,33 +19,25 @@
                     {{form.errors}}
                     <form method="post" enctype="multipart/form-data" id="form">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>{{ form.student.label }}</label>
-                                    {{ form.student }}
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>{{ form.session.label }}</label>
-                                    {{ form.session }}
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label>{{ form.student.label }}</label>
+                            {{ form.student }}
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>{{ form.year.label }}</label>
-                                    {{ form.year }}
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>{{ form.department.label }}</label>
-                                    {{ form.department }}
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label>{{ form.year.label }}</label>
+                            {{ form.year }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.schedule.label }}</label>
+                            {{ form.schedule }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.batch.label }}</label>
+                            {{ form.batch }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.department.label }}</label>
+                            {{ form.department }}
                         </div>
                         <button type="submit" class="btn btn-primary m-2">Update</button>
                     </form>

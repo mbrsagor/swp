@@ -37,6 +37,7 @@
                                 <th>Course Schedule</th>
                                 <th>title</th>
                                 <th>PDF Files</th>
+                                <th>Show Assignment</th>
                                 <th>Create</th>
                                 <th>Last Date</th>
                                 <th>Actions</th>
@@ -56,6 +57,9 @@
                                     </td>
                                      <td>
                                          <a href="{{ obj.assignment_file.url }}" target="_blank">Assignment PDF Download</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'faculties:assignments-detail' pk=obj.pk %}" class="btn btn-primary">Show Assignment</a>
                                     </td>
                                     <td>{{ obj.created_at|date }}</td>
                                     <td>{{ obj.last_date }}</td>

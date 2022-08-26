@@ -81,6 +81,18 @@ class AssignmentSubmitView(LoginRequiredMixin, generic.FormView):
 
 
 
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.teacher), name='dispatch')
+class AssignmentDetailView(generic.DetailView):
+    model = Assignment
+    template_name = 'assignment/detail.html'
+
+
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
+class AssignmentSubmitListView(generic.ListView):
+    model = AssignmentSubmit
+    template_name = 'assignment-submit/list.html'
+
+
 
 
 
