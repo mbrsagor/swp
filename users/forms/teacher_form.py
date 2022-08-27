@@ -63,7 +63,6 @@ class TeacherProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super(TeacherProfileForm, self).__init__(*args, **kwargs)
-        # self.fields['subject'].queryset = Subject.objects.filter(department=self.request.user.department)
 
     class Meta:
         model = TeacherProfile

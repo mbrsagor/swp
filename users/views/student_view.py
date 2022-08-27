@@ -57,7 +57,7 @@ class StudentProfileView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = StudentProfile.objects.get(user_id=kwargs['pk'])
-        context['courses'] = CourseSchedule.objects.filter(student__in=[self.request.user.id])
+        context['courses'] = CourseSchedule.objects.filter(students__in=[self.request.user.id])
         return context
 
 

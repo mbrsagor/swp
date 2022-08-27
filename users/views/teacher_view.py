@@ -49,7 +49,7 @@ class TeacherProfileView(generic.TemplateView):
         return context
 
 
-@method_decorator(login_required(login_url='/login/'), name='dispatch')
+@method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
 class TeacherProfileUpdateView(generic.UpdateView):
     model = TeacherProfile
     form_class = TeacherProfileForm
