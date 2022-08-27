@@ -19,16 +19,12 @@
                 <div class="tile-header text-left mb-2">
                 {% include 'common/success_message.html' %}
                 </div>
-                {% if user.is_superuser %}
-                    {% include 'include/admin-table.html' %}
-                {% endif %}
-
                 {% if user.student %}
                     {% include 'dashboard/student.html' %}
-                {% endif %}
-                
-                {% if user.teacher %}
-                    {% include 'include/teacher-table.html' %}
+                {% elif user.teacher %}
+                    {% include 'include/teacher-table.html' with objects=assignments %}
+                {% else %}
+                {% include 'include/admin-table.html' %}
                 {% endif %}
             </div>
         </div>

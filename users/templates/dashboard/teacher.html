@@ -1,7 +1,6 @@
 
 <div class="tile-body">
     <h3>Assignments</h3>
-    {% if assignments %}
         <table class="table table-hover table-bordered" id="sampleTable">
             <thead>
             <tr>
@@ -15,7 +14,8 @@
             </tr>
             </thead>
             <tbody>
-            {% for obj in assignments %}
+            {{objects}}
+            {% for obj in objects %}
                 <tr>
                     <td>
                         {{ obj.teacher }}
@@ -43,5 +43,4 @@
             {% endfor %}
             </tbody>
         </table>
-    {% endif %}
 </div>
