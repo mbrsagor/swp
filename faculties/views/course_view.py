@@ -82,9 +82,9 @@ class CourseScheduleView(generic.ListView):
 @method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
 class CourseScheduleEnrollView(View):
     def get(self, *args, **kwargs):
-        if CourseSchedule.objects.filter(students=self.request.user).exists():
-            messages.info(self.request, 'Already Joined')
-            return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
+        # if CourseSchedule.objects.filter(students=self.request.user).exists():
+        #     messages.info(self.request, 'Already Joined')
+        #     return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
 
         course_schedule = CourseSchedule.objects.get(pk=kwargs['pk'])
         profile = StudentProfile.objects.get(user=self.request.user)
