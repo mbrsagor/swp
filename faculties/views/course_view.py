@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from faculties.models import Course, CourseSchedule
 from faculties.forms import CourseForm, CourseScheduleForm
 from users.models import StudentProfile
+from django.db.models import Q
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
@@ -77,6 +78,9 @@ class CourseScheduleCreateView(generic.CreateView):
 class CourseScheduleView(generic.ListView):
     model = CourseSchedule
     template_name = 'course-schedule/course-enroll.html'
+
+    def get_queryset(self):
+        return CourseSchedule.objects.filter(~Q(students__username='test_user'))
 
 
 @method_decorator(user_passes_test(lambda user: user.student), name='dispatch')

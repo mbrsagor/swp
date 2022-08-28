@@ -33,7 +33,9 @@
                                 <th>Title</th>
                                 <th>PDF</th>
                                 <th>Expire Date</th>
+                                {% if not user.teacher %}
                                 <th>Actions</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
@@ -46,14 +48,16 @@
                                          <a href="{{ assignment.assignment_file.url }}" target="_blank">Assignment PDF Download</a>
                                     </td>
                                     <td>{{ assignment.last_date }}</td>
-                                    {% if assignment.date_expiry %}
-                                        <td>
-                                             <a class="btn btn-success btn-sm" href="{% url 'faculties:assignment-submits-create' pk=assignment.pk %}">
-                                                Submit
-                                            </a>
-                                        </td>
-                                    {% else %}
-                                        <td>Expire</td>
+                                    {% if not user.teacher %}
+                                        {% if assignment.date_expiry %}
+                                            <td>
+                                                 <a class="btn btn-success btn-sm" href="{% url 'faculties:assignment-submits-create' pk=assignment.pk %}">
+                                                    Submit
+                                                </a>
+                                            </td>
+                                        {% else %}
+                                            <td>Expire</td>
+                                        {% endif %}
                                     {% endif %}
                                 </tr>
                             {% endfor %}

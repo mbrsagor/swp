@@ -14,6 +14,13 @@ class MarkListView(generic.CreateView,  generic.ListView):
     form_class = MarkForm
     success_url = reverse_lazy('portal:marks')
     template_name = 'mark/list.html'
+
+    def get_queryset(self):
+        qs = super(MarkListView, self).get_queryset()
+        if self.request.user.teacher:
+            return qs.filter(teacher=self.request.user)
+        else:
+            return qs.all()
     
     def form_valid(self, form):
         form.instance.teacher = self.request.user
@@ -48,8 +55,13 @@ class MarkSearchView(generic.ListView):
     template_name = 'mark/search.html'
 
     def get_queryset(self):
-        if query := self.request.GET.get("q"):
+        if not (query := self.request.GET.get("q")):
+            return self.model.objects.none()
+        if self.request.user.teacher:
+            profile = StudentProfile.objects.get(unique_id__icontains=query)
+            return self.model.objects.filter(
+                (Q(student__username__icontains=profile.user.username) & Q(teacher=self.request.user)))
+
+        else:
             profile = StudentProfile.objects.get(unique_id__icontains=query)
             return self.model.objects.filter(Q(student__username__icontains=profile.user.username))
-        else:
-            return self.model.objects.none()
