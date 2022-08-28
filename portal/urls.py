@@ -24,7 +24,7 @@ urlpatterns = [
     path('marks/', mark_view.MarkListView.as_view(), name='marks'),
     path('marks/<pk>/update/', mark_view.MarkUpdateView.as_view(), name='marks-update'),
     path('marks/<pk>/delete/', mark_view.MarkDeleteView.as_view(), name='marks-delete'),
-
+    path('marks/search/', mark_view.MarkSearchView.as_view(), name='marks-search'),
     # E-Books urls
     path('books/', ebook_view.BooksListView.as_view(), name='books'),
     path('books/create/', ebook_view.BookCreateView.as_view(), name='books-create'),

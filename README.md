@@ -37,3 +37,4 @@ pip install -r requirements.txt
 ./manage.py createsuperuser
 ./mangae.py runserver
 ```
+

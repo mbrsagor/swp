@@ -15,7 +15,6 @@ from django.forms import (
 )
 from django.db import transaction
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.translation import gettext_lazy as _
 from users.models import Student, StudentProfile
 from faculties.models import Faculty, Department, Program
 
@@ -43,8 +42,8 @@ class StudentSingUpForm(UserCreationForm):
     father_name = CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Father name'}))
     mother_name = CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Mother name'}))
     date_of_birth = DateField(widget=DateInput(attrs={'type': 'date', 'class': 'form-control'}))
-    ssc_passing_year = DateField(widget=DateInput(attrs={'type': 'date', 'class': 'form-control'}))
-    hsc_passing_year = DateField(widget=DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    ssc_passing_year = CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'SSC passing year'}))
+    hsc_passing_year = CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'HSC passing year'}))
     password1 = CharField(widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter valid password'}))
     password2 = CharField(widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter confirm password'}))
 
@@ -106,8 +105,8 @@ class StudentProfileForm(ModelForm):
             'cgpa': NumberInput(attrs={'step': 0.25, 'class': 'form-control', 'id': 'cgpa'}),
             'gender': Select(attrs={'class': 'form-control', 'id': 'gender'}),
             'date_of_birth': DateInput(attrs={'type': 'date', 'class': 'form-control', 'id': 'date_of_birth'}),
-            'ssc_passing_year': DateInput(attrs={'type': 'date', 'class': 'form-control', 'id': 'ssc_passing_year'}),
-            'hsc_passing_year': DateInput(attrs={'type': 'date', 'class': 'form-control', 'id': 'hsc_passing_year'}),
+            'ssc_passing_year': TextInput(attrs={'class': 'form-control', 'id': 'ssc_passing_year'}),
+            'hsc_passing_year': TextInput(attrs={'class': 'form-control', 'id': 'hsc_passing_year'}),
             'avatar': FileInput(attrs={'class': 'form-control', 'id': 'avatar'}),
             'credit': NumberInput(attrs={'step': 0.25, 'class': 'form-control', 'id': 'credit'}),
         }

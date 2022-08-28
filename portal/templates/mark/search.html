@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
-{% block title %} Marks {% endblock %}
+{% block title %} Marks Search {% endblock %}
 
 {% block content %}
 <div class="app-title">
         <div>
-            <h1>Marks</h1>
-            <p>Marks create & listview</p>
+            <h1>Marks Search</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -16,18 +15,13 @@
         <div class="col-md-12">
             <div class="tile">
                 {% include 'common/success_message.html' %}
-                <div class="tile-header mb-2 d-flex justify-content-between">
+                <div class="tile-header text-right mb-2">
                     <div>
-                        <form class="d-flex" action="{% url 'portal:marks-search' %}" method="get" style="width: 300px">
+                        <form method="get" class="d-flex" style="width: 300px">
                             <input class="form-control" name="q">
                             <button class="btn btn-primary ml-2">Submit</button>
                         </form>
                     </div>
-                    <button data-toggle="modal" data-target="#exampleModal" type="button"
-                            class="btn btn-sm btn-success">
-                        <i class="fa fa-plus"></i>
-                        Add Marks
-                    </button>
                 </div>
                 <div class="tile-body">
                     {% if object_list %}

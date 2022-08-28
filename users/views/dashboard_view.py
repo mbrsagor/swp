@@ -1,7 +1,7 @@
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from users.models import StudentProfile, TeacherProfile
 from faculties.models import CourseSchedule, Assignment, AssignmentSubmit
+from faculties.models import Faculty, Department
 
 
 class DashboardView(LoginRequiredMixin, generic.TemplateView):
@@ -9,19 +9,15 @@ class DashboardView(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
-        print('=============')
-        print(self.request.user.teacher)
-        print('============')
         if self.request.user.student:
-            context['profile'] = StudentProfile.objects.get(user=self.request.user)
             context['assignment_submit'] = AssignmentSubmit.objects.filter(student=self.request.user)
             context['course_schedule'] = CourseSchedule.objects.filter(students=self.request.user)
         elif self.request.user.teacher:
-            context['profile'] = TeacherProfile.objects.get(user=self.request.user)
             context['course_schedule'] = CourseSchedule.objects.filter(teacher=self.request.user)
             context['assignments'] = Assignment.objects.filter(teacher=self.request.user)
         else:
-            context['assignments'] = Assignment.objects.all()
+            context['faculties'] = Faculty.objects.all()
+            context['departments'] = Department.objects.all()
         return context
 
 

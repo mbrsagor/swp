@@ -55,9 +55,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Does the user have permissions to view the app `app_label`?"""
         return True
 
-    # def get_absolute_url(self):
-    #     return reverse('accounts:dashboard_view', kwargs={'pk': self.pk})
-
 
 class StudentProfile(TimeStamp):
     GENDER = (
@@ -82,8 +79,8 @@ class StudentProfile(TimeStamp):
     full_name = models.CharField(max_length=50)
     father_name = models.CharField(max_length=50)
     mother_name = models.CharField(max_length=50)
-    ssc_passing_year = models.DateField(null=True, blank=True)
-    hsc_passing_year = models.DateField(null=True, blank=True)
+    ssc_passing_year = models.CharField(max_length=6)
+    hsc_passing_year = models.CharField(max_length=6)
     date_of_birth = models.DateField(null=True, blank=True)
     cgpa = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     gender = models.CharField(choices=GENDER, max_length=10)
