@@ -34,11 +34,6 @@ class MarkUpdateView(generic.UpdateView):
     success_url = reverse_lazy('portal:marks')
     template_name = 'mark/update.html'
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
-
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user.teacher), name='dispatch')
 class MarkDeleteView(generic.DeleteView):

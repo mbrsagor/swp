@@ -80,7 +80,7 @@ class CourseScheduleView(generic.ListView):
     template_name = 'course-schedule/course-enroll.html'
 
     def get_queryset(self):
-        return CourseSchedule.objects.filter(~Q(students__username='test_user'))
+        return CourseSchedule.objects.filter(~Q(students=self.request.user))
 
 
 @method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
