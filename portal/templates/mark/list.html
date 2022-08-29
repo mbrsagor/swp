@@ -36,6 +36,7 @@
                             <tr>
                                 <th>Teacher</th>
                                 <th>Student</th>
+                                <th>Course</th>
                                 <th>Type</th>
                                 <th>Marks</th>
                                 <th>Actions</th>
@@ -47,6 +48,9 @@
                                     <td>{{ obj.teacher }}</td>
                                     <td>
                                         {{ obj.student }}
+                                    </td>
+                                    <td>
+                                        {{ obj.course_schedule.course.title }}
                                     </td>
                                     <td>{{ obj.status }}</td>
                                     <td>{{ obj.marks }}</td>
