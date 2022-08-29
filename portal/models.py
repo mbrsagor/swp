@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from swp.models import TimeStamp
 from users.models import Student, Teacher, Admin
+from faculties.models import CourseSchedule
 
 
 class Ebook(TimeStamp):
@@ -63,6 +64,7 @@ class Mark(TimeStamp):
     )
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher_marks')
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_marks')
+    course_schedule = models.ForeignKey(CourseSchedule, on_delete=models.CASCADE)
     marks = models.IntegerField()
     status = models.CharField(choices=STATUS_CHOICES, default='Assignment', max_length=20)
 
