@@ -14,7 +14,6 @@ class MarkForm(ModelForm):
         else:
             self.fields['course_schedule'].queryset = CourseSchedule.objects.all()
 
-
     class Meta:
         model = Mark
         fields = ('student', 'course_schedule', 'marks', 'status')
@@ -22,6 +21,17 @@ class MarkForm(ModelForm):
         widgets = {
             'student': Select(attrs={'class': 'form-control', 'id': 'student'}),
             'course_schedule': Select(attrs={'class': 'form-control', 'id': 'course_schedule'}),
+            'marks': TextInput(attrs={'type': 'number', 'class': 'form-control', 'id': 'name'}),
+            'status': Select(attrs={'class': 'form-control', 'id': 'status'}),
+        }
+
+
+class MarkUpdateForm(ModelForm):
+    class Meta:
+        model = Mark
+        fields = ('marks', 'status')
+
+        widgets = {
             'marks': TextInput(attrs={'type': 'number', 'class': 'form-control', 'id': 'name'}),
             'status': Select(attrs={'class': 'form-control', 'id': 'status'}),
         }
