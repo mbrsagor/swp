@@ -43,6 +43,9 @@ class Course(TimeStamp):
     title = models.CharField(_('title'), max_length=120, unique=True)
     credit = models.FloatField(_('code'))
 
+    def natural_key(self):
+        return self.title
+
     def __str__(self):
         return self.title
 
@@ -58,6 +61,10 @@ class CourseSchedule(TimeStamp):
     students = models.ManyToManyField(User, blank=True, related_name='my_course_schedule')
     schedule = models.CharField(choices=SCHEDULE_CHOICES, max_length=8)
     is_active = models.BooleanField(default=True)
+
+    @property
+    def title(self):
+        return self.course.title
 
     def __str__(self):
         return self.course.title
@@ -86,6 +93,10 @@ class AssignmentSubmit(TimeStamp):
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='my_assignment_submit')
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='assignment_submit')
     assignment_file_url = models.URLField(help_text='github, gitlab or google drive file link')
+
+    @property
+    def submitted(self):
+        return self.student
 
     def __str__(self) -> str:
         return f'{self.student}'

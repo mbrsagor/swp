@@ -73,3 +73,37 @@
     </div>
     {% include 'mark/modal.html' %}
 {% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+    var app = new Vue({
+      el: '#app',
+      delimiters: ['[[', ']]'],
+      data: {
+        course_schedule_list: {{ course_schedules|safe }},
+        course_schedule_selected: '',
+        students_arr: [],
+      },
+      mounted: function(){
+        console.log('I am working.')
+        console.log(this.course_schedule_list)
+        console.log(this.students_arr)
+      },
+      methods: {
+        loadFac(){
+            this.students_arr = [];
+            // console.log('i am a mark add modal')
+            for (item in  this.course_schedule_list){
+                if (this.course_schedule_selected === this.course_schedule_list[item]['pk']){
+                    students = this.course_schedule_list[item]['fields']['students']
+                    for(student in students){
+                        this.students_arr.push({'id': students[student]['pk'], 'username': students[student]['username']})
+                    }
+                }
+            }
+            // console.log(this.students_arr)
+        }
+      }
+    })
+</script>
+{% endblock %}

@@ -46,6 +46,7 @@ class CourseDeleteView(generic.DeleteView):
         return self.delete(self.request, *args, **kwargs)
 
 
+@method_decorator(user_passes_test(lambda user: user.is_superuser or user.teacher), name='dispatch')
 class CourseScheduleListView(LoginRequiredMixin, generic.ListView):
     model = CourseSchedule
     template_name = 'course-schedule/list.html'
@@ -55,10 +56,6 @@ class CourseScheduleListView(LoginRequiredMixin, generic.ListView):
 
         if self.request.user.teacher:
             return qs.filter(teacher=self.request.user)
-
-        if self.request.user.student:
-            return qs.filter(students=self.request.user)
-
         return qs.all()
 
 

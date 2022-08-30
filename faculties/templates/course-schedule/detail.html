@@ -50,8 +50,9 @@
                                     <td>{{ assignment.last_date }}</td>
                                     {% if not user.teacher %}
                                         {% if assignment.date_expiry %}
+                                            {{ assignment.assignment_submit.submitted}}
                                             <td>
-                                                 <a class="btn btn-success btn-sm" href="{% url 'faculties:assignment-submits-create' pk=assignment.pk %}">
+                                                <a class="btn btn-success btn-sm" href="{% url 'faculties:assignment-submits-create' pk=assignment.pk %}">
                                                     Submit
                                                 </a>
                                             </td>

@@ -38,6 +38,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def admin(self):
         return self.roll == self.Rolls.ADMIN
+    
+    def natural_key(self):
+        return ({'username': self.username, 'pk': self.pk})
 
     def __str__(self):
         return f'{self.username}'

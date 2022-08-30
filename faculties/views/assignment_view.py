@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
@@ -77,7 +78,7 @@ class AssignmentSubmitView(LoginRequiredMixin, generic.FormView):
             obj.assignment = assignment
             obj.student = self.request.user
             obj.save()
-            return HttpResponseRedirect(self.get_success_url)
+            return redirect('faculties:course-schedules-detail', pk=assignment.course_schedule.id)
 
 
 
