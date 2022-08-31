@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
+from datetime import datetime
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,8 +32,13 @@ class AssignmentCreateView(generic.CreateView):
     success_url = reverse_lazy('faculties:assignments')
 
     def form_valid(self, form):
-        form.instance.teacher = self.request.user
-        return super(AssignmentCreateView, self).form_valid(form)
+        last_date = form.cleaned_data['last_date']
+        if last_date > datetime.date(datetime.now()):
+            form.instance.teacher = self.request.user
+            return super(AssignmentCreateView, self).form_valid(form)
+        else:
+            print('next date set')
+            return redirect('faculties:assignments')
 
     def get_form_kwargs(self):
         kwargs = super(AssignmentCreateView, self).get_form_kwargs()
@@ -79,7 +84,6 @@ class AssignmentSubmitView(LoginRequiredMixin, generic.FormView):
             obj.student = self.request.user
             obj.save()
             return redirect('faculties:course-schedules-detail', pk=assignment.course_schedule.id)
-
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user.teacher), name='dispatch')

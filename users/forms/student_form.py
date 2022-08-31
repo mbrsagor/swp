@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.forms import (
     ModelForm,
     TextInput,
@@ -12,6 +13,7 @@ from django.forms import (
     ModelChoiceField,
     DateField,
     NumberInput,
+    ValidationError
 )
 from django.db import transaction
 from django.contrib.auth.forms import UserCreationForm
@@ -49,8 +51,13 @@ class StudentSingUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Student
-        # fields = ('username', 'email')
-        #
+
+    def clean_date_of_birth(self):
+        dob = self.cleaned_data['date_of_birth']
+        age = (datetime.date(datetime.now()) - dob).days / 365
+        if age < 18:
+            raise ValidationError('Must be at least 18 years old to register')
+        return dob
 
     @transaction.atomic
     def save(self):

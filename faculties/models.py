@@ -55,7 +55,6 @@ class CourseSchedule(TimeStamp):
         ('DAY', 'Day'),
         ('EVENING', 'Evening')
     )
-    MAX_CREDIT = 25.0
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_schedule')
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='teacher_course_schedule')
     students = models.ManyToManyField(User, blank=True, related_name='my_course_schedule')

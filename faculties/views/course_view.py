@@ -1,4 +1,6 @@
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import redirect
 from django.views import generic, View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
@@ -10,6 +12,7 @@ from faculties.models import Course, CourseSchedule
 from faculties.forms import CourseForm, CourseScheduleForm
 from users.models import StudentProfile
 from django.db.models import Q
+from django.conf import settings
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
@@ -65,10 +68,21 @@ class CourseScheduleDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
-class CourseScheduleCreateView(generic.CreateView):
+class CourseScheduleCreateView(SuccessMessageMixin, generic.CreateView):
     form_class = CourseScheduleForm
-    success_url = reverse_lazy('faculties:course-schedules')
     template_name = 'course-schedule/create.html'
+    success_url = reverse_lazy('faculties:course-schedules')
+    success_message = 'Course Schedule Create'
+    
+    def form_valid(self, form):
+        teacher = form.cleaned_data['teacher']
+        course = form.cleaned_data['course']
+        course_schedule = CourseSchedule.objects.filter(teacher=teacher, course=course)
+        if not course_schedule:
+            print('save the course schedule')
+            return super(CourseScheduleCreateView, self).form_valid(form)
+        print('already teacher exists the course schedule.')
+        return redirect('faculties:course-schedules')
 
 
 @method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
@@ -83,16 +97,15 @@ class CourseScheduleView(generic.ListView):
 @method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
 class CourseScheduleEnrollView(View):
     def get(self, *args, **kwargs):
-        # if CourseSchedule.objects.filter(students=self.request.user).exists():
-        #     messages.info(self.request, 'Already Joined')
-        #     return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
-
-        course_schedule = CourseSchedule.objects.get(pk=kwargs['pk'])
+        if CourseSchedule.objects.filter(students=self.request.user).exists():
+            messages.info(self.request, 'Already Joined')
+            return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
         profile = StudentProfile.objects.get(user=self.request.user)
 
-        if profile.credit >= course_schedule.MAX_CREDIT:
+        if profile.credit >= settings.MAX_CREDIT:
             messages.info(self.request, 'Your Credit Completed.')
             return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
+        course_schedule = CourseSchedule.objects.get(pk=kwargs['pk'])
         profile.credit += course_schedule.course.credit
         profile.save()
         course_schedule.students.add(self.request.user)

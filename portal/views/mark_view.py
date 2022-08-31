@@ -36,6 +36,7 @@ class MarkListView(generic.CreateView,  generic.ListView):
         course = form.cleaned_data['course_schedule']
         student = form.cleaned_data['student']
         status = form.cleaned_data['status']
+
         course_schedule = CourseSchedule.objects.get(course__title=course)
         if Mark.objects.filter(course_schedule=course_schedule, student__username=student, status=status).exists():
             return redirect('portal:marks')

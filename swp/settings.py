@@ -151,6 +151,9 @@ MESSAGE_TAGS = {
 }
 
 
+MAX_CREDIT = 25.0
+MINIMUM_AGE = 18
+
 # EMAIL CONFIGARATION
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "ican4654@gmail.com"
