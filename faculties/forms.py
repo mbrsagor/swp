@@ -1,4 +1,5 @@
 from django import forms
+from datetime import datetime
 from faculties.models import (
     Faculty,
     Department,
@@ -116,6 +117,12 @@ class AssignmentForm(forms.ModelForm):
             'last_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'id': 'last_date'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_active'}),
         }
+
+    def clean_last_date(self):
+        lt = self.cleaned_data['last_date']
+        if not lt > datetime.date(datetime.now()):
+            raise forms.ValidationError('Must Select Next day or Any date but not allow previous date')
+        return lt
 
 
 class AssignmentSubmitForm(forms.ModelForm):

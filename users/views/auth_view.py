@@ -1,26 +1,8 @@
 from django.shortcuts import resolve_url, redirect
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.views import generic, View
+from django.views import View
 from users.forms.auth_form import LoginForm
-
-
-# class DashboardView(LoginRequiredMixin, generic.TemplateView):
-#     template_name = 'index.html'
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     if self.request.user.roll == 'STUDENT':
-    #         context['routine'] = Routine.objects.all()
-
-        # if self.request.user.roll == 'TEACHER':
-        #     context['routine'] = Routine.objects.filter(book=self.request.user)
-        #
-        # if self.request.user.is_superuser:
-        #     context['subjects'] = Subject.objects.all()
-        #     context['enroll_subjects'] = EnrollSubject.objects.all()
-
-        # return context
 
 
 class SingInView(LoginView):
@@ -28,7 +10,6 @@ class SingInView(LoginView):
     form_class = LoginForm
     redirect_authenticated_user = False
     template_name = 'auth/login.html'
-
 
     def get_success_url(self):
         url = self.get_redirect_url()

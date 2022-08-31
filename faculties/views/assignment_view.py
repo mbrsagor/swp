@@ -32,13 +32,8 @@ class AssignmentCreateView(generic.CreateView):
     success_url = reverse_lazy('faculties:assignments')
 
     def form_valid(self, form):
-        last_date = form.cleaned_data['last_date']
-        if last_date > datetime.date(datetime.now()):
-            form.instance.teacher = self.request.user
-            return super(AssignmentCreateView, self).form_valid(form)
-        else:
-            print('next date set')
-            return redirect('faculties:assignments')
+        form.instance.teacher = self.request.user
+        return super(AssignmentCreateView, self).form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super(AssignmentCreateView, self).get_form_kwargs()
