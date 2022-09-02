@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ request.user.username }} {% endblock %}
+
+{% block content %}
+
+    <div class="row user">
+        <div class="col-md-12">
+            <div class="profile">
+                <div class="info"><img class="user-img"
+                                       src="{% if profile.avatar %} {{ profile.avatar.url }} {% else %}{% static 'image/avatar.png' %} {% endif %}">
+                    <h4>{{ profile.user}}</h4>
+                    <p>{{ profile.user.department}}</p>
+                </div>
+                <div class="cover-image"></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tile p-0">
+                <ul class="nav flex-column nav-tabs user-tabs">
+                    <li class="nav-item"><a class="nav-link active" href="#user-timeline">Timeline</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content">
+                <div class="tab-pane active" id="user-timeline">
+                    <div class="timeline-post">
+                        <div class="post-content">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px">
+                                <ul class="list-group">
+                                    <h3 class="card-title">Personal Information</h3>
+                                    <li class="list-group-item">Roll Number: {{ profile.roll_number }}</li>
+                                    <li class="list-group-item">Unique ID: {{ profile.unique_id }}</li>
+                                    <li class="list-group-item">Name: {{ profile.full_name }}</li>
+                                    <li class="list-group-item">Gender: {{ profile.gender }}</li>
+                                    <li class="list-group-item">Date Of Birth: {{ profile.date_of_birth }}</li>
+                                    <li class="list-group-item">Father Name: {{ profile.father_name }}</li>
+                                    <li class="list-group-item">Mother Name: {{ profile.mother_name }}</li>
+                                </ul>
+                                <ul class="list-group">
+                                    <h3 class="card-title">Academic Information</h3>
+                                    <li class="list-group-item">Faculty: {{ profile.faculty }}</li>
+                                    <li class="list-group-item">Department: {{ profile.department }}</li>
+                                    <li class="list-group-item">Program: {{ profile.program.name }}</li>
+                                    <li class="list-group-item">SSC Passing year: {{ profile.ssc_passing_year }}</li>
+                                    <li class="list-group-item">HSC Passing year: {{ profile.hsc_passing_year }}</li>
+                                    <li class="list-group-item">Total CGPA: {{ profile.cgpa }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tile-body">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Status</th>
+                                            <th>Matks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for obj in profile.user.student_marks.all %}
+                                        <tr>
+                                            <td>
+                                                {{ obj.student }}
+                                            </td>
+                                            <td>
+                                                {{ obj.status }}
+                                            </td>
+                                            <td>
+                                                {{ obj.marks }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="tile-body">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Course</th>
+                                            <th>Teacher</th>
+                                            <th>Schedule</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for obj in courses %}
+                                        <tr>
+                                            <td>
+                                                {{ obj.course }}
+                                            </td>
+                                            <td>
+                                                {{ obj.teacher }}
+                                            </td>
+                                            <td>
+                                                {{ obj.schedule }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="user-settings">
+                    <div class="tile user-settings">
+                        <h4 class="line-head">Settings</h4>
+                        <form>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label>First Name</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Last Name</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 mb-4">
+                                    <label>Email</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-8 mb-4">
+                                    <label>Mobile No</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-8 mb-4">
+                                    <label>Office Phone</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-8 mb-4">
+                                    <label>Home Phone</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="row mb-10">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" type="button"><i
+                                            class="fa fa-fw fa-lg fa-check-circle"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

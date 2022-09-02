@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %} Course Schedule {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>Course Schedule</h1>
+            <p>Course Schedule lists and Create</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                {% if user.is_superuser %}
+                    <div class="tile-header text-right mb-2">
+                        <a href="{% url 'faculties:course-schedules-create' %}" class="btn btn-sm btn-success">
+                            <i class="fa fa-plus"></i>
+                            Add Course Schedule
+                        </a>
+                    </div>
+                {% endif %}
+                {% if object_list %}
+                <div class="tile-body">
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Teachers</th>
+                                <th>Students</th>
+                                <th>Schedule</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in object_list %}
+                                <tr>
+                                    <td>
+                                        {{ obj.course }}
+                                    </td>
+                                    <td>
+                                        {{ obj.teacher }}
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            {% for student in obj.students.all %}
+                                                <li>{{ student }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        {{ obj.schedule }}
+                                    </td>
+                                    <td>{{ obj.created_at|date }}</td>
+                                    <td>{{ obj.updated_at|date }}</td>
+                                    <td>
+                                        {% if user.is_superuser %}
+                                        <a class="btn btn-danger btn-sm" href="{% url 'faculties:course-schedules-delete' pk=obj.pk %}"><i
+                                                class="fa fa-trash"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'faculties:course-schedules-update' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
+                                        {% endif %}
+                                        {% if user.student %}
+                                            <a href="{% url 'faculties:course-schedules-join' obj.pk %}" class="btn btn-primary">Join</a>
+                                        {% endif %}
+                                         <a class="btn btn-success btn-sm" href="{% url 'faculties:course-schedules-detail' pk=obj.pk %}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

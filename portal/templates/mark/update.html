@@ -1,32 +1,41 @@
 {% extends 'base.html' %}
-{% load humanize %}
-{% block title %} {{ title }}  {% endblock %}
+{% block title %} Marks update  {% endblock %}
 
 {% block content %}
 <div class="app-title">
         <div>
-            <h1>{{ title}}</h1>
+            <h1>Marks update</h1>
             <p>Marks update</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
         </ul>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6 m-auto card">
+                <div class="col-md-6 m-auto card py-2">
                     {{form.errors}}
-                    <form method="post" enctype="multipart/form-data" id="form">
+                    <form method="post" enctype="multipart/form-data" id="app">
                             {% csrf_token %}
-                            {% for field in form %}
-                            <div class="form-group">
-                                <label>{{ field..label }}</label>
-                                {{ field }}
-                            </div>
-                        {% endfor %}
-                            <button type="submit" class="btn btn-primary m-2">Save</button>
+                        <div class="form-group">
+                            <label>Course</label>
+                            <input value="{{object.course_schedule}}" disabled class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Student</label>
+                            <input value="{{object.student}}" disabled class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.marks.label }}</label>
+                            {{ form.marks }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.status.label }}</label>
+                            {{ form.status }}
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2">Update</button>
                     </form>
                 </div>
             </div>

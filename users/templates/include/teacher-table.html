@@ -1,0 +1,66 @@
+<div class="tile-body">
+    {% if course_schedule %}
+        <h3 class="title">Course Schedule</h3>
+        <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Course</th>
+                <th>Students</th>
+                <th>Schedule</th>
+                <th>Updated at</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in course_schedule %}
+                <tr>
+                    <td>{{ obj.teacher }}</td>
+                    <td>{{ obj.course }}</td>
+                    <td>
+                        <ul>
+                            {% for student in obj.students.all %}
+                            <li>{{ student }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ obj.schedule }}</td>
+                    <td>{{ obj.updated_at|date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+<div class="tile-body">
+    {{ teacher }}
+    {% if assignments %}
+        <h3 class="title">Assignments</h3>
+        <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Course</th>
+                <th>Title</th>
+                <th>PDF</th>
+                <th>Last Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in assignments %}
+                <tr>
+                    <td>{{ obj.teacher }}</td>
+                    <td>{{ obj.course_schedule }}</td>
+                    <td>{{ obj.title }}</td>
+                    <td>
+                        <a href="{{ obj.assignment_file.url }}" target="_blank">
+                            PDF Preview Link
+                        </a>
+                    </td>
+                    <td>{{ obj.last_date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

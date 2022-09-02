@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} Books List {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Ebook detail & update.</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-8 m-auto">
+            <div class="tile">
+                {% if object.book_cover_image %}
+                <img src="{{ object.book_cover_image.url }}" style="height: 500px; width: 550px">
+                {% else %}
+                Cover image not
+                {% endif %}
+                <h3 class="text-center my-2">{{ object.name }}</h3>
+                <h5 class="text-center my-2">Author: {{ object.author_name }}</h5>
+                <h5>Description</h5>
+                <p>
+                    {{ object.description }}
+                </p>
+                {% if object.book_pdf %}
+                <p>
+                    <a href="{{ object.book_pdf.url }}" target="_blank"><i class="fa fa-download mr-2" aria-hidden="true"></i> PDF link preview</a>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% include 'project/modal.html' %}
+{% endblock %}

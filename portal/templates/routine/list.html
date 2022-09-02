@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} Section {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Routine</h1>
+            <p>Routine create & listview</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                
+                {% if user.roll == 'TEACHER' or user.is_superuser %}
+                    <div class="tile-header text-right mb-2">
+                        <button data-toggle="modal" data-target="#exampleModal" type="button"
+                                class="btn btn-sm btn-success">
+                            <i class="fa fa-plus"></i>
+                            Add Routine
+                        </button>
+                    </div>
+                {% endif %}
+                <div class="tile-body">
+                    {% if routine %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Routine Title</th>
+                                <th>Routine Image</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                {% if user.roll == 'TEACHER' or user.is_superuser %}
+                                <th>Actions</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in routine %}
+                                <tr>
+                                    <td>{{ obj.title }}</td>
+                                    <td>
+                                        <a href="{{ obj.routine_image.url }}" target="_blank">
+                                            <img src="{{ obj.routine_image.url }}" style="height: 100px; width: 110px">
+                                        </a>
+                                    </td>
+                                    <td>{{ obj.created_at|date }}</td>
+                                    <td>{{ obj.updated_at|date }}</td>
+                                    {% if user.roll == 'TEACHER' or user.is_superuser %}
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'portal:routines-delete' pk=obj.pk %}"><i
+                                                class="fa fa-trash"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'portal:routines-update' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'routine/modal.html' %}
+{% endblock %}

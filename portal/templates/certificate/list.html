@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %} Certificate {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> Certificates</h1>
+            <p>Certificate lists</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                {% include 'common/success_message.html' %}
+                <div class="tile-header text-right mb-2">
+                    <a href="{% url 'portal:certificates-create' %}"  class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Add Certificate
+                    </a>
+                </div>
+                <div class="tile-body">
+                    {% if certificates %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Certificate Name</th>
+                                <th>Certificate Link</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in certificates %}
+                                <tr>
+                                    <td>{{ obj.certificate_title }}</td>
+                                    <td>
+                                        <a href="{{ obj.certificate.url }}" target="_blank">
+                                            Preview Link
+                                        </a>
+                                    </td>
+                                    <td>{{ obj.created_at|date }}</td>
+                                    <td>{{ obj.updated_at|date }}</td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'portal:certificates-delete' pk=obj.pk %}"><i
+                                                class="fa fa-trash"></i></a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'portal:certificates-update' pk=obj.pk %}"><i class="fa fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+
+<div class="tile-body">
+    <h3>Course Schedule</h3>
+    {% if course_schedule %}
+        <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Course</th>
+                <th>Schedule</th>
+                <th>View</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in course_schedule %}
+                <tr>
+                    <td>
+                        {{ obj.teacher }}
+                    </td>
+                    <td>
+                        {{ obj.course }}
+                    </td>
+                    <td>
+                        {{ obj.schedule }}
+                    </td>
+                    <td>
+                        <a class="btn btn-success btn-sm" href="{% url 'faculties:course-schedules-detail' pk=obj.pk %}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+<div class="tile-body">
+    <h3>Assignment Submit</h3>
+    {% if assignment_submit %}
+        <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+            <tr>
+                <th>Student</th>
+                <th>Assignment</th>
+                <th>Assignment File link</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in assignment_submit %}
+                <tr>
+                    <td>
+                        {{ obj.student }}
+                    </td>
+                    <td>
+                        {{ obj.assignment }}
+                    </td>
+                    <td>
+                        <a href="{{ obj.assignment_file_url }}">Your Assignment Link</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

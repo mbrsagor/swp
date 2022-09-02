@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% block title %} Student Add Form  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Student Register</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12 card card-body">
+            <div>
+                    {% if form.errors %}
+                        <p class="alert alert-danger" role="alert">{{ form.errors }}</p>
+                    {% endif %}
+                </div>
+            <form method="post" enctype="multipart/form-data" id="app">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Full Name</label>
+                                    {{ form.full_name }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Username</label>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Father Name</label>
+                                    {{ form.father_name }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Mother Name</label>
+                                    {{ form.mother_name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Session</label>
+                                    {{ form.session }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Gander</label>
+                                    {{ form.gender }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="app">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="faculty">Faculty</label>
+                                    <select class="custom-select" name="faculty" v-model="faculty_selected" @change="loadFac($event)">
+                                      <option v-for="(v,k) in faculty_list" :key="k" :value="v.id">[[v.name]]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="department">Department</label>
+                                    <select class="custom-select" name="department" v-model="department_selected" @change="loadDep($event)">
+                                      <option v-for="(v,k) in department_arr" :key="k" :value="v.id">[[v.name]]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="program">Program</label>
+                                    <select class="custom-select" name="program">
+                                      <option v-for="(v,k) in progream_arr" :key="k" :value="v.id">[[v.name]]</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Date Of Birth</label>
+                                    {{ form.date_of_birth }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">SSC Year</label>
+                                    {{ form.ssc_passing_year }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">HSC Year</label>
+                                    {{ form.hsc_passing_year }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Password</label>
+                                    {{ form.password1 }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="control-label">Confirm Password</label>
+                                    {{ form.password2 }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group btn-container">
+                            <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN UP</button>
+                        </div>
+                    </form>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+    var app = new Vue({
+      el: '#app',
+      delimiters: ['[[', ']]'],
+      data: {
+        faculty_list: {{ faculties|safe }},
+        department_list: {{ departments|safe }},
+        program_list: {{ programs|safe }},
+        faculty_selected: '',
+        department_arr: [],
+        department_selected: '',
+        progream_arr: [],
+      },
+      mounted: function(){
+        console.log('I am working.')
+      },
+      methods: {
+        loadFac(){
+            this.department_arr = [];
+            for (let i = 0; i < this.department_list.length; i++) {
+                if (this.faculty_selected === this.department_list[i].faculty__id) {
+                    this.department_arr.push({name:this.department_list[i].name, id: this.department_list[i].id});
+                }
+            };
+            console.log(this.department_arr)
+        },
+        loadDep(){
+            this.progream_arr = [];
+            for (let i = 0; i < this.program_list.length; i++) {
+                if (this.department_selected === this.program_list[i].department__id) {
+                    console.log(this.program_list[i].id)
+                    this.progream_arr.push({name:this.program_list[i].name, id: this.program_list[i].id});
+                }
+            }
+            console.log(this.department_selected)
+
+        },
+      }
+    })
+</script>
+{% endblock %}

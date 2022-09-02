@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ request.user.username }} profile Update {% endblock %}
+
+{% block content %}
+    <h1 class="mt-4">Profile</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">{{ request.user.username }}</li>
+    </ol>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Profile update form</h3>
+        </div>
+        <div class="card-body" id="app">
+            <form method="post" enctype="multipart/form-data">
+                {% include 'common/success_message.html' %}
+                {% if form.errors %}
+                    {% include 'common/error_message.html' %}
+                {% endif %}
+                {% csrf_token %}
+                <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="roll_number">Roll Number</label>
+                        {{ form.roll_number }}
+                    </div>
+                    <div class="form-group">
+                        <label for="unique_id">Unique ID</label>
+                        {{ form.unique_id }}
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Credit</label>
+                        {{ form.credit }}
+                    </div>
+                </div>
+                <div class="pb-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="faculty">Faculty</label>
+                        {{ form.faculty }}
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        {{ form.department }}
+                    </div>
+                    <div class="form-group">
+                        <label for="program">Program</label>
+                        {{ form.program }}
+                    </div>
+                </div>
+                <div class="pb-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="name">Enter Full Name</label>
+                        {{ form.full_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="father_name">Enter father Name</label>
+                        {{ form.father_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="mother_name">Enter mother Name</label>
+                        {{ form.mother_name }}
+                    </div>
+                </div>
+                <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="cgpa">Enter CGPA</label>
+                        {{ form.cgpa }}
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Select Gender</label>
+                        {{ form.gender }}
+                    </div>
+                    <div class="form-group">
+                        <label for="session">Select Session</label>
+                        {{ form.session }}
+                    </div>
+                </div>
+                <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="date_of_birth">Date Of Birth</label>
+                        {{ form.date_of_birth }}
+                    </div>
+                    <div class="form-group">
+                        <label for="ssc_passing_year">SSC Passing Year</label>
+                        {{ form.ssc_passing_year }}
+                    </div>
+                    <div class="form-group">
+                        <label for="hsc_passing_year">HSC Passing Year</label>
+                        {{ form.hsc_passing_year }}
+                    </div>
+                </div>
+                <div class="pb-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 15px">
+                    <div class="form-group">
+                        <label for="avatar">Profile Image</label>
+                        {{ form.avatar }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-sm" {% if object.is_updated %}disabled{% endif %}>Update</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

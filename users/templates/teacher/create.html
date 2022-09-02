@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %} Teacher Add Form  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Teacher Register</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 m-auto card p-3">
+                    {{form.errors}}
+                    <form method="post" enctype="multipart/form-data" id="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Username</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label>Department</label>
+                            {{ form.department }}
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            {{ form.gender }}
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Image</label>
+                            {{ form.avatar }}
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm password</label>
+                            {{ form.password2 }}
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

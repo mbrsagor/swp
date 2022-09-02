@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %} Routine update  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Routine update</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 m-auto card p-4">
+                    {{form.errors}}
+                    <form method="post" enctype="multipart/form-data" id="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>{{ form.title.label }}</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.routine_image.label }}</label>
+                            {{ form.routine_image }}
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

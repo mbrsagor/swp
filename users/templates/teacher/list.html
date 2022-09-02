@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %} Teachers {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Teachers</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-header text-left mb-2">
+                {% include 'common/success_message.html' %}
+                </div>
+                <div class="tile-header text-right mb-2">
+                    <a href="{% url 'users:teachers-create' %}" class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i>
+                        Add Teacher
+                    </a>
+                </div>
+                <div class="tile-body">
+                    {% if teachers %}
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                    <th>Image</th>
+                                    <th>Gender</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for teacher in teachers %}
+                                <tr>
+                                    <td>
+                                        {{ teacher.username }}
+                                    </td>
+                                    <td>
+                                        {{ teacher.email }}
+                                    </td>
+                                    <td>
+                                        {{ teacher.teacher_profile.department }}
+                                    </td>
+                                    <td>
+                                        <img src="{{ teacher.teacher_profile.avatar.url }}" height="50" width="50">
+                                    </td>
+                                    <td>{{ teacher.teacher_profile.gender }}</td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="{% url 'users:teachers-update' teacher.pk %}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'users:teachers-profile-update' teacher.teacher_profile.pk %}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'users:teachers-delete' teacher.pk %}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

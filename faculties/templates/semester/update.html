@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} Semester update  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Semester update</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8 m-auto card">
+                    {{form.errors}}
+                    <form method="post" enctype="multipart/form-data" id="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>{{ form.student.label }}</label>
+                            {{ form.student }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.year.label }}</label>
+                            {{ form.year }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.schedule.label }}</label>
+                            {{ form.schedule }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.batch.label }}</label>
+                            {{ form.batch }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.department.label }}</label>
+                            {{ form.department }}
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

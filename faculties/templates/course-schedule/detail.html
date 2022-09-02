@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %} Course Schedule Detail  {% endblock %}
+
+{% block content %}
+<div class="app-title">
+        <div>
+            <h1>CBIU Student Web Portal</h1>
+            <p>Course Schedule Detail</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="row">
+          <div class="col-md-12 m-auto card p-3">
+            <h1>{{ object.course.title }}</h1>
+            <h5>Teacher: {{ object.teacher }}</h5>
+            <h5>Credit: {{ object.course.credit }}</h5>
+              <h5>Students</h5>
+              <ul>
+                  {% for student in object.students.all %}
+                      <li>
+                          {{ student }}
+                      </li>
+                  {% endfor %}
+              </ul>
+              <h5>Assignments</h5>
+              <div class="tile-body">
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>PDF</th>
+                                <th>Expire Date</th>
+                                {% if not user.teacher %}
+                                <th>Actions</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for assignment in object.assignments.all %}
+                                <tr>
+                                    <td>
+                                        {{ assignment.title }}
+                                    </td>
+                                     <td>
+                                         <a href="{{ assignment.assignment_file.url }}" target="_blank">Assignment PDF Download</a>
+                                    </td>
+                                    <td>{{ assignment.last_date }}</td>
+                                    {% if not user.teacher %}
+                                        {% if assignment.date_expiry %}
+                                            {{ assignment.assignment_submit.submitted}}
+                                            <td>
+                                                <a class="btn btn-success btn-sm" href="{% url 'faculties:assignment-submits-create' pk=assignment.pk %}">
+                                                    Submit
+                                                </a>
+                                            </td>
+                                        {% else %}
+                                            <td>Expire</td>
+                                        {% endif %}
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                </div>
+          </div>
+    </div>
+{% endblock %}
