@@ -7,7 +7,7 @@ from faculties.forms import FacultyForm
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
-class FacultyCreateAndListView(SuccessMessageMixin, generic.CreateView,  generic.ListView):
+class FacultyCreateAndListView(SuccessMessageMixin, generic.CreateView, generic.ListView):
     model = Faculty
     form_class = FacultyForm
     template_name = 'faculty/list.html'

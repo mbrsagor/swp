@@ -134,5 +134,3 @@ class AssignmentSubmitForm(forms.ModelForm):
         widgets = {
             'assignment_file_url': forms.URLInput(attrs={'class': 'form-control', 'id': 'assignment_file_url'})
         }
-
-

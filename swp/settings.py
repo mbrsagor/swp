@@ -150,7 +150,6 @@ MESSAGE_TAGS = {
     messages.WARNING: "WARNING",
 }
 
-
 MAX_CREDIT = 25.0
 MINIMUM_AGE = 18
 

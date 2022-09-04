@@ -36,4 +36,3 @@ class PaymentDeleteView(generic.DeleteView):
 
     def get(self, *args, **kwargs):
         return self.delete(self.request, *args, **kwargs)
-    

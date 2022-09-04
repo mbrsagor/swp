@@ -99,4 +99,3 @@ class ProjectDeleteView(generic.DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
-

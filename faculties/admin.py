@@ -9,5 +9,4 @@ from faculties.models import (
     AssignmentSubmit
 )
 
-
 admin.site.register([Faculty, Department, Program, Semester, Course, Assignment, AssignmentSubmit])

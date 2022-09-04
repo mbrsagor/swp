@@ -91,10 +91,3 @@ class AssignmentDetailView(generic.DetailView):
 class AssignmentSubmitListView(generic.ListView):
     model = AssignmentSubmit
     template_name = 'assignment-submit/list.html'
-
-
-
-
-
-
-

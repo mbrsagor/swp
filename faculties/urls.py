@@ -36,7 +36,8 @@ urlpatterns = [
     path('courses/<pk>/delete/', course_view.CourseDeleteView.as_view(), name="courses-delete"),
     # course schedule url config
     path('course-schedules/', course_view.CourseScheduleListView.as_view(), name="course-schedules"),
-    path('course-schedules/<pk>/detail', course_view.CourseScheduleDetailView.as_view(), name="course-schedules-detail"),
+    path('course-schedules/<pk>/detail', course_view.CourseScheduleDetailView.as_view(),
+         name="course-schedules-detail"),
     path('course-schedules/create/', course_view.CourseScheduleCreateView.as_view(), name="course-schedules-create"),
     path('course-schedules/<pk>/join/', course_view.CourseScheduleEnrollView.as_view(), name="course-schedules-join"),
     path('course-schedules/<pk>/update/', course_view.CourseScheduleUpdateView.as_view(),

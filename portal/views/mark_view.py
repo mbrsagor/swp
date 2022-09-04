@@ -12,7 +12,7 @@ from faculties.models import CourseSchedule
 
 
 @method_decorator(user_passes_test(lambda user: user.is_superuser or user.teacher), name='dispatch')
-class MarkListView(generic.CreateView,  generic.ListView):
+class MarkListView(generic.CreateView, generic.ListView):
     model = Mark
     form_class = MarkForm
     success_url = reverse_lazy('portal:marks')
@@ -21,7 +21,8 @@ class MarkListView(generic.CreateView,  generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(MarkListView, self).get_context_data(**kwargs)
         course_schedule = CourseSchedule.objects.filter(teacher=self.request.user)
-        course_schedules_data = serializers.serialize('json', course_schedule, fields={'course', 'students'}, use_natural_foreign_keys=True, use_natural_primary_keys=True)
+        course_schedules_data = serializers.serialize('json', course_schedule, fields={'course', 'students'},
+                                                      use_natural_foreign_keys=True, use_natural_primary_keys=True)
         context["course_schedules"] = course_schedules_data
         return context
 
@@ -31,7 +32,7 @@ class MarkListView(generic.CreateView,  generic.ListView):
             return qs.filter(teacher=self.request.user)
         else:
             return qs.all()
-    
+
     def form_valid(self, form):
         course = form.cleaned_data['course_schedule']
         student = form.cleaned_data['student']
@@ -42,7 +43,7 @@ class MarkListView(generic.CreateView,  generic.ListView):
             return redirect('portal:marks')
         form.instance.teacher = self.request.user
         return super(MarkListView, self).form_valid(form)
-    
+
     def get_form_kwargs(self):
         kwargs = super(MarkListView, self).get_form_kwargs()
         kwargs['user'] = self.request.user

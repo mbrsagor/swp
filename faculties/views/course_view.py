@@ -73,7 +73,7 @@ class CourseScheduleCreateView(SuccessMessageMixin, generic.CreateView):
     template_name = 'course-schedule/create.html'
     success_url = reverse_lazy('faculties:course-schedules')
     success_message = 'Course Schedule Create'
-    
+
     def form_valid(self, form):
         teacher = form.cleaned_data['teacher']
         course = form.cleaned_data['course']
