@@ -7,7 +7,6 @@ from faculties.models import Faculty, Department, Program
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-
     class Rolls(models.TextChoices):
         ADMIN = 'ADMIN', 'Admin'
         STUDENT = 'STUDENT', 'Student'
@@ -38,9 +37,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def admin(self):
         return self.roll == self.Rolls.ADMIN
-    
+
     def natural_key(self):
-        return ({'username': self.username, 'pk': self.pk})
+        return {'username': self.username, 'pk': self.pk}
 
     def __str__(self):
         return f'{self.username}'
@@ -72,7 +71,7 @@ class StudentProfile(TimeStamp):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
-    roll_number = models.CharField(max_length=5, blank=True, help_text='student roll number format 001-101',)
+    roll_number = models.CharField(max_length=5, blank=True, help_text='student roll number format 001-101', )
     unique_id = models.CharField(max_length=16, blank=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
@@ -115,7 +114,7 @@ class TeacherProfile(TimeStamp):
     @property
     def avatarURL(self):
         return self.avatar.url if self.avatar else '/static/image/avatar.png'
-    
+
     def __str__(self):
         return self.user.username
 
@@ -133,7 +132,7 @@ class AdminProfile(TimeStamp):
     @property
     def avatarURL(self):
         return self.avatar.url if self.avatar else '/static/image/avatar.png'
-    
+
     def __str__(self):
         return self.user.username
 
@@ -187,6 +186,3 @@ class Student(User):
     @property
     def profile(self):
         return self.studentprofile
-
-
-

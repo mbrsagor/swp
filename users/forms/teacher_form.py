@@ -53,7 +53,8 @@ class TeacherForm(ModelForm):
         fields = ('username', 'email')
 
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control', 'id': 'username', 'placeholder': 'Enter your username'}),
+            'username': TextInput(
+                attrs={'class': 'form-control', 'id': 'username', 'placeholder': 'Enter your username'}),
             'email': EmailInput(attrs={'class': 'form-control', 'id': 'email', 'placeholder': 'Enter your email'}),
         }
 

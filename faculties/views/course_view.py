@@ -1,5 +1,4 @@
 from django.http import HttpResponseRedirect
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
 from django.views import generic, View
 from django.utils.decorators import method_decorator
@@ -97,7 +96,7 @@ class CourseScheduleView(generic.ListView):
 @method_decorator(user_passes_test(lambda user: user.student), name='dispatch')
 class CourseScheduleEnrollView(View):
     def get(self, *args, **kwargs):
-        print(kwargs['pk'])
+        # print(kwargs['pk'])
         course_schedule = CourseSchedule.objects.get(pk=kwargs['pk'])
         if CourseSchedule.objects.filter(students=self.request.user, course=course_schedule.course).exists():
             messages.info(self.request, 'Already Joined')

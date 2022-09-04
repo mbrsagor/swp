@@ -83,5 +83,5 @@ class MarkSearchView(generic.ListView):
             else:
                 profile = StudentProfile.objects.get(unique_id__icontains=query)
                 return self.model.objects.filter(Q(student__username__icontains=profile.user.username))
-        except:
-            return self.model.objects.none()
+        except Exception as ex:
+            return str(ex)

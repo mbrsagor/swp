@@ -1,5 +1,4 @@
 from django.shortcuts import redirect
-from datetime import datetime
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 from django.views import generic
