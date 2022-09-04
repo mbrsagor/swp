@@ -16,6 +16,7 @@ class PaymentListView(generic.ListView):
 @method_decorator(user_passes_test(lambda user: user.is_superuser), name='dispatch')
 class PaymentCreateView(generic.CreateView):
     form_class = PaymentForm
+    model = Payment
     success_url = reverse_lazy('payments:payments')
     template_name = 'payment/create.html'
 
